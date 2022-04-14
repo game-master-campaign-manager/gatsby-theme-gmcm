@@ -15,24 +15,22 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/gvorbeck/gatsby-theme-gmcm">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="height: 100px;"><g class="" transform="translate(0,0)" style=""><path d="M256 20a104 104 0 0 0-104 104 104 104 0 0 0 104 104 104 104 0 0 0 104-104A104 104 0 0 0 256 20zM16 256v240h48c64-160 320-160 384 0h48V256h-48v64h-60v-64h-48v64h-60v-64h-48v64h-60v-64h-48v64H64v-64H16z" fill="#000000" fill-opacity="1"></path></g></svg>
+  <a href="https://github.com/game-master-campaign-manager/gatsby-theme-gmcm">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g class="" transform="translate(0,0)" style=""><path d="M256 20a104 104 0 0 0-104 104 104 104 0 0 0 104 104 104 104 0 0 0 104-104A104 104 0 0 0 256 20zM16 256v240h48c64-160 320-160 384 0h48V256h-48v64h-60v-64h-48v64h-60v-64h-48v64h-60v-64h-48v64H64v-64H16z" fill="#000000" fill-opacity="1"></path></g></svg>
   </a>
 
-<h3 align="center">GMCM</h3>
-<h4 align="center">Game Master Campaign Manager</h4>
+<h1 align="center">GMCM</h1>
+<h2 align="center">Game Master Campaign Manager</h2>
 
   <p align="center">
     A management tool for your favorite 5e TTRPGs! Keep track of your maps, NPCs, rule references, spells, and monsters in this virtual notebook. Roll virtual dice, click interactive stat sheets, and more.
     <br />
-    <a href="https://github.com/gvorbeck/gatsby-theme-gmcm"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/game-master-campaign-manager/gatsby-theme-gmcm"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/gvorbeck/gatsby-theme-gmcm">View Demo</a>
+    <a href="https://game-master-campaign-manager.github.io/">View Demo</a>
     ·
-    <a href="https://github.com/gvorbeck/gatsby-theme-gmcm/issues">Report Bug</a>
-    ·
-    <!-- <a href="https://github.com/gvorbeck/gatsby-theme-gmcm/issues">Request Feature</a> -->
+    <a href="https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/issues">Report Bug</a>
   </p>
 </div>
 
@@ -92,11 +90,12 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-Make sure that your terminal accepts `npm` and `gatsby` commands.
+Make sure that your terminal accepts `yarn/npm` and `gatsby` commands.
 
-- npm
+- yarn/npm 
   ```sh
   npm -v
+  yarn -v
   ```
 - Gatsby CLI
   ```sh
@@ -138,9 +137,18 @@ Install these if they are not already.
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+When you first run `gatsby develop` you'll find your local site at `http://localhost:8000/`. It will be filled with example content that is housed within the plugin. To begin adding your own content, go to your project's root directory and you'll see that `gatsby-theme-gmcm` has created a `src/content` directory. This is where all your content will live.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+There are four directories you can add to begin adding content:
+```
+/src/content/adventures
+/src/content/references
+/src/content/spells
+/src/content/monsters
+```
+In order, these will be used to contain your campaigns/adventures, any rule references you wish to document, spell documentation, monster documentation.
+
+_For more information about creating your own content, please refer to the [Wiki documentation](https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/wiki)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -153,7 +161,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Feature 3
   - [ ] Nested Feature
 
-See the [open issues](https://github.com/gvorbeck/gatsby-theme-gmcm/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -186,9 +194,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/gvorbeck/gatsby-theme-gmcm](https://github.com/gvorbeck/gatsby-theme-gmcm)
+Project Link: [https://github.com/game-master-campaign-manager/gatsby-theme-gmcm](https://github.com/game-master-campaign-manager/gatsby-theme-gmcm)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -205,14 +211,14 @@ Project Link: [https://github.com/gvorbeck/gatsby-theme-gmcm](https://github.com
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/gvorbeck/gatsby-theme-gmcm.svg?style=for-the-badge
-[contributors-url]: https://github.com/gvorbeck/gatsby-theme-gmcm/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/gvorbeck/gatsby-theme-gmcm.svg?style=for-the-badge
-[forks-url]: https://github.com/gvorbeck/gatsby-theme-gmcm/network/members
-[stars-shield]: https://img.shields.io/github/stars/gvorbeck/gatsby-theme-gmcm.svg?style=for-the-badge
-[stars-url]: https://github.com/gvorbeck/gatsby-theme-gmcm/stargazers
-[issues-shield]: https://img.shields.io/github/issues/gvorbeck/gatsby-theme-gmcm.svg?style=for-the-badge
-[issues-url]: https://github.com/gvorbeck/gatsby-theme-gmcm/issues
-[license-shield]: https://img.shields.io/github/license/gvorbeck/gatsby-theme-gmcm.svg?style=for-the-badge
-[license-url]: https://github.com/gvorbeck/gatsby-theme-gmcm/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/game-master-campaign-manager/gatsby-theme-gmcm.svg?style=for-the-badge
+[contributors-url]: https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/game-master-campaign-manager/gatsby-theme-gmcm.svg?style=for-the-badge
+[forks-url]: https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/network/members
+[stars-shield]: https://img.shields.io/github/stars/game-master-campaign-manager/gatsby-theme-gmcm.svg?style=for-the-badge
+[stars-url]: https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/stargazers
+[issues-shield]: https://img.shields.io/github/issues/game-master-campaign-manager/gatsby-theme-gmcm.svg?style=for-the-badge
+[issues-url]: https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/issues
+[license-shield]: https://img.shields.io/github/license/game-master-campaign-manager/gatsby-theme-gmcm.svg?style=for-the-badge
+[license-url]: https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/blob/master/LICENSE.txt
 [product-screenshot]: ./src/images/screen.png
