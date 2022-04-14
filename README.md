@@ -70,8 +70,8 @@
 
 ### Built With
 
-- [React.js](https://reactjs.org/)
-- [Gatsbyjs](https://www.gatsbyjs.com/)
+- [React](https://reactjs.org/)
+- [Gatsby](https://www.gatsbyjs.com/)
 - [MUI](https://mui.com/)
 - [notistack](https://iamhosseindhv.com/notistack)
 - [RPG Dice Roller](https://dice-roller.github.io/documentation/)
