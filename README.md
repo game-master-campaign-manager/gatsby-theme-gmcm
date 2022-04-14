@@ -15,10 +15,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/game-master-campaign-manager/gatsby-theme-gmcm">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g class="" transform="translate(0,0)" style=""><path d="M256 20a104 104 0 0 0-104 104 104 104 0 0 0 104 104 104 104 0 0 0 104-104A104 104 0 0 0 256 20zM16 256v240h48c64-160 320-160 384 0h48V256h-48v64h-60v-64h-48v64h-60v-64h-48v64h-60v-64h-48v64H64v-64H16z" fill="#000000" fill-opacity="1"></path></g></svg>
-  </a>
-
 <h1 align="center">GMCM</h1>
 <h2 align="center">Game Master Campaign Manager</h2>
 
@@ -154,7 +150,7 @@ _For more information about creating your own content, please refer to the [Wiki
 
 <!-- ROADMAP -->
 
-## Roadmap
+<!-- ## Roadmap
 
 - [ ] Feature 1
 - [ ] Feature 2
@@ -163,11 +159,11 @@ _For more information about creating your own content, please refer to the [Wiki
 
 See the [open issues](https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/issues) for a full list of proposed features (and known issues).
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p> -->
 
 <!-- CONTRIBUTING -->
 
-## Contributing
+<!-- ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -180,7 +176,7 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p> -->
 
 <!-- LICENSE -->
 
@@ -200,13 +196,13 @@ Project Link: [https://github.com/game-master-campaign-manager/gatsby-theme-gmcm
 
 <!-- ACKNOWLEDGMENTS -->
 
-## Acknowledgments
+<!-- ## Acknowledgments
 
 - []()
 - []()
 - []()
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p> -->
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
