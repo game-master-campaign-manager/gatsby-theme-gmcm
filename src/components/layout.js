@@ -19,28 +19,10 @@ function Layout({
   children, hideNavigation, title, navDirection,
 }) {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const click = () => {
-    console.log('hi');
-    // const box = document.getElementsByClassName('gmcm-Drawer-paper')[0];
-    // console.log(box);
-    // if (box && !box.contains(event.target)) {
-    //   console.log('yo');
-    // setDrawerOpen(false);
-    // }
-  };
-  React.useEffect(() => {
-    document.addEventListener('click', click);
-    return document.removeEventListener('click', click);
-  }, []);
   return (
     <>
       <Helmet defaultTitle="GMCM" title={`${title} | ${SITE_NAME}`} />
       <Stack
-        onClick={(event) => {
-          // console.log(event.target.id);
-          // event.stopPropagation();
-          // drawerOpen && setDrawerOpen(false);
-        }}
         sx={{
           typography: 'body1',
           color: 'secondary.main',
