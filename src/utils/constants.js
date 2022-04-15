@@ -45,6 +45,10 @@ export const SITE_SHORT_NAME = 'GMCM';
 export const FOOTER_COPY = `${SITE_NAME} © ${new Date().getFullYear()} J. Garrett Vorbeck`;
 export const NAVIGATION_DATA = [
   {
+    title: 'Combat Tracker',
+    slug: '',
+  },
+  {
     title: 'adventures',
     slug: '/adventures',
   },

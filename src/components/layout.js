@@ -10,6 +10,7 @@ import {
 } from '../utils/constants';
 import Navigation from './navigation';
 import GmcmBlackBridgeIcon from '../images/black-bridge.svg';
+import Arena from './arena';
 
 // eslint-disable-next-line react/function-component-definition
 const HeaderContainer = (props) => <Container component="header" {...props} />;
@@ -17,10 +18,29 @@ const HeaderContainer = (props) => <Container component="header" {...props} />;
 function Layout({
   children, hideNavigation, title, navDirection,
 }) {
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const click = () => {
+    console.log('hi');
+    // const box = document.getElementsByClassName('gmcm-Drawer-paper')[0];
+    // console.log(box);
+    // if (box && !box.contains(event.target)) {
+    //   console.log('yo');
+    // setDrawerOpen(false);
+    // }
+  };
+  React.useEffect(() => {
+    document.addEventListener('click', click);
+    return document.removeEventListener('click', click);
+  }, []);
   return (
     <>
       <Helmet defaultTitle="GMCM" title={`${title} | ${SITE_NAME}`} />
       <Stack
+        onClick={(event) => {
+          // console.log(event.target.id);
+          // event.stopPropagation();
+          // drawerOpen && setDrawerOpen(false);
+        }}
         sx={{
           typography: 'body1',
           color: 'secondary.main',
@@ -34,6 +54,7 @@ function Layout({
           '& thead tr': {
             backgroundColor: 'primary.main',
           },
+          // for <SnackbarProvider />
           '& .SnackbarContainer-root': {
             gap: 2,
           },
@@ -44,7 +65,6 @@ function Layout({
           sx={{
             backgroundColor: 'primary.main',
             minHeight: '4.25rem',
-            // display: 'block',
             position: 'static',
           }}
         >
@@ -87,7 +107,12 @@ function Layout({
               </Link>
             </Typography>
           </Box>
-          <Navigation hideNavigation={hideNavigation} navDirection={navDirection} />
+          <Navigation
+            hideNavigation={hideNavigation}
+            navDirection={navDirection}
+            drawerOpen={drawerOpen}
+            setDrawerOpen={setDrawerOpen}
+          />
         </AppBar>
         <Container
           component="main"
@@ -110,6 +135,7 @@ function Layout({
             )}
             {children}
           </SnackbarProvider>
+          <Arena drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
         </Container>
         <Container
           component="footer"

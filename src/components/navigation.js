@@ -1,10 +1,13 @@
 import React from 'react';
-import { Box, List, ListItem } from '@mui/material';
-import { Button } from 'gatsby-theme-material-ui';
+import {
+  Box, List, ListItem, SvgIcon,
+} from '@mui/material';
+import { Button, IconButton } from 'gatsby-theme-material-ui';
 import { NAVIGATION_DATA } from '../utils/constants';
+import SwordWoman from '../images/swordwoman.svg';
 
 function Navigation({
-  homeNav, hideNavigation, variant, size,
+  homeNav, hideNavigation, variant, size, drawerOpen, setDrawerOpen, hideDrawerIcon = false,
 }) {
   return (
     <Box
@@ -19,31 +22,44 @@ function Navigation({
         sx={{
           display: !homeNav && 'flex',
           justifyContent: !homeNav && 'flex-end',
+          gap: !homeNav && 2,
         }}
       >
-        {NAVIGATION_DATA.map((item) => (
-          <ListItem
-            disablePadding
-            key={item.title}
-            sx={{
-              '& + &': {
-                mt: homeNav ? 2 : 0,
-                ml: homeNav ? 0 : 2,
-              },
-              width: homeNav ? '100%' : 'auto',
-            }}
-          >
-            <Button
-              size={size || 'medium'}
-              variant={variant || 'contained'}
-              to={item.slug}
-              color={homeNav ? 'primary' : 'secondary'}
-              fullWidth
-            >
-              {item.title}
-            </Button>
-          </ListItem>
-        ))}
+        {NAVIGATION_DATA.map((item, index) => {
+          if (!hideDrawerIcon && index === 0) {
+            return (
+              <ListItem key={item.title} disablePadding sx={{ width: 'auto' }}>
+                <IconButton
+                  aria-label="Toggle the Combat Tracker"
+                  size="small"
+                  edge="end"
+                  variant="contained"
+                  onClick={() => {
+                    setDrawerOpen(!drawerOpen);
+                    console.log('foo');
+                  }}
+                >
+                  <SvgIcon>
+                    <SwordWoman />
+                  </SvgIcon>
+                </IconButton>
+              </ListItem>
+            );
+          }
+          return (
+            <ListItem disablePadding key={item.title} sx={{ width: homeNav ? '100%' : 'auto' }}>
+              <Button
+                size={size || 'medium'}
+                variant={variant || 'contained'}
+                to={item.slug}
+                color={homeNav ? 'primary' : 'secondary'}
+                fullWidth
+              >
+                {item.title}
+              </Button>
+            </ListItem>
+          );
+        })}
       </List>
     </Box>
   );
