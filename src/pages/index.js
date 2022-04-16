@@ -30,7 +30,7 @@ function IndexPage() {
               <Typography variant="body1">{DESCRIPTION}</Typography>
             </CardContent>
           </Card>
-          <Navigation homeNav size="large" />
+          <Navigation hideDrawerIcon homeNav size="large" />
           {/* <Card raised>
             <CardHeader
               title="Adventures"

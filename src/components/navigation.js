@@ -20,31 +20,35 @@ function Navigation({
       <List
         disablePadding
         sx={{
-          display: !homeNav && 'flex',
+          display: 'flex',
+          flexDirection: homeNav ? 'column' : 'row',
           justifyContent: !homeNav && 'flex-end',
-          gap: !homeNav && 2,
+          gap: 2,
         }}
       >
         {NAVIGATION_DATA.map((item, index) => {
-          if (!hideDrawerIcon && index === 0) {
-            return (
-              <ListItem key={item.title} disablePadding sx={{ width: 'auto' }}>
-                <IconButton
-                  aria-label="Toggle the Combat Tracker"
-                  size="small"
-                  edge="end"
-                  variant="contained"
-                  onClick={() => {
-                    setDrawerOpen(!drawerOpen);
-                    console.log('foo');
-                  }}
-                >
-                  <SvgIcon>
-                    <SwordWoman />
-                  </SvgIcon>
-                </IconButton>
-              </ListItem>
-            );
+          if (index === 0) {
+            if (!hideDrawerIcon) {
+              return (
+                <ListItem key={item.title} disablePadding sx={{ width: 'auto' }}>
+                  <IconButton
+                    aria-label="Toggle the Combat Tracker"
+                    size="small"
+                    edge="end"
+                    variant="contained"
+                    onClick={() => {
+                      setDrawerOpen(!drawerOpen);
+                      console.log('foo');
+                    }}
+                  >
+                    <SvgIcon>
+                      <SwordWoman />
+                    </SvgIcon>
+                  </IconButton>
+                </ListItem>
+              );
+            }
+            return '';
           }
           return (
             <ListItem disablePadding key={item.title} sx={{ width: homeNav ? '100%' : 'auto' }}>

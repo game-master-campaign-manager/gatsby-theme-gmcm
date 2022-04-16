@@ -25,6 +25,8 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import { IconButton } from 'gatsby-theme-material-ui';
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import Masonry from '@mui/lab/Masonry';
 import MarkdownView from 'react-showdown';
 import Layout from '../components/layout';
@@ -158,7 +160,7 @@ function SearchResults({ value }) {
 function SearchResultsItem({ item }) {
   return (
     <Box>
-      <Card raised>
+      <Card raised sx={{ position: 'relative' }}>
         <SearchResultsItemHeader item={item} />
         <SearchResultsItemContent item={item} />
       </Card>
@@ -168,6 +170,7 @@ function SearchResultsItem({ item }) {
 function SearchResultsItemHeader({ item }) {
   let DmcmIcon;
   let subtitle;
+  let combatIcon = false;
   if (item.type) {
     Object.keys(CREATURE_TYPES).forEach((c) => {
       if (item.type.toUpperCase().search(c.toUpperCase()) > -1) {
@@ -175,6 +178,7 @@ function SearchResultsItemHeader({ item }) {
       }
     });
     subtitle = item.type;
+    combatIcon = true;
   } else if (item.school) {
     Object.keys(MAGIC_TYPES).forEach((m) => {
       if (item.school.toUpperCase().search(m.toUpperCase()) > -1) {
@@ -219,6 +223,22 @@ function SearchResultsItemHeader({ item }) {
         title={<Typography variant="h6" component="h3">{item.name}</Typography>}
         subheader={<Typography variant="body1">{subtitle}</Typography>}
       />
+      {combatIcon && (
+        <Tooltip title="Add monster to Combat Tracker">
+          <IconButton
+            aria-label="Add monster to Combat Tracker"
+            sx={{
+              position: 'absolute',
+              top: '0.25rem',
+              right: '0.25rem',
+            }}
+          >
+            <SvgIcon>
+              <AddModeratorIcon color="primary" />
+            </SvgIcon>
+          </IconButton>
+        </Tooltip>
+      )}
       <Divider />
     </>
   );

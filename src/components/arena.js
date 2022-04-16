@@ -34,9 +34,6 @@ function Arena({ drawerOpen, setDrawerOpen }) {
         />
         <Button
           onClick={() => {
-            // combatantList.push('batman');
-            // saveSessionStorage();
-            // setTest('butt');
             addCombatant({
               name: playerName,
               health: '25/25',
