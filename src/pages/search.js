@@ -46,12 +46,15 @@ import {
 } from '../utils/constants';
 import * as CREATURE_TYPES from '../images/creature-types';
 import * as MAGIC_TYPES from '../images/magic-types';
-import { arenaDrawerState } from '../components/arena';
+import useArena from '../components/arena';
 import SwordWoman from '../images/swordwoman.svg';
-import combatData from '../components/session-storage';
+// import combatData from '../components/session-storage';
 
 function SearchPage({ data, location }) {
-  const { drawerOpen, setDrawerOpen } = arenaDrawerState();
+  const {
+    arenaDrawerOpen, setArenaDrawerOpen, arenaRender, arenaSessionStorage, setArenaSessionStorage,
+  } = useArena();
+
   const search = new URLSearchParams(location.search.substring(1));
   const category = search.get('category');
   const searchData = {
@@ -91,7 +94,12 @@ function SearchPage({ data, location }) {
   }
   const [value, setValue] = React.useState(startingValue || []);
   return (
-    <Layout title={searchTitle} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}>
+    <Layout
+      title={searchTitle}
+      arenaDrawerOpen={arenaDrawerOpen}
+      setArenaDrawerOpen={setArenaDrawerOpen}
+      arenaRender={arenaRender}
+    >
       <Box>
         <SearchForm
           searchTitle={searchTitle}
@@ -100,7 +108,13 @@ function SearchPage({ data, location }) {
           data={searchData[category]}
           category={category}
         />
-        <SearchResults value={value} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+        <SearchResults
+          value={value}
+          arenaDrawerOpen={arenaDrawerOpen}
+          setArenaDrawerOpen={setArenaDrawerOpen}
+          arenaSessionStorage={arenaSessionStorage}
+          setArenaSessionStorage={setArenaSessionStorage}
+        />
       </Box>
     </Layout>
   );
@@ -141,7 +155,9 @@ function SearchForm({
   );
 }
 
-function SearchResults({ value, drawerOpen, setDrawerOpen }) {
+function SearchResults({
+  value, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage,
+}) {
   return (
     <Box
       sx={{
@@ -155,8 +171,10 @@ function SearchResults({ value, drawerOpen, setDrawerOpen }) {
               <SearchResultsItem
                 key={item.name}
                 item={item}
-                drawerOpen={drawerOpen}
-                setDrawerOpen={setDrawerOpen}
+                arenaDrawerOpen={arenaDrawerOpen}
+                setArenaDrawerOpen={setArenaDrawerOpen}
+                arenaSessionStorage={arenaSessionStorage}
+                setArenaSessionStorage={setArenaSessionStorage}
               />
             ))}
           </Masonry>
@@ -166,22 +184,30 @@ function SearchResults({ value, drawerOpen, setDrawerOpen }) {
   );
 }
 
-function SearchResultsItem({ item, drawerOpen, setDrawerOpen }) {
+function SearchResultsItem({
+  item, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage,
+}) {
   return (
     <Box>
       <Card raised sx={{ position: 'relative' }}>
         <SearchResultsItemHeader
           item={item}
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
+          arenaDrawerOpen={arenaDrawerOpen}
+          setArenaDrawerOpen={setArenaDrawerOpen}
+          arenaSessionStorage={arenaSessionStorage}
+          setArenaSessionStorage={setArenaSessionStorage}
         />
         <SearchResultsItemContent item={item} />
       </Card>
     </Box>
   );
 }
-function SearchResultsItemHeader({ item, drawerOpen, setDrawerOpen }) {
-  const { addCombatant } = combatData();
+function SearchResultsItemHeader({
+  item, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage,
+}) {
+  // const {
+  //   arenaSessionStorage, setArenaSessionStorage, arenaSessionStorage, setArenaSessionStorage,
+  // } = useArena();
   let DmcmIcon;
   let subtitle;
   let combatIcon = false;
@@ -247,8 +273,11 @@ function SearchResultsItemHeader({ item, drawerOpen, setDrawerOpen }) {
               right: '0.25rem',
             }}
             onClick={() => {
-              setDrawerOpen(!drawerOpen);
-              addCombatant({ name: item.name });
+              setArenaDrawerOpen(!arenaDrawerOpen);
+              // setArenaSessionStorage([...arenaSessionStorage, { name: item.name }]);
+              setArenaSessionStorage([...arenaSessionStorage, { name: item.name }]);
+              // test(arenaDrawerOpen);
+              // console.log(arenaSessionStorage);
             }}
           >
             <SvgIcon>

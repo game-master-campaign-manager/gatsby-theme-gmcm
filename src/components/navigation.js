@@ -7,7 +7,13 @@ import { NAVIGATION_DATA } from '../utils/constants';
 import SwordWoman from '../images/swordwoman.svg';
 
 function Navigation({
-  homeNav, hideNavigation, variant, size, drawerOpen, setDrawerOpen, hideDrawerIcon = false,
+  homeNav,
+  hideNavigation,
+  variant,
+  size,
+  arenaDrawerOpen,
+  setArenaDrawerOpen,
+  hideDrawerIcon = false,
 }) {
   return (
     <Box
@@ -37,7 +43,7 @@ function Navigation({
                     edge="end"
                     variant="contained"
                     onClick={() => {
-                      setDrawerOpen(!drawerOpen);
+                      setArenaDrawerOpen(!arenaDrawerOpen);
                     }}
                   >
                     <SvgIcon>

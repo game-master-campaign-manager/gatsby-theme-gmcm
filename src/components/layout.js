@@ -10,13 +10,20 @@ import {
 } from '../utils/constants';
 import Navigation from './navigation';
 import GmcmBlackBridgeIcon from '../images/black-bridge.svg';
-import { Arena } from './arena';
+// import useArena from './arena';
 
 // eslint-disable-next-line react/function-component-definition
 const HeaderContainer = (props) => <Container component="header" {...props} />;
 
 function Layout({
-  children, hideNavigation, title, navDirection, drawerOpen = undefined, setDrawerOpen = undefined,
+  children,
+  hideNavigation,
+  hideDrawerIcon = false,
+  title,
+  navDirection,
+  arenaDrawerOpen = false,
+  setArenaDrawerOpen = undefined,
+  arenaRender = undefined,
 }) {
   return (
     <>
@@ -90,9 +97,10 @@ function Layout({
           </Box>
           <Navigation
             hideNavigation={hideNavigation}
+            hideDrawerIcon={hideDrawerIcon}
             navDirection={navDirection}
-            drawerOpen={drawerOpen}
-            setDrawerOpen={setDrawerOpen}
+            arenaDrawerOpen={arenaDrawerOpen}
+            setArenaDrawerOpen={setArenaDrawerOpen}
           />
         </AppBar>
         <Container
@@ -102,6 +110,7 @@ function Layout({
             position: 'relative',
           }}
         >
+          {arenaRender}
           <SnackbarProvider maxSnack={5}>
             {title && title !== 'Home' && (
               <Typography
@@ -116,7 +125,6 @@ function Layout({
             )}
             {children}
           </SnackbarProvider>
-          <Arena drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
         </Container>
         <Container
           component="footer"

@@ -26,16 +26,10 @@ import AdventureDetails from './adventure-details';
 import {
   NPCS, HEADER_CELLS, LOCATIONS,
 } from '../utils/constants';
-import { arenaDrawerState } from './arena';
 
 function AdventurePageLayout({ data }) {
-  const { drawerOpen, setDrawerOpen } = arenaDrawerState();
   return (
-    <Layout
-      title={data.mdx.frontmatter.title}
-      drawerOpen={drawerOpen}
-      setDrawerOpen={setDrawerOpen}
-    >
+    <Layout title={data.mdx.frontmatter.title} hideDrawerIcon>
       <Box>
         <Paper
           sx={{
