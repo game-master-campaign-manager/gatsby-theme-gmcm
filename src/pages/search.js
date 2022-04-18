@@ -29,6 +29,7 @@ import { IconButton } from 'gatsby-theme-material-ui';
 // import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import Masonry from '@mui/lab/Masonry';
 import MarkdownView from 'react-showdown';
+import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import Layout from '../components/layout';
 import Dice from '../components/dice';
 import {
@@ -48,7 +49,6 @@ import * as CREATURE_TYPES from '../images/creature-types';
 import * as MAGIC_TYPES from '../images/magic-types';
 import useArena from '../components/arena';
 import SwordWoman from '../images/swordwoman.svg';
-// import combatData from '../components/session-storage';
 
 function SearchPage({ data, location }) {
   const {
@@ -245,6 +245,10 @@ function SearchResultsItemHeader({
   } else {
     console.error('Searched item not recognized. Make sure your content follows frontmatter guidelines.');
   }
+  const hpRoll = new DiceRoll(item.hp.notes);
+  const initiativeRoll = new DiceRoll(`d20+${Math.floor((item.abilities.dex - 10) / 2)}`);
+
+  console.log(item);
   return (
     <>
       <CardHeader
@@ -274,15 +278,17 @@ function SearchResultsItemHeader({
             }}
             onClick={() => {
               setArenaDrawerOpen(!arenaDrawerOpen);
-              // setArenaSessionStorage([...arenaSessionStorage, { name: item.name }]);
-              setArenaSessionStorage([...arenaSessionStorage, { name: item.name }]);
-              // test(arenaDrawerOpen);
-              // console.log(arenaSessionStorage);
+              setArenaSessionStorage([...arenaSessionStorage,
+                {
+                  name: item.name,
+                  hp: hpRoll.total,
+                  initiative: initiativeRoll.total,
+                },
+              ]);
             }}
           >
             <SvgIcon>
               <SwordWoman />
-              {/* <AddModeratorIcon color="primary" /> */}
             </SvgIcon>
           </IconButton>
         </Tooltip>
