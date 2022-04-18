@@ -10,15 +10,14 @@ import {
 } from '../utils/constants';
 import Navigation from './navigation';
 import GmcmBlackBridgeIcon from '../images/black-bridge.svg';
-import Arena from './arena';
+import { Arena } from './arena';
 
 // eslint-disable-next-line react/function-component-definition
 const HeaderContainer = (props) => <Container component="header" {...props} />;
 
 function Layout({
-  children, hideNavigation, title, navDirection,
+  children, hideNavigation, title, navDirection, drawerOpen = undefined, setDrawerOpen = undefined,
 }) {
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
   return (
     <>
       <Helmet defaultTitle="GMCM" title={`${title} | ${SITE_NAME}`} />

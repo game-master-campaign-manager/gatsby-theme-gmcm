@@ -38,7 +38,6 @@ function Navigation({
                     variant="contained"
                     onClick={() => {
                       setDrawerOpen(!drawerOpen);
-                      console.log('foo');
                     }}
                   >
                     <SvgIcon>

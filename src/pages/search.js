@@ -26,7 +26,7 @@ import {
   Typography,
 } from '@mui/material';
 import { IconButton } from 'gatsby-theme-material-ui';
-import AddModeratorIcon from '@mui/icons-material/AddModerator';
+// import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import Masonry from '@mui/lab/Masonry';
 import MarkdownView from 'react-showdown';
 import Layout from '../components/layout';
@@ -46,8 +46,12 @@ import {
 } from '../utils/constants';
 import * as CREATURE_TYPES from '../images/creature-types';
 import * as MAGIC_TYPES from '../images/magic-types';
+import { arenaDrawerState } from '../components/arena';
+import SwordWoman from '../images/swordwoman.svg';
+import combatData from '../components/session-storage';
 
 function SearchPage({ data, location }) {
+  const { drawerOpen, setDrawerOpen } = arenaDrawerState();
   const search = new URLSearchParams(location.search.substring(1));
   const category = search.get('category');
   const searchData = {
@@ -87,7 +91,7 @@ function SearchPage({ data, location }) {
   }
   const [value, setValue] = React.useState(startingValue || []);
   return (
-    <Layout title={searchTitle}>
+    <Layout title={searchTitle} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}>
       <Box>
         <SearchForm
           searchTitle={searchTitle}
@@ -96,7 +100,7 @@ function SearchPage({ data, location }) {
           data={searchData[category]}
           category={category}
         />
-        <SearchResults value={value} />
+        <SearchResults value={value} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
       </Box>
     </Layout>
   );
@@ -137,7 +141,7 @@ function SearchForm({
   );
 }
 
-function SearchResults({ value }) {
+function SearchResults({ value, drawerOpen, setDrawerOpen }) {
   return (
     <Box
       sx={{
@@ -148,7 +152,12 @@ function SearchResults({ value }) {
         {value.length > 0 && (
           <Masonry columns={2} spacing={2}>
             {value.map((item) => (
-              <SearchResultsItem key={item.name} item={item} />
+              <SearchResultsItem
+                key={item.name}
+                item={item}
+                drawerOpen={drawerOpen}
+                setDrawerOpen={setDrawerOpen}
+              />
             ))}
           </Masonry>
         )}
@@ -157,17 +166,22 @@ function SearchResults({ value }) {
   );
 }
 
-function SearchResultsItem({ item }) {
+function SearchResultsItem({ item, drawerOpen, setDrawerOpen }) {
   return (
     <Box>
       <Card raised sx={{ position: 'relative' }}>
-        <SearchResultsItemHeader item={item} />
+        <SearchResultsItemHeader
+          item={item}
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+        />
         <SearchResultsItemContent item={item} />
       </Card>
     </Box>
   );
 }
-function SearchResultsItemHeader({ item }) {
+function SearchResultsItemHeader({ item, drawerOpen, setDrawerOpen }) {
+  const { addCombatant } = combatData();
   let DmcmIcon;
   let subtitle;
   let combatIcon = false;
@@ -232,9 +246,14 @@ function SearchResultsItemHeader({ item }) {
               top: '0.25rem',
               right: '0.25rem',
             }}
+            onClick={() => {
+              setDrawerOpen(!drawerOpen);
+              addCombatant({ name: item.name });
+            }}
           >
             <SvgIcon>
-              <AddModeratorIcon color="primary" />
+              <SwordWoman />
+              {/* <AddModeratorIcon color="primary" /> */}
             </SvgIcon>
           </IconButton>
         </Tooltip>

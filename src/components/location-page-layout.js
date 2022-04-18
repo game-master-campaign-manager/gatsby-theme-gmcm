@@ -49,18 +49,24 @@ import {
   Boss,
   Unknown,
 } from '../images/icons';
+import { arenaDrawerState } from './arena';
 
 const markdownComponentsList = {
   Link, MonsterLink, SpellLink, Dice,
 };
 
 function LocationPageLayout({ data, location }) {
+  const { drawerOpen, setDrawerOpen } = arenaDrawerState();
   const [scrollLocation, setScrollLocation] = useState(0);
 
   const parentAdventureTitle = location.state ? location.state.parentAdventureTitle : '';
   const parentAdventureSlug = location.state ? location.state.parentAdventureSlug : '';
   return (
-    <Layout title={data.mdx.frontmatter.title}>
+    <Layout
+      title={data.mdx.frontmatter.title}
+      drawerOpen={drawerOpen}
+      setDrawerOpen={setDrawerOpen}
+    >
       {parentAdventureTitle && (
         <Link
           sx={{

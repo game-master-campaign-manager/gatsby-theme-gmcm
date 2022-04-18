@@ -25,6 +25,7 @@ import Masonry from '@mui/lab/Masonry';
 import Layout from '../components/layout';
 import Dice from '../components/dice';
 import { REFERENCE, SCROLL_BEHAVIOR } from '../utils/constants';
+import { arenaDrawerState } from '../components/arena';
 
 /* Table of Contents */
 function TableOfContents({ referenceData }) {
@@ -288,8 +289,8 @@ function ReferenceArticlesCategoryBlockItemMarkdown(props) {
 }
 
 /* PAGE FUNCTION */
-function ReferencePage(props) {
-  const { data } = props;
+function ReferencePage({ data }) {
+  const { drawerOpen, setDrawerOpen } = arenaDrawerState();
   const posts = data.allMdx.nodes;
 
   const referenceData = [];
@@ -327,7 +328,7 @@ function ReferencePage(props) {
   }
 
   return (
-    <Layout title={REFERENCE}>
+    <Layout title={REFERENCE} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}>
       <Fab
         color="primary"
         aria-label="Scroll to top"
