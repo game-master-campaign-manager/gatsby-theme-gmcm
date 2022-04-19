@@ -6,7 +6,7 @@ import { Link } from 'gatsby-theme-material-ui';
 import { Helmet } from 'react-helmet';
 import { SnackbarProvider } from 'notistack';
 import {
-  SITE_NAME, SITE_SHORT_NAME, FOOTER_COPY,
+  SITE_NAME, SITE_SHORT_NAME, FOOTER_COPY, SITE_AUTHOR,
 } from '../utils/constants';
 import Navigation from './navigation';
 import GmcmBlackBridgeIcon from '../images/black-bridge.svg';
@@ -114,10 +114,12 @@ function Layout({
         <Container
           component="footer"
           sx={{
-            marginTop: '2rem',
+            mt: 4,
+            mb: 2,
           }}
         >
           {FOOTER_COPY}
+          {SITE_AUTHOR}
         </Container>
       </Stack>
     </>

@@ -8,6 +8,7 @@ import {
   SocialDistance,
   Extension,
 } from '@mui/icons-material';
+import { Link } from '@mui/material';
 import DmcmDamageIcon from '../images/exploding-planet.svg';
 import DmcmAttackIcon from '../images/bullseye.svg';
 
@@ -42,7 +43,8 @@ export const FLAG_TOOLTIPS = {
 export const SPELL_STAT_ICONS = [<WatchLater />, <SocialDistance />, <Extension />, <WatchLater />, <DmcmAttackIcon width="24" fill="white" />, <DmcmDamageIcon width="24" fill="White" />];
 export const SITE_NAME = 'Game Master\'s Campaign Manager';
 export const SITE_SHORT_NAME = 'GMCM';
-export const FOOTER_COPY = `${SITE_NAME} © ${new Date().getFullYear()} J. Garrett Vorbeck`;
+export const SITE_AUTHOR = <Link color="primary.main" href="https://github.com/gvorbeck" target="_blank" rel="noreferrer noopener">gvorbeck</Link>;
+export const FOOTER_COPY = `${SITE_NAME} © ${new Date().getFullYear()} `;
 export const NAVIGATION_DATA = [
   {
     title: 'adventures',
