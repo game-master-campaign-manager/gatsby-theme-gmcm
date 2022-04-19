@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import {
-  Box, Card, CardContent, Paper, Typography,
+  Box, Card, CardContent, List, ListItem, Paper, Typography,
 } from '@mui/material';
 import Navigation from '../components/navigation';
 import Layout from '../components/layout';
@@ -27,27 +27,35 @@ function IndexPage() {
           <Card raised>
             <CardContent>
               <Typography variant="h2">{GREETING}</Typography>
-              <Typography variant="body1">{DESCRIPTION}</Typography>
+              <Typography>{DESCRIPTION}</Typography>
+              <Box
+                sx={{
+                  mt: 4,
+                  '& li': {
+                    pl: 0,
+                    pb: 0,
+                  },
+                  '& a': {
+                    color: 'secondary.main',
+                  },
+                }}
+              >
+                <Typography variant="h6" component="h3">External Links</Typography>
+                <List disablePadding>
+                  <ListItem>
+                    <a target="_blank" href="https://github.com/game-master-campaign-manager/gatsby-theme-gmcm" rel="noreferrer noopener">GMCM Plugin HitHub Repository</a>
+                  </ListItem>
+                  <ListItem>
+                    <a target="_blank" href="https://github.com/game-master-campaign-manager/gatsby-theme-gmcm/wiki" rel="noreferrer noopener">GMCM Documentation</a>
+                  </ListItem>
+                  <ListItem>
+                    <a target="_blank" href="https://game-master-campaign-manager.github.io/" rel="noreferrer noopener">GMCM Demo Site</a>
+                  </ListItem>
+                </List>
+              </Box>
             </CardContent>
           </Card>
-          <Navigation hideDrawerIcon homeNav size="large" />
-          {/* <Card raised>
-            <CardHeader
-              title="Adventures"
-              subheader="Where all the fun is at."
-            />
-            <Divider />
-            <CardContent>
-              <Typography>
-                This is the whole reason we\'re here, right? What would our favorite TTRPG
-                be without our our adventures?
-              </Typography>
-              <Typography>
-                The GMCM allows you to group NPCs and Locations within individual
-                campaigns, or \"adventures\".
-              </Typography>
-            </CardContent>
-          </Card> */}
+          <Navigation homeNav size="large" />
         </Paper>
       </Box>
     </Layout>

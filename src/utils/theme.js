@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import { brown, lime } from '@mui/material/colors';
 
-const height = '100%';
+// const height = '100%';
 
 // A custom theme for this app
 const theme = createTheme({
@@ -14,24 +14,24 @@ const theme = createTheme({
       main: brown[200],
     },
   },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        '#gatsby-focus-wrapper': {
-          height,
-        },
-        '#___gatsby': {
-          height,
-        },
-        html: {
-          height,
-        },
-        body: {
-          height,
-        },
-      },
-    },
-  },
+  // components: {
+  //   MuiCssBaseline: {
+  //     styleOverrides: {
+  //       '#gatsby-focus-wrapper': {
+  //         height,
+  //       },
+  //       '#___gatsby': {
+  //         height,
+  //       },
+  //       html: {
+  //         height,
+  //       },
+  //       body: {
+  //         height,
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export default theme;
