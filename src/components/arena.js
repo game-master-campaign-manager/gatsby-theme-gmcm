@@ -34,6 +34,14 @@ function useArena() {
     arenaCopy[index] = arenaCopyItem;
     setArenaSessionStorage(arenaCopy);
   };
+  // Submit new HP value like above.
+  const hpSubmit = (value, current, index) => {
+    const arenaCopy = [...arenaSessionStorage];
+    const arenaCopyItem = { ...arenaCopy[index] };
+    arenaCopyItem.hp = current - parseInt(value.replace(/\D/g, ''), 10);
+    arenaCopy[index] = arenaCopyItem;
+    setArenaSessionStorage(arenaCopy);
+  };
   const combatantListMaker = (array) => array
     // Sort by initiative and then by name.
     .sort(
@@ -61,7 +69,14 @@ function useArena() {
         {/* HP value */}
         <TextField
           variant="standard"
-          defaultValue={item.hp || 0}
+          defaultValue={parseInt(item.hp, 10) || 0}
+          onFocus={(event) => event.target.select()}
+          onBlur={(event) => hpSubmit(event.target.value, item.hp, index)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.target.blur();
+            }
+          }}
         />
       </ListItem>
     ));
