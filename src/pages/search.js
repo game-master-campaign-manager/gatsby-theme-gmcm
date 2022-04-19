@@ -166,7 +166,7 @@ function SearchResults({
     >
       <Paper>
         {value.length > 0 && (
-          <Masonry columns={2} spacing={2}>
+          <Masonry columns={2} spacing={2} sx={{ m: 0 }}>
             {value.map((item) => (
               <SearchResultsItem
                 key={item.name}
@@ -211,6 +211,8 @@ function SearchResultsItemHeader({
   let DmcmIcon;
   let subtitle;
   let combatIcon = false;
+  let hpRoll = '';
+  let initiativeRoll = '';
   if (item.type) {
     Object.keys(CREATURE_TYPES).forEach((c) => {
       if (item.type.toUpperCase().search(c.toUpperCase()) > -1) {
@@ -219,6 +221,8 @@ function SearchResultsItemHeader({
     });
     subtitle = item.type;
     combatIcon = true;
+    hpRoll = new DiceRoll(item.hp.notes);
+    initiativeRoll = new DiceRoll(`d20+${Math.floor((item.abilities.dex - 10) / 2)}`);
   } else if (item.school) {
     Object.keys(MAGIC_TYPES).forEach((m) => {
       if (item.school.toUpperCase().search(m.toUpperCase()) > -1) {
@@ -245,8 +249,6 @@ function SearchResultsItemHeader({
   } else {
     console.error('Searched item not recognized. Make sure your content follows frontmatter guidelines.');
   }
-  const hpRoll = new DiceRoll(item.hp.notes);
-  const initiativeRoll = new DiceRoll(`d20+${Math.floor((item.abilities.dex - 10) / 2)}`);
 
   console.log(item);
   return (
