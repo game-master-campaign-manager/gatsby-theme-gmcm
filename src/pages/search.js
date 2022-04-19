@@ -250,7 +250,6 @@ function SearchResultsItemHeader({
     console.error('Searched item not recognized. Make sure your content follows frontmatter guidelines.');
   }
 
-  console.log(item);
   return (
     <>
       <CardHeader
