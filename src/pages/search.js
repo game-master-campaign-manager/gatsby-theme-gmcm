@@ -1,35 +1,34 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import {
-  Autocomplete,
-  Avatar,
-  Box,
-  ButtonGroup,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-  SvgIcon,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import SvgIcon from '@mui/material/SvgIcon';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import { IconButton } from 'gatsby-theme-material-ui';
 // import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import Masonry from '@mui/lab/Masonry';
 import MarkdownView from 'react-showdown';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
+import { useSnackbar } from 'notistack';
 import Layout from '../components/layout';
 import Dice from '../components/dice';
 import {
@@ -203,7 +202,7 @@ function SearchResultsItem({
   );
 }
 function SearchResultsItemHeader({
-  item, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage,
+  item, arenaSessionStorage, setArenaSessionStorage,
 }) {
   // const {
   //   arenaSessionStorage, setArenaSessionStorage, arenaSessionStorage, setArenaSessionStorage,
@@ -249,6 +248,7 @@ function SearchResultsItemHeader({
   } else {
     console.error('Searched item not recognized. Make sure your content follows frontmatter guidelines.');
   }
+  const { enqueueSnackbar } = useSnackbar();
 
   return (
     <>
@@ -278,7 +278,8 @@ function SearchResultsItemHeader({
               right: '0.25rem',
             }}
             onClick={() => {
-              setArenaDrawerOpen(!arenaDrawerOpen);
+              enqueueSnackbar(`Added ${item.name} to the Combat Tracker.`);
+              // setArenaDrawerOpen(!arenaDrawerOpen);
               setArenaSessionStorage([...arenaSessionStorage,
                 {
                   name: item.name,
