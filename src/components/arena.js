@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  Box, Drawer, FormControl, Input, InputLabel, List, ListItem, ListItemText, SvgIcon, TextField,
+  Box, Drawer, List, ListItem, ListItemText, SvgIcon, TextField,
 } from '@mui/material';
-import { IconButton } from 'gatsby-theme-material-ui';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import CasinoIcon from '@mui/icons-material/Casino';
+import { Button, IconButton } from 'gatsby-theme-material-ui';
+import SkullIcon from '../images/icons/skull.svg';
+// import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 function useArena() {
   // Prep Session Storage data:
@@ -25,12 +25,24 @@ function useArena() {
 
   // Create ListItems
   const [combatantListItems, setCombatantListItems] = React.useState([]);
+
+  // State for new player name validation.
+  const [error, setError] = React.useState(false);
+  // Skull input adornment.
+  const deathAdornment = (
+    <IconButton>
+      <SvgIcon>
+        <SkullIcon />
+      </SvgIcon>
+    </IconButton>
+  );
   // Submit new initiative by making a shallow copy of data, manipulating it, and then
   // submiting the new data.
   const initiativeSubmit = (value, index) => {
     const arenaCopy = [...arenaSessionStorage];
     const arenaCopyItem = { ...arenaCopy[index] };
-    arenaCopyItem.initiative = parseInt(value.replace(/\D/g, ''), 10);
+    arenaCopyItem.initiative = Number.isNaN(Number(parseInt(value, 10)))
+      ? 0 : Number(parseInt(value, 10));
     arenaCopy[index] = arenaCopyItem;
     setArenaSessionStorage(arenaCopy);
   };
@@ -38,10 +50,16 @@ function useArena() {
   const hpSubmit = (value, current, index) => {
     const arenaCopy = [...arenaSessionStorage];
     const arenaCopyItem = { ...arenaCopy[index] };
-    arenaCopyItem.hp = current - parseInt(value.replace(/\D/g, ''), 10);
+    console.log(`${arenaCopyItem.name} ${value.includes('+') ? 'receives' : 'loses'} ${value} HP`);
+    const hpSanitized = Number.isNaN(Number(parseInt(value, 10))) ? 0 : Number(parseInt(value, 10));
+    const hpDigit = Number.isNaN(hpSanitized) ? 0 : hpSanitized;
+    arenaCopyItem.hp = value.includes('+') ? (current + hpDigit) : (current - hpDigit);
     arenaCopy[index] = arenaCopyItem;
     setArenaSessionStorage(arenaCopy);
   };
+
+  // Use this to check for duplicates.
+  const duplicatesArray = [];
   const combatantListMaker = (array) => array
     // Sort by initiative and then by name.
     .sort(
@@ -51,35 +69,48 @@ function useArena() {
         ) : -1
       ),
     )
-    .map((item, index) => (
-      <ListItem key={`${item.name}-${Math.random()}`}>
-        {/* Initiative value */}
-        <TextField
-          variant="standard"
-          defaultValue={item.initiative}
-          onBlur={(event) => initiativeSubmit(event.target.value, index)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              event.target.blur();
-            }
-          }}
-        />
-        {/* Combatant's name */}
-        <ListItemText primary={item.name} />
-        {/* HP value */}
-        <TextField
-          variant="standard"
-          defaultValue={parseInt(item.hp, 10) || 0}
-          onFocus={(event) => event.target.select()}
-          onBlur={(event) => hpSubmit(event.target.value, item.hp, index)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              event.target.blur();
-            }
-          }}
-        />
-      </ListItem>
-    ));
+    .map((item, index) => {
+      duplicatesArray.push(item.name);
+      const dupes = (name) => {
+        let count = 0;
+        duplicatesArray.forEach((element, i) => {
+          if (duplicatesArray[i] === name) {
+            count += 1;
+          }
+        });
+        return count;
+      };
+      return (
+        <ListItem key={`${item.name}-${Math.random()}`}>
+          {/* Initiative value */}
+          <TextField
+            variant="standard"
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9.+-]*' }}
+            defaultValue={item.initiative}
+            onFocus={(event) => event.target.select()}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                initiativeSubmit(event.target.value, index);
+              }
+            }}
+          />
+          {/* Combatant's name */}
+          <ListItemText primary={dupes(item.name) > 1 ? `${item.name} #${dupes(item.name)}` : item.name} />
+          {/* HP value */}
+          <TextField
+            variant="standard"
+            InputProps={{ endAdornment: item.hp > 0 ? '' : deathAdornment, inputMode: 'numeric', pattern: '[0-9.+-]*' }}
+            defaultValue={item.hp}
+            onFocus={(event) => event.target.select()}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                hpSubmit(event.target.value, item.hp, index);
+              }
+            }}
+          />
+        </ListItem>
+      );
+    });
 
   // IF arenaSessionStorage value is altered, reset the Session Storage data:
   React.useEffect(() => {
@@ -104,75 +135,6 @@ function useArena() {
           p: '1rem',
         }}
       >
-        <List>{combatantListItems}</List>
-      </Drawer>
-    ),
-  };
-}
-
-{ /* function useArena() {
-  // Drawer State.
-  // const [arenaDrawerOpen, setArenaDrawerOpen] = React.useState(false);
-  // Parsed Session Storage data.
-  // const [arenaSessionStorage, setArenaSessionStorage] = React.useState(
-  //   JSON.parse(sessionStorage.getItem('gmcm-combatants') || '[]'),
-  // );
-  // const [playerName, setPlayerName] = React.useState('');
-  const [error, setError] = React.useState(false);
-  // Mapping ListItems based on parsed Session Storage data
-  const combatantListItems = arenaSessionStorage
-    .sort((a, b) => (a.initiative < b.initiative ? 1 : -1))
-    .map((item) => {
-      const initiative = item.initiative || 0;
-      console.log(initiative);
-      return (
-        <ListItem key={`${item.name}-${Math.random()}`}>
-          <IconButton sx={{ textAlign: 'center' }}>
-            {initiative === 0 ? (
-              <SvgIcon>
-                <CasinoIcon />
-              </SvgIcon>
-            ) : initiative}
-          </IconButton>
-          {item.name}
-          <TextField
-            variant="standard"
-            error={error && playerName === ''}
-            value={item.hp || 0}
-            sx={{
-              width: '2rem',
-              '& input': {
-                textAlign: 'center',
-                fontFamily: 'monospace',
-              },
-            }}
-            onChange={() => {
-              // setError(false);
-              // setPlayerName(event.target.value);
-            }}
-          />
-        </ListItem>
-      );
-    });
-  // Set Stringified Session Storage data.
-  // React.useEffect(() => {
-  //   sessionStorage.setItem('gmcm-combatants', JSON.stringify(arenaSessionStorage));
-  // }, [arenaSessionStorage]);
-
-  return {
-    arenaSessionStorage,
-    setArenaSessionStorage,
-    arenaDrawerOpen,
-    setArenaDrawerOpen,
-    arenaRender: (
-      <Drawer
-        anchor="right"
-        open={arenaDrawerOpen}
-        onClose={() => setArenaDrawerOpen(false)}
-        sx={{
-          p: '1rem',
-        }}
-      >
         <Box
           component="form"
           onSubmit={(event) => {
@@ -181,30 +143,34 @@ function useArena() {
               setError(true);
               return;
             }
-            setArenaSessionStorage([...arenaSessionStorage, { name: playerName, initiative: 0 }]);
+            setArenaSessionStorage(
+              [...arenaSessionStorage, { name: playerName, initiative: 0, hp: 0 }],
+            );
             setPlayerName('');
           }}
         >
-          <FormControl>
-            <InputLabel htmlFor="add-player">Add to Combat Tracker</InputLabel>
-            <Input
-              error={error && playerName === ''}
-              id="add-player"
-              value={playerName}
-              onChange={(event) => {
-                setError(false);
-                setPlayerName(event.target.value);
-              }}
-            />
-          </FormControl>
-          <IconButton color="primary" arial-label="Add a character to the combat tracker" type="submit">
-            <PersonAddIcon />
-          </IconButton>
+          <TextField
+            variant="filled"
+            error={error && playerName === ''}
+            value={playerName}
+            onChange={(event) => {
+              setError(false);
+              setPlayerName(event.target.value);
+            }}
+          />
         </Box>
         <List>{combatantListItems}</List>
+        <Button
+          onClick={() => {
+            sessionStorage.clear();
+            setArenaSessionStorage([]);
+          }}
+        >
+          Clear
+        </Button>
       </Drawer>
     ),
   };
-} */ }
+}
 
 export default useArena;
