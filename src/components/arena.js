@@ -1,8 +1,16 @@
 import React from 'react';
-import {
-  Box, Drawer, List, ListItem, ListItemText, SvgIcon, TextField,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+// import SvgIcon from '@mui/material/SvgIcon';
+import TextField from '@mui/material/TextField';
+import ListItemText from '@mui/material/ListItemText';
 import { Button, IconButton } from 'gatsby-theme-material-ui';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import PersonOffIcon from '@mui/icons-material/PersonOff';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SkullIcon from '../images/icons/skull.svg';
 // import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
@@ -30,12 +38,15 @@ function useArena() {
   const [error, setError] = React.useState(false);
   // Skull input adornment.
   const deathAdornment = (
-    <IconButton>
-      <SvgIcon>
-        <SkullIcon />
-      </SvgIcon>
-    </IconButton>
+    'hi'
+    // <IconButton>
+    //   <SvgIcon>
+    //     <SkullIcon />
+    //   </SvgIcon>
+    // </IconButton>
   );
+  // Turn indicator.
+  const [turnIndex, setTurnIndex] = React.useState(0);
   // Submit new initiative by making a shallow copy of data, manipulating it, and then
   // submiting the new data.
   const initiativeSubmit = (value, index) => {
@@ -52,8 +63,7 @@ function useArena() {
     const arenaCopyItem = { ...arenaCopy[index] };
     console.log(`${arenaCopyItem.name} ${value.includes('+') ? 'receives' : 'loses'} ${value} HP`);
     const hpSanitized = Number.isNaN(Number(parseInt(value, 10))) ? 0 : Number(parseInt(value, 10));
-    const hpDigit = Number.isNaN(hpSanitized) ? 0 : hpSanitized;
-    arenaCopyItem.hp = value.includes('+') ? (current + hpDigit) : (current - hpDigit);
+    arenaCopyItem.hp = current + hpSanitized;
     arenaCopy[index] = arenaCopyItem;
     setArenaSessionStorage(arenaCopy);
   };
@@ -82,6 +92,7 @@ function useArena() {
       };
       return (
         <ListItem key={`${item.name}-${Math.random()}`}>
+          <Box>{index === turnIndex && <DoubleArrowIcon color="primary" />}</Box>
           {/* Initiative value */}
           <TextField
             variant="standard"
@@ -108,6 +119,15 @@ function useArena() {
               }
             }}
           />
+          <IconButton
+            onClick={() => {
+              setArenaSessionStorage(
+                [...arenaSessionStorage].filter((x) => x !== arenaSessionStorage[index]),
+              );
+            }}
+          >
+            <PersonOffIcon color="primary" />
+          </IconButton>
         </ListItem>
       );
     });
@@ -115,11 +135,12 @@ function useArena() {
   // IF arenaSessionStorage value is altered, reset the Session Storage data:
   React.useEffect(() => {
     console.log('arenaSessionStorage useEffect');
+    console.log(`turnIndex: ${turnIndex}`);
     // Resort the data and recreate the list.
     setCombatantListItems(combatantListMaker(arenaSessionStorage));
     // Stringify and resend the data to Session Storage.
     sessionStorage.setItem(ssKey, JSON.stringify(arenaSessionStorage));
-  }, [arenaSessionStorage]);
+  }, [arenaSessionStorage, turnIndex]);
 
   return {
     arenaSessionStorage,
@@ -155,10 +176,28 @@ function useArena() {
             value={playerName}
             onChange={(event) => {
               setError(false);
-              setPlayerName(event.target.value);
+              setPlayerName(
+                event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1),
+              );
             }}
           />
         </Box>
+        <ButtonGroup variant="contained" aria-label="turn advancer">
+          <Button
+            onClick={() => setTurnIndex(
+              (turnIndex - 1) <= 0 ? turnIndex.length - 1 : turnIndex - 1,
+            )}
+          >
+            <ArrowForwardIcon sx={{ transform: 'rotate(180deg)' }} />
+          </Button>
+          <Button
+            onClick={() => setTurnIndex(
+              (turnIndex + 1) > arenaSessionStorage.length ? 0 : turnIndex + 1,
+            )}
+          >
+            <ArrowForwardIcon />
+          </Button>
+        </ButtonGroup>
         <List>{combatantListItems}</List>
         <Button
           onClick={() => {
