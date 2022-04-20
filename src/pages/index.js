@@ -55,7 +55,7 @@ function IndexPage() {
               </Box>
             </CardContent>
           </Card>
-          <Navigation homeNav size="large" />
+          <Navigation homeNav size="large" hideDrawerIcon />
         </Paper>
       </Box>
     </Layout>
