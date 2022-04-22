@@ -7,12 +7,10 @@ import { CardActionArea } from 'gatsby-theme-material-ui';
 import Layout from '../components/layout';
 import AdventureDetails from '../components/adventure-details';
 import { ADVENTURES } from '../utils/constants';
-import { arenaDrawerState } from '../components/arena';
 
 function AdventuresPage({ data }) {
-  const { drawerOpen, setDrawerOpen } = arenaDrawerState();
   return (
-    <Layout title={ADVENTURES} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}>
+    <Layout title={ADVENTURES} hideDrawerIcon>
       <Adventures content={data.allMdx.nodes} />
     </Layout>
   );

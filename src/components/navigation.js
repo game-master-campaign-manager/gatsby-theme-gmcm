@@ -42,9 +42,7 @@ function Navigation({
                     size="small"
                     edge="end"
                     variant="contained"
-                    onClick={() => {
-                      setArenaDrawerOpen(!arenaDrawerOpen);
-                    }}
+                    onClick={() => { setArenaDrawerOpen(!arenaDrawerOpen); }}
                   >
                     <SvgIcon>
                       <SwordWoman />

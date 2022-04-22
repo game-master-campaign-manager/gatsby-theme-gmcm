@@ -1,16 +1,3 @@
-// 1.2 Checklist
-// XXX arena: clicking monster's add icon shouldn't open drawer (makes adding multiple monsters tedious). instead it should add the monster to the list (drawer closed) and give a snackbar notification that the monster was added.
-// XXX arena: add a hotkey for the drawer. add hint text for the key on the drawer.
-// XXX arena: use split button (https://mui.com/material-ui/react-button-group/#split-button) to have a button that gives option to clear all combatants or clear just npcs.
-// XXX arena: give monster add icon a "+" using ::after or something.
-// arena: click monster to see its stats
-// legal: comply with this (https://www.thearcanelibrary.com/blogs/news/how-to-use-the-open-game-license)
-// Homepage: 'What's new explaining combat drawer.
-// Arena: button should be a floating button, not in nav.
-// XXX arena: style the drawer.
-// general: theme options to exclude default content pieces.
-// legal: use Tabs?
-// arena: remove strings to constants.
 import React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';

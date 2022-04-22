@@ -187,7 +187,7 @@ function SearchResultsItem({
   item, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage,
 }) {
   return (
-    <Box>
+    <Box id={item.name.toLowerCase().replaceAll(' ', '-')}>
       <Card raised sx={{ position: 'relative' }}>
         <SearchResultsItemHeader
           item={item}
@@ -204,9 +204,6 @@ function SearchResultsItem({
 function SearchResultsItemHeader({
   item, arenaSessionStorage, setArenaSessionStorage,
 }) {
-  // const {
-  //   arenaSessionStorage, setArenaSessionStorage, arenaSessionStorage, setArenaSessionStorage,
-  // } = useArena();
   let DmcmIcon;
   let subtitle;
   let combatIcon = false;
