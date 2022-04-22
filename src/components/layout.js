@@ -135,6 +135,8 @@ function Layout({
         >
           {FOOTER_COPY}
           {SITE_AUTHOR}
+          {', '}
+          <Link to="/legal">Legal</Link>
         </Container>
       </Stack>
     </>
