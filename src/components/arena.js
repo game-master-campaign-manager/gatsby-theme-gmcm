@@ -9,6 +9,7 @@ import { Button, IconButton } from 'gatsby-theme-material-ui';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Fab from '@mui/material/Fab';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Typography from '@mui/material/Typography';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -24,6 +25,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import SkullIcon from '../images/icons/skull.svg';
+import SwordWoman from '../images/swordwoman.svg';
 
 function useArena() {
   // Prep Session Storage data:
@@ -267,125 +269,132 @@ function useArena() {
     arenaDrawerOpen,
     setArenaDrawerOpen,
     arenaRender: (
-      <Drawer anchor="right" open={arenaDrawerOpen} onClose={() => setArenaDrawerOpen(false)}>
-        {/* Add player form */}
-        <Box
-          component="form"
-          sx={{
-            px: 2, py: 2, typography: 'body2', textAlign: 'center',
-          }}
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (playerName === '') {
-              setError(true);
-              return;
-            }
-            setArenaSessionStorage(
-              [...arenaSessionStorage, {
-                name: playerName, initiative: 0, hp: 0, type: 'player',
-              }],
-            );
-            setPlayerName('');
-          }}
-
-        >
-          <TextField
-            variant="filled"
-            size="small"
-            fullWidth
-            label="Add a player"
-            error={error && playerName === ''}
-            value={playerName}
-            InputProps={{
-              endAdornment: (
-                <IconButton type="submit">
-                  <PersonAddIcon />
-                </IconButton>
-              ),
+      <>
+        <Drawer anchor="right" open={arenaDrawerOpen} onClose={() => setArenaDrawerOpen(false)}>
+          {/* Add player form */}
+          <Box
+            component="form"
+            sx={{
+              px: 2, py: 2, typography: 'body2', textAlign: 'center',
             }}
-            onChange={(event) => {
-              setError(false);
-              setPlayerName(
-                event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1),
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (playerName === '') {
+                setError(true);
+                return;
+              }
+              setArenaSessionStorage(
+                [...arenaSessionStorage, {
+                  name: playerName, initiative: 0, hp: 0, type: 'player',
+                }],
               );
+              setPlayerName('');
             }}
-          />
-        </Box>
-        {/* Turn advancement */}
-        <ButtonGroup variant="contained" aria-label="turn advancer" sx={{ alignSelf: 'center', mb: 2 }}>
-          <Button onClick={() => handleTurnClick('previous')}>
-            <ArrowForwardIcon sx={{ transform: 'rotate(180deg)' }} />
-          </Button>
-          <Typography variant="body2" sx={{ my: 'auto', px: 1 }}>Turn Direction</Typography>
-          <Button onClick={() => handleTurnClick('next')}>
-            <ArrowForwardIcon />
-          </Button>
-        </ButtonGroup>
-        {/* Combatant List */}
-        {combatantListItems.length > 0 && (
-          <Card raised sx={{ mx: 2 }}>
-            <CardContent>
-              <List ref={combatantListRef} disablePadding sx={{ '& > li + li': { mt: 1 } }}>{combatantListItems}</List>
-            </CardContent>
-          </Card>
-        )}
-        {/* Clear Button Group */}
-        <ButtonGroup variant="contained" ref={anchorRef} aria-label="clear buttons" sx={{ alignSelf: 'center', mt: 2 }}>
-          <Button onClick={handleClearClick}>{options[selectedIndex]}</Button>
-          <Button
-            size="small"
-            aria-controls={clearOpen ? 'split-menu-menu' : undefined}
-            aria-expanded={clearOpen ? 'true' : undefined}
-            aria-label="select clear option"
-            aria-haspopup="menu"
-            onClick={handleToggle}
+
           >
-            <ArrowDropDownIcon />
-          </Button>
-        </ButtonGroup>
-        <Popper
-          open={clearOpen}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              styles={{
-                transformOrigin:
-                  placement === 'bottom' ? 'center top' : 'center bottom',
+            <TextField
+              variant="filled"
+              size="small"
+              fullWidth
+              label="Add a player"
+              error={error && playerName === ''}
+              value={playerName}
+              InputProps={{
+                endAdornment: (
+                  <IconButton type="submit">
+                    <PersonAddIcon />
+                  </IconButton>
+                ),
               }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClearClose}>
-                  <MenuList id="split-button-menu" autoFocusItem>
-                    {options.map((option, index) => (
-                      <MenuItem
-                        key={option}
-                        selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
-                      >
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
+              onChange={(event) => {
+                setError(false);
+                setPlayerName(
+                  event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1),
+                );
+              }}
+            />
+          </Box>
+          {/* Turn advancement */}
+          <ButtonGroup variant="contained" aria-label="turn advancer" sx={{ alignSelf: 'center', mb: 2 }}>
+            <Button onClick={() => handleTurnClick('previous')}>
+              <ArrowForwardIcon sx={{ transform: 'rotate(180deg)' }} />
+            </Button>
+            <Typography variant="body2" sx={{ my: 'auto', px: 1 }}>Turn Direction</Typography>
+            <Button onClick={() => handleTurnClick('next')}>
+              <ArrowForwardIcon />
+            </Button>
+          </ButtonGroup>
+          {/* Combatant List */}
+          {combatantListItems.length > 0 && (
+            <Card raised sx={{ mx: 2 }}>
+              <CardContent>
+                <List ref={combatantListRef} disablePadding sx={{ '& > li + li': { mt: 1 } }}>{combatantListItems}</List>
+              </CardContent>
+            </Card>
           )}
-        </Popper>
-        {/* Hotkey notice */}
-        <Typography
-          variant="caption"
-          sx={{
-            px: 2, alignSelf: 'center', mt: 'auto', pb: 2,
-          }}
-        >
-          Press CTRL+C to toggle the Combat Drawer.
-        </Typography>
-      </Drawer>
+          {/* Clear Button Group */}
+          <ButtonGroup variant="contained" ref={anchorRef} aria-label="clear buttons" sx={{ alignSelf: 'center', mt: 2 }}>
+            <Button onClick={handleClearClick}>{options[selectedIndex]}</Button>
+            <Button
+              size="small"
+              aria-controls={clearOpen ? 'split-menu-menu' : undefined}
+              aria-expanded={clearOpen ? 'true' : undefined}
+              aria-label="select clear option"
+              aria-haspopup="menu"
+              onClick={handleToggle}
+            >
+              <ArrowDropDownIcon />
+            </Button>
+          </ButtonGroup>
+          <Popper
+            open={clearOpen}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                styles={{
+                  transformOrigin:
+                    placement === 'bottom' ? 'center top' : 'center bottom',
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClearClose}>
+                    <MenuList id="split-button-menu" autoFocusItem>
+                      {options.map((option, index) => (
+                        <MenuItem
+                          key={option}
+                          selected={index === selectedIndex}
+                          onClick={(event) => handleMenuItemClick(event, index)}
+                        >
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+          {/* Hotkey notice */}
+          <Typography
+            variant="caption"
+            sx={{
+              px: 2, alignSelf: 'center', mt: 'auto', pb: 2,
+            }}
+          >
+            Press CTRL+C to toggle the Combat Drawer.
+          </Typography>
+        </Drawer>
+        <Fab sx={{ position: 'fixed', bottom: '1rem', right: '1rem' }} color="primary" aria-label="Add to Combat Tracker" onClick={() => setArenaDrawerOpen(true)}>
+          <SvgIcon>
+            <SwordWoman />
+          </SvgIcon>
+        </Fab>
+      </>
     ),
   };
 }

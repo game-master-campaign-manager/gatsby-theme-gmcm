@@ -47,10 +47,6 @@ export const SITE_AUTHOR = <Link color="primary.main" href="https://github.com/g
 export const FOOTER_COPY = `${SITE_NAME} © ${new Date().getFullYear()} `;
 export const NAVIGATION_DATA = [
   {
-    title: 'Combat Tracker',
-    slug: '',
-  },
-  {
     title: 'adventures',
     slug: '/adventures',
   },

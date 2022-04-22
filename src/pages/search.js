@@ -24,7 +24,6 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { IconButton } from 'gatsby-theme-material-ui';
-// import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import Masonry from '@mui/lab/Masonry';
 import MarkdownView from 'react-showdown';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
@@ -95,8 +94,6 @@ function SearchPage({ data, location }) {
   return (
     <Layout
       title={searchTitle}
-      arenaDrawerOpen={arenaDrawerOpen}
-      setArenaDrawerOpen={setArenaDrawerOpen}
       arenaRender={arenaRender}
     >
       <Box>

@@ -1,19 +1,15 @@
 import React from 'react';
 import {
-  Box, List, ListItem, SvgIcon,
+  Box, List, ListItem,
 } from '@mui/material';
-import { Button, IconButton } from 'gatsby-theme-material-ui';
+import { Button } from 'gatsby-theme-material-ui';
 import { NAVIGATION_DATA } from '../utils/constants';
-import SwordWoman from '../images/swordwoman.svg';
 
 function Navigation({
   homeNav,
   hideNavigation,
   variant,
   size,
-  arenaDrawerOpen,
-  setArenaDrawerOpen,
-  hideDrawerIcon = false,
 }) {
   return (
     <Box
@@ -32,41 +28,19 @@ function Navigation({
           gap: 2,
         }}
       >
-        {NAVIGATION_DATA.map((item, index) => {
-          if (index === 0) {
-            if (!hideDrawerIcon) {
-              return (
-                <ListItem key={item.title} disablePadding sx={{ width: 'auto' }}>
-                  <IconButton
-                    aria-label="Toggle the Combat Tracker"
-                    size="small"
-                    edge="end"
-                    variant="contained"
-                    onClick={() => { setArenaDrawerOpen(!arenaDrawerOpen); }}
-                  >
-                    <SvgIcon>
-                      <SwordWoman />
-                    </SvgIcon>
-                  </IconButton>
-                </ListItem>
-              );
-            }
-            return '';
-          }
-          return (
-            <ListItem disablePadding key={item.title} sx={{ width: homeNav ? '100%' : 'auto' }}>
-              <Button
-                size={size || 'medium'}
-                variant={variant || 'contained'}
-                to={item.slug}
-                color={homeNav ? 'primary' : 'secondary'}
-                fullWidth
-              >
-                {item.title}
-              </Button>
-            </ListItem>
-          );
-        })}
+        {NAVIGATION_DATA.map((item) => (
+          <ListItem disablePadding key={item.title} sx={{ width: homeNav ? '100%' : 'auto' }}>
+            <Button
+              size={size || 'medium'}
+              variant={variant || 'contained'}
+              to={item.slug}
+              color={homeNav ? 'primary' : 'secondary'}
+              fullWidth
+            >
+              {item.title}
+            </Button>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
