@@ -265,8 +265,9 @@ function SearchResultsItemHeader({
             </SvgIcon>
           </Avatar>
         )}
-        title={<Typography variant="h6" component="h3">{item.name}</Typography>}
+        title={<Typography sx={{ wordBreak: 'break-all', mr: '2rem' }} variant="h6" component="h3">{item.name}</Typography>}
         subheader={<Typography variant="body1">{subtitle}</Typography>}
+        sx={{ overflow: 'hidden' }}
       />
       {combatIcon && (
         <Tooltip title="Add monster to Combat Tracker">
@@ -276,6 +277,20 @@ function SearchResultsItemHeader({
               position: 'absolute',
               top: '0.25rem',
               right: '0.25rem',
+              '&::after': {
+                content: '"+"',
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                borderRadius: '50%',
+                width: '12px',
+                height: '12px',
+                fontSize: '1.25rem',
+                lineHeight: '12px',
+                p: '0.25rem',
+                boxSizing: 'content-box',
+                backgroundColor: 'grey.800',
+              },
             }}
             onClick={() => {
               enqueueSnackbar(`Added ${item.name} to the Combat Tracker.`);
