@@ -285,6 +285,7 @@ function SearchResultsItemHeader({
                   name: item.name,
                   hp: hpRoll.total,
                   initiative: initiativeRoll.total,
+                  type: 'monster',
                 },
               ]);
             }}
