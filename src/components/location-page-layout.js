@@ -144,7 +144,6 @@ function LocationNavigation({
 
   const handleClick = (event, anchorTarget, content) => {
     event.preventDefault();
-    console.log(scrollLocation);
     let location = scrollLocation;
     if (content.anchor === 'up' || content.anchor === 'down') {
       if (content.anchor === 'up') {

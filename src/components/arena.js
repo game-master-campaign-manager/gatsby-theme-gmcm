@@ -100,7 +100,7 @@ function useArena() {
   const hpSubmit = (value, current, index) => {
     const arenaCopy = [...arenaSessionStorage];
     const arenaCopyItem = { ...arenaCopy[index] };
-    console.log(`${arenaCopyItem.name} ${value.includes('+') ? 'receives' : 'loses'} ${value} HP`);
+    console.info(`${arenaCopyItem.name} ${value.includes('+') ? 'receives' : 'loses'} ${value} HP`);
     const hpSanitized = Number.isNaN(Number(parseInt(value, 10))) ? 0 : Number(parseInt(value, 10));
     arenaCopyItem.hp = current + hpSanitized;
     arenaCopy[index] = arenaCopyItem;
@@ -206,8 +206,6 @@ function useArena() {
 
   // IF arenaSessionStorage value is altered, reset the Session Storage data:
   React.useEffect(() => {
-    console.log('arenaSessionStorage useEffect');
-    console.log(`turnIndex: ${turnIndex}`);
     // Resort the data and recreate the list.
     setCombatantListItems(combatantListMaker(arenaSessionStorage));
     // Stringify and resend the data to Session Storage.
