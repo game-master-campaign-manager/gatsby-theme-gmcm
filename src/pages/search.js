@@ -49,71 +49,73 @@ import useArena from '../components/arena';
 import SwordWoman from '../images/swordwoman.svg';
 
 function SearchPage({ data, location }) {
-  const {
-    arenaDrawerOpen, setArenaDrawerOpen, arenaRender, arenaSessionStorage, setArenaSessionStorage,
-  } = useArena();
+  if (typeof window !== 'undefined') {
+    const {
+      arenaDrawerOpen, setArenaDrawerOpen, arenaRender, arenaSessionStorage, setArenaSessionStorage,
+    } = useArena();
 
-  const search = new URLSearchParams(location.search.substring(1));
-  const category = search.get('category');
-  const searchData = {
-    monsters: [],
-    spells: [],
-  };
+    const search = new URLSearchParams(location.search.substring(1));
+    const category = search.get('category');
+    const searchData = {
+      monsters: [],
+      spells: [],
+    };
 
-  let searchTitle;
-  if (category === 'monsters') {
-    searchTitle = BESTIARY;
-  } else if (category === 'spells') {
-    searchTitle = SPELLBOOK;
-  } else {
-    searchTitle = UNKNOWN_SEARCH_TYPE;
+    let searchTitle;
+    if (category === 'monsters') {
+      searchTitle = BESTIARY;
+    } else if (category === 'spells') {
+      searchTitle = SPELLBOOK;
+    } else {
+      searchTitle = UNKNOWN_SEARCH_TYPE;
+    }
+
+    if (category) {
+      data.allMdx.nodes.forEach((source) => {
+        const content = source.frontmatter;
+        if (content[category]) {
+          content[category].forEach((obj) => {
+            searchData[category].push(obj);
+          });
+        }
+      });
+      searchData[category].sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      console.error('DMCM ERROR: URL Param: \'category\' is missing. Search will not work.');
+    }
+
+    let startingValue;
+    if (location.state && location.state.query) {
+      const result = searchData[category].filter((obj) => (
+        obj.name.toUpperCase() === location.state.query.toUpperCase()
+      ));
+      startingValue = result;
+    }
+    const [value, setValue] = React.useState(startingValue || []);
+    return (
+      <Layout
+        title={searchTitle}
+        arenaRender={arenaRender}
+      >
+        <Box>
+          <SearchForm
+            searchTitle={searchTitle}
+            value={value}
+            setValue={setValue}
+            data={searchData[category]}
+            category={category}
+          />
+          <SearchResults
+            value={value}
+            arenaDrawerOpen={arenaDrawerOpen}
+            setArenaDrawerOpen={setArenaDrawerOpen}
+            arenaSessionStorage={arenaSessionStorage}
+            setArenaSessionStorage={setArenaSessionStorage}
+          />
+        </Box>
+      </Layout>
+    );
   }
-
-  if (category) {
-    data.allMdx.nodes.forEach((source) => {
-      const content = source.frontmatter;
-      if (content[category]) {
-        content[category].forEach((obj) => {
-          searchData[category].push(obj);
-        });
-      }
-    });
-    searchData[category].sort((a, b) => a.name.localeCompare(b.name));
-  } else {
-    console.error('DMCM ERROR: URL Param: \'category\' is missing. Search will not work.');
-  }
-
-  let startingValue;
-  if (location.state && location.state.query) {
-    const result = searchData[category].filter((obj) => (
-      obj.name.toUpperCase() === location.state.query.toUpperCase()
-    ));
-    startingValue = result;
-  }
-  const [value, setValue] = React.useState(startingValue || []);
-  return (
-    <Layout
-      title={searchTitle}
-      arenaRender={arenaRender}
-    >
-      <Box>
-        <SearchForm
-          searchTitle={searchTitle}
-          value={value}
-          setValue={setValue}
-          data={searchData[category]}
-          category={category}
-        />
-        <SearchResults
-          value={value}
-          arenaDrawerOpen={arenaDrawerOpen}
-          setArenaDrawerOpen={setArenaDrawerOpen}
-          arenaSessionStorage={arenaSessionStorage}
-          setArenaSessionStorage={setArenaSessionStorage}
-        />
-      </Box>
-    </Layout>
-  );
 }
 
 function SearchForm({
