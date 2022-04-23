@@ -15,7 +15,11 @@ import GmcmBlackBridgeIcon from '../images/black-bridge.svg';
 const HeaderContainer = (props) => <Container component="header" {...props} />;
 
 function Layout({
-  children, hideNavigation, title, navDirection,
+  children,
+  hideNavigation,
+  title,
+  navDirection,
+  arenaRender = undefined,
 }) {
   return (
     <>
@@ -34,6 +38,7 @@ function Layout({
           '& thead tr': {
             backgroundColor: 'primary.main',
           },
+          // for <SnackbarProvider />
           '& .SnackbarContainer-root': {
             gap: 2,
           },
@@ -44,7 +49,6 @@ function Layout({
           sx={{
             backgroundColor: 'primary.main',
             minHeight: '4.25rem',
-            // display: 'block',
             position: 'static',
           }}
         >
@@ -87,7 +91,10 @@ function Layout({
               </Link>
             </Typography>
           </Box>
-          <Navigation hideNavigation={hideNavigation} navDirection={navDirection} />
+          <Navigation
+            hideNavigation={hideNavigation}
+            navDirection={navDirection}
+          />
         </AppBar>
         <Container
           component="main"
@@ -96,6 +103,7 @@ function Layout({
             position: 'relative',
           }}
         >
+          {arenaRender}
           <SnackbarProvider maxSnack={5}>
             {title && title !== 'Home' && (
               <Typography
@@ -120,6 +128,8 @@ function Layout({
         >
           {FOOTER_COPY}
           {SITE_AUTHOR}
+          {', '}
+          <Link to="/legal">Legal</Link>
         </Container>
       </Stack>
     </>

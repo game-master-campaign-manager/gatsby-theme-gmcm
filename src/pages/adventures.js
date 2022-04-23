@@ -10,7 +10,7 @@ import { ADVENTURES } from '../utils/constants';
 
 function AdventuresPage({ data }) {
   return (
-    <Layout title={ADVENTURES}>
+    <Layout title={ADVENTURES} hideDrawerIcon>
       <Adventures content={data.allMdx.nodes} />
     </Layout>
   );

@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import {
-  Alert,
-  Box,
-  ButtonGroup,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  List,
-  ListItem,
-  Paper,
-  Stack,
-  SvgIcon,
-  Tooltip,
-} from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import SvgIcon from '@mui/material/SvgIcon';
+import Tooltip from '@mui/material/Tooltip';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import {
   Link,
@@ -60,7 +58,7 @@ function LocationPageLayout({ data, location }) {
   const parentAdventureTitle = location.state ? location.state.parentAdventureTitle : '';
   const parentAdventureSlug = location.state ? location.state.parentAdventureSlug : '';
   return (
-    <Layout title={data.mdx.frontmatter.title}>
+    <Layout title={data.mdx.frontmatter.title} hideDrawerIcon>
       {parentAdventureTitle && (
         <Link
           sx={{

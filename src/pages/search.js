@@ -1,32 +1,33 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import {
-  Autocomplete,
-  Avatar,
-  Box,
-  ButtonGroup,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-  SvgIcon,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import SvgIcon from '@mui/material/SvgIcon';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { IconButton } from 'gatsby-theme-material-ui';
 import Masonry from '@mui/lab/Masonry';
 import MarkdownView from 'react-showdown';
+import { DiceRoll } from '@dice-roller/rpg-dice-roller';
+import { useSnackbar } from 'notistack';
 import Layout from '../components/layout';
 import Dice from '../components/dice';
 import {
@@ -44,8 +45,14 @@ import {
 } from '../utils/constants';
 import * as CREATURE_TYPES from '../images/creature-types';
 import * as MAGIC_TYPES from '../images/magic-types';
+import useArena from '../components/arena';
+import SwordWoman from '../images/swordwoman.svg';
 
 function SearchPage({ data, location }) {
+  const {
+    arenaDrawerOpen, setArenaDrawerOpen, arenaRender, arenaSessionStorage, setArenaSessionStorage,
+  } = useArena();
+
   const search = new URLSearchParams(location.search.substring(1));
   const category = search.get('category');
   const searchData = {
@@ -85,7 +92,10 @@ function SearchPage({ data, location }) {
   }
   const [value, setValue] = React.useState(startingValue || []);
   return (
-    <Layout title={searchTitle}>
+    <Layout
+      title={searchTitle}
+      arenaRender={arenaRender}
+    >
       <Box>
         <SearchForm
           searchTitle={searchTitle}
@@ -94,7 +104,13 @@ function SearchPage({ data, location }) {
           data={searchData[category]}
           category={category}
         />
-        <SearchResults value={value} />
+        <SearchResults
+          value={value}
+          arenaDrawerOpen={arenaDrawerOpen}
+          setArenaDrawerOpen={setArenaDrawerOpen}
+          arenaSessionStorage={arenaSessionStorage}
+          setArenaSessionStorage={setArenaSessionStorage}
+        />
       </Box>
     </Layout>
   );
@@ -135,7 +151,9 @@ function SearchForm({
   );
 }
 
-function SearchResults({ value }) {
+function SearchResults({
+  value, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage,
+}) {
   return (
     <Box
       sx={{
@@ -144,9 +162,16 @@ function SearchResults({ value }) {
     >
       <Paper>
         {value.length > 0 && (
-          <Masonry columns={2} spacing={2}>
+          <Masonry columns={2} spacing={2} sx={{ m: 0 }}>
             {value.map((item) => (
-              <SearchResultsItem key={item.name} item={item} />
+              <SearchResultsItem
+                key={item.name}
+                item={item}
+                arenaDrawerOpen={arenaDrawerOpen}
+                setArenaDrawerOpen={setArenaDrawerOpen}
+                arenaSessionStorage={arenaSessionStorage}
+                setArenaSessionStorage={setArenaSessionStorage}
+              />
             ))}
           </Masonry>
         )}
@@ -155,19 +180,32 @@ function SearchResults({ value }) {
   );
 }
 
-function SearchResultsItem({ item }) {
+function SearchResultsItem({
+  item, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage,
+}) {
   return (
-    <Box>
-      <Card raised>
-        <SearchResultsItemHeader item={item} />
+    <Box id={item.name.toLowerCase().replaceAll(' ', '-')}>
+      <Card raised sx={{ position: 'relative' }}>
+        <SearchResultsItemHeader
+          item={item}
+          arenaDrawerOpen={arenaDrawerOpen}
+          setArenaDrawerOpen={setArenaDrawerOpen}
+          arenaSessionStorage={arenaSessionStorage}
+          setArenaSessionStorage={setArenaSessionStorage}
+        />
         <SearchResultsItemContent item={item} />
       </Card>
     </Box>
   );
 }
-function SearchResultsItemHeader({ item }) {
+function SearchResultsItemHeader({
+  item, arenaSessionStorage, setArenaSessionStorage,
+}) {
   let DmcmIcon;
   let subtitle;
+  let combatIcon = false;
+  let hpRoll = '';
+  let initiativeRoll = '';
   if (item.type) {
     Object.keys(CREATURE_TYPES).forEach((c) => {
       if (item.type.toUpperCase().search(c.toUpperCase()) > -1) {
@@ -175,6 +213,9 @@ function SearchResultsItemHeader({ item }) {
       }
     });
     subtitle = item.type;
+    combatIcon = true;
+    hpRoll = new DiceRoll(item.hp.notes);
+    initiativeRoll = new DiceRoll(`d20+${Math.floor((item.abilities.dex - 10) / 2)}`);
   } else if (item.school) {
     Object.keys(MAGIC_TYPES).forEach((m) => {
       if (item.school.toUpperCase().search(m.toUpperCase()) > -1) {
@@ -201,6 +242,8 @@ function SearchResultsItemHeader({ item }) {
   } else {
     console.error('Searched item not recognized. Make sure your content follows frontmatter guidelines.');
   }
+  const { enqueueSnackbar } = useSnackbar();
+
   return (
     <>
       <CardHeader
@@ -216,9 +259,52 @@ function SearchResultsItemHeader({ item }) {
             </SvgIcon>
           </Avatar>
         )}
-        title={<Typography variant="h6" component="h3">{item.name}</Typography>}
+        title={<Typography sx={{ wordBreak: 'break-all', mr: '2rem' }} variant="h6" component="h3">{item.name}</Typography>}
         subheader={<Typography variant="body1">{subtitle}</Typography>}
+        sx={{ overflow: 'hidden' }}
       />
+      {combatIcon && (
+        <Tooltip title="Add monster to Combat Tracker">
+          <IconButton
+            aria-label="Add monster to Combat Tracker"
+            sx={{
+              position: 'absolute',
+              top: '0.25rem',
+              right: '0.25rem',
+              '&::after': {
+                content: '"+"',
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                borderRadius: '50%',
+                width: '12px',
+                height: '12px',
+                fontSize: '1.25rem',
+                lineHeight: '12px',
+                p: '0.25rem',
+                boxSizing: 'content-box',
+                backgroundColor: 'grey.800',
+              },
+            }}
+            onClick={() => {
+              enqueueSnackbar(`Added ${item.name} to the Combat Tracker.`);
+              // setArenaDrawerOpen(!arenaDrawerOpen);
+              setArenaSessionStorage([...arenaSessionStorage,
+                {
+                  name: item.name,
+                  hp: hpRoll.total,
+                  initiative: initiativeRoll.total,
+                  type: 'monster',
+                },
+              ]);
+            }}
+          >
+            <SvgIcon>
+              <SwordWoman />
+            </SvgIcon>
+          </IconButton>
+        </Tooltip>
+      )}
       <Divider />
     </>
   );
