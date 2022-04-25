@@ -212,7 +212,7 @@ function SearchResultsItemHeader({
     });
     subtitle = item.type;
     combatIcon = true;
-    hpRoll = new DiceRoll(item.hp.notes);
+    hpRoll = new DiceRoll(item.hp.notes ? item.hp.notes : '0');
     initiativeRoll = new DiceRoll(`d20+${Math.floor((item.abilities.dex - 10) / 2)}`);
   } else if (item.school) {
     Object.keys(MAGIC_TYPES).forEach((m) => {
@@ -451,7 +451,7 @@ function MonsterStats({
         >
           <ListItemText
             primary={page.childMdx.frontmatter.lifeStatNames[index]}
-            secondary={stat && (`${stat.value} (${stat.notes ? stat.notes : ''})`)}
+            secondary={stat && (`${stat.value} ${stat.notes ? `(${stat.notes})` : ''}`)}
           />
         </ListItem>
       ))}
