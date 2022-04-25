@@ -29,6 +29,7 @@ query AdventuresPageQuery {
         slug
         frontmatter {
           title
+          levels
           setting
           playernum
         }

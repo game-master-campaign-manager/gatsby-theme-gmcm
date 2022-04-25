@@ -63,9 +63,6 @@ export const NAVIGATION_DATA = [
     slug: '/search/?category=spells',
   },
 ];
-export const SETTING = 'Setting';
-export const PLAYERS = 'Players';
-export const LEVELS = 'Levels';
 export const HEADER_CELLS = [
   {
     id: 'name',

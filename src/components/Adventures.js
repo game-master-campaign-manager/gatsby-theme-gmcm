@@ -17,7 +17,6 @@ function Adventures({ page, adventures }) {
 }
 
 function AdventuresList({ content }) {
-  console.log(content);
   return (
     <Box>
       <Paper

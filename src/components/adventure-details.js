@@ -9,7 +9,18 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import SwitchAccessShortcutIcon from '@mui/icons-material/SwitchAccessShortcut';
 import {
   SETTING, PLAYERS, LEVELS,
-} from '../utils/constants';
+} from '../utils/strings';
+
+function AdventureDetails({
+  levels, players, setting, body, direction,
+}) {
+  return (
+    <Stack direction={direction || 'column'}>
+      <AdventureStats setting={setting} levels={levels} players={players} />
+      <AdventureDescription body={body} />
+    </Stack>
+  );
+}
 
 function AdventureStats({ setting, levels, players }) {
   const statTitles = [SETTING, LEVELS, PLAYERS];
@@ -48,17 +59,6 @@ function AdventureDescription({ body }) {
     >
       <MDXRenderer>{body}</MDXRenderer>
     </Box>
-  );
-}
-
-function AdventureDetails({
-  levels, players, setting, body, direction,
-}) {
-  return (
-    <Stack direction={direction || 'column'}>
-      <AdventureStats setting={setting} levels={levels} players={players} />
-      <AdventureDescription body={body} />
-    </Stack>
   );
 }
 
