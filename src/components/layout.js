@@ -17,13 +17,13 @@ const HeaderContainer = (props) => <Container component="header" {...props} />;
 function Layout({
   children,
   hideNavigation,
-  title,
+  title = undefined,
   navDirection,
   arenaRender = undefined,
 }) {
   return (
     <>
-      <Helmet defaultTitle="GMCM" title={`${title} | ${SITE_NAME}`} />
+      <Helmet defaultTitle="GMCM" title={title ? `${title} | ${SITE_NAME}` : SITE_NAME} />
       <Stack
         sx={{
           typography: 'body1',

@@ -1,28 +1,24 @@
-/* eslint-disable react/jsx-indent */
 import React from 'react';
-import { StaticImage } from 'gatsby-plugin-image';
-import {
-  Box, Divider, Paper, Typography,
-} from '@mui/material';
-import Layout from '../components/layout';
+import { graphql } from 'gatsby';
+import FourOhFour from '../components/404';
 
-function Image() {
-  return <StaticImage src="../images/404.png" alt="Sword" />;
+export default function FourOhFourPage({ data }) {
+  return <FourOhFour data={data} />;
 }
 
-function FourOhFourPage() {
-  return (
-    <Layout title="404!">
-      <Box>
-        <Paper sx={{ p: 2, textAlign: 'center' }}>
-          <Image />
-          <Divider sx={{ my: 2 }} />
-          <Typography>Your party has become lost in rough terrain.</Typography>
-          <Typography>Turn back now.</Typography>
-        </Paper>
-      </Box>
-    </Layout>
-  );
+export const query = graphql`
+query FourOhFourPageQuery {
+  file(
+    sourceInstanceName: {eq: "defaultContent"}
+    relativePath: {eq: "pages/404.mdx"}
+  ) {
+    childMdx {
+      id
+      frontmatter {
+        title
+        textLines
+      }
+    }
+  }
 }
-
-export default FourOhFourPage;
+`;

@@ -13,7 +13,7 @@ module.exports = ({ contentPath = 'src/content', basePath = '/' }) => ({
       resolve: 'gatsby-source-filesystem',
       options: {
         // Served from theme directly.
-        name: 'dummyContent',
+        name: 'defaultContent',
         path: `${__dirname}/src/content`,
       },
     },

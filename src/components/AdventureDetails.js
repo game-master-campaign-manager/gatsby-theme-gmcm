@@ -11,6 +11,17 @@ import {
   SETTING, PLAYERS, LEVELS,
 } from '../utils/constants';
 
+function AdventureDetails({
+  levels, players, setting, body, direction,
+}) {
+  return (
+    <Stack direction={direction || 'column'}>
+      <AdventureStats setting={setting} levels={levels} players={players} />
+      <AdventureDescription body={body} />
+    </Stack>
+  );
+}
+
 function AdventureStats({ setting, levels, players }) {
   const statTitles = [SETTING, LEVELS, PLAYERS];
   const statIcons = [<PublicIcon />, <SwitchAccessShortcutIcon />, <SupervisedUserCircleIcon />];
@@ -48,17 +59,6 @@ function AdventureDescription({ body }) {
     >
       <MDXRenderer>{body}</MDXRenderer>
     </Box>
-  );
-}
-
-function AdventureDetails({
-  levels, players, setting, body, direction,
-}) {
-  return (
-    <Stack direction={direction || 'column'}>
-      <AdventureStats setting={setting} levels={levels} players={players} />
-      <AdventureDescription body={body} />
-    </Stack>
   );
 }
 

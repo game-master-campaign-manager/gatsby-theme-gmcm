@@ -115,7 +115,6 @@ export const HEADER_CELLS = [
 ];
 export const GREETING = 'Hail fellow well met.';
 export const DESCRIPTION = 'The GMCM is a React-based campaign manager for your favorite 5E TTRPG.';
-export const ADVENTURES = 'Adventures';
 export const NPCS = 'NPCs';
 export const LOCATIONS = 'Locations';
 export const LOCATION_NAVIGATION = [
