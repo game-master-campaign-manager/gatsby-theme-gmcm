@@ -106,6 +106,7 @@ function Search({
           arenaSessionStorage={arenaSessionStorage}
           setArenaSessionStorage={setArenaSessionStorage}
           page={page}
+          category={category}
         />
       </Box>
     </Layout>
@@ -148,7 +149,13 @@ function SearchForm({
 }
 
 function SearchResults({
-  value, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage, page,
+  value,
+  arenaDrawerOpen,
+  setArenaDrawerOpen,
+  arenaSessionStorage,
+  setArenaSessionStorage,
+  page,
+  category,
 }) {
   return (
     <Box
@@ -168,6 +175,7 @@ function SearchResults({
                 arenaSessionStorage={arenaSessionStorage}
                 setArenaSessionStorage={setArenaSessionStorage}
                 page={page}
+                category={category}
               />
             ))}
           </Masonry>
@@ -178,7 +186,13 @@ function SearchResults({
 }
 
 function SearchResultsItem({
-  item, arenaDrawerOpen, setArenaDrawerOpen, arenaSessionStorage, setArenaSessionStorage, page,
+  item,
+  arenaDrawerOpen,
+  setArenaDrawerOpen,
+  arenaSessionStorage,
+  setArenaSessionStorage,
+  page,
+  category,
 }) {
   return (
     <Box id={item.name.toLowerCase().replaceAll(' ', '-')}>
@@ -190,53 +204,49 @@ function SearchResultsItem({
           arenaSessionStorage={arenaSessionStorage}
           setArenaSessionStorage={setArenaSessionStorage}
           page={page}
+          category={category}
         />
-        <SearchResultsItemContent item={item} page={page} />
+        <SearchResultsItemContent item={item} page={page} category={category} />
       </Card>
     </Box>
   );
 }
 function SearchResultsItemHeader({
-  item, arenaSessionStorage, setArenaSessionStorage, page,
+  item, arenaSessionStorage, setArenaSessionStorage, page, category,
 }) {
   let DmcmIcon;
   let subtitle;
   let combatIcon = false;
   let hpRoll = '';
   let initiativeRoll = '';
-  if (item.type) {
+
+  if (category === 'monsters') {
     Object.keys(CREATURE_TYPES).forEach((c) => {
-      if (item.type.toUpperCase().search(c.toUpperCase()) > -1) {
+      if (item.type && item.type.toUpperCase().search(c.toUpperCase()) > -1) {
         DmcmIcon = CREATURE_TYPES[c];
       }
     });
-    subtitle = item.type;
+    subtitle = item.type ? item.type : 'Unknown';
     combatIcon = true;
-    hpRoll = new DiceRoll(item.hp.notes ? item.hp.notes : '0');
-    initiativeRoll = new DiceRoll(`d20+${Math.floor((item.abilities.dex - 10) / 2)}`);
-  } else if (item.school) {
+    hpRoll = new DiceRoll(item.hp && item.hp.notes ? item.hp.notes : '0');
+    initiativeRoll = new DiceRoll(item.abilities && item.abilities.dex ? `d20+${Math.floor((item.abilities.dex - 10) / 2)}` : 'd20');
+  } else if (category === 'spells') {
     Object.keys(MAGIC_TYPES).forEach((m) => {
-      if (item.school.toUpperCase().search(m.toUpperCase()) > -1) {
+      if (item.school && item.school.toUpperCase().search(m.toUpperCase()) > -1) {
         DmcmIcon = MAGIC_TYPES[m];
-      } else {
-        DmcmIcon = MAGIC_TYPES.Abjuration;
       }
     });
-    const { ritualExplainer } = page.childMdx.frontmatter;
     const ritual = item.ritual ? (
       <Box
         key={Math.random()}
         component="span"
-        title={ritualExplainer}
-        sx={{
-          borderBottom: '1px dashed',
-          cursor: 'help',
-        }}
+        title={page.childMdx.frontmatter.ritualExplainer}
+        sx={{ borderBottom: '1px dashed', cursor: 'help' }}
       >
         ritual
       </Box>
     ) : 'spell';
-    subtitle = [`${page.childMdx.frontmatter.spellLevelLabel} ${item.level}, ${item.school} `, ritual];
+    subtitle = [`${page.childMdx.frontmatter.spellLevelLabel} ${item.level && item.level}, ${item.school && item.school} `, ritual];
   } else {
     console.error('Searched item not recognized. Make sure your content follows frontmatter guidelines.');
   }
@@ -246,7 +256,7 @@ function SearchResultsItemHeader({
     <>
       <CardHeader
         disableTypography
-        avatar={(
+        avatar={DmcmIcon && (
           <Avatar
             sx={{
               bgcolor: 'secondary.main',
@@ -308,11 +318,11 @@ function SearchResultsItemHeader({
   );
 }
 
-function SearchResultsItemContent({ item, page }) {
+function SearchResultsItemContent({ item, page, category }) {
   const content = (
-    item.type && <SearchResultItemContentMonster monster={item} page={page} />
+    category === 'monsters' && <SearchResultItemContentMonster monster={item} page={page} />
   ) || (
-    item.school && <SearchResultItemContentSpell spell={item} page={page} />
+    category === 'spells' && <SearchResultItemContentSpell spell={item} page={page} />
   );
   return (
     <CardContent>

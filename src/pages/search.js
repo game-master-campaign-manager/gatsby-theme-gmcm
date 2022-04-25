@@ -43,7 +43,6 @@ query SearchPageQuery {
           spells {
             attacksave
             castingtime
-            classes
             components
             damage
             description
