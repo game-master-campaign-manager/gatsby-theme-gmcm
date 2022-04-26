@@ -175,7 +175,7 @@ function ReferenceArticlesCategoryBlockItem({ item: { post } }) {
         <CardContent>
           {frontmatter.content && frontmatter.content.map((piece) => {
             if (piece.type === 'dl') {
-              return <ReferenceArticlesCategoryBlockItemDl key={piece.title} content={piece} />;
+              return <ReferenceArticlesCategoryBlockItemDl key={Math.random()} content={piece} />;
             }
             if (piece.type === 'table') {
               return (
@@ -239,7 +239,7 @@ function ReferenceArticlesCategoryBlockItemTable({ content }) {
           {content.rows && (
             <TableBody>
               {content.rows.map((row) => (
-                <TableRow key={row}>
+                <TableRow key={Math.random()}>
                   {row.cells.length > 0 && row.cells.map((cell) => (
                     <TableCell
                       key={cell}

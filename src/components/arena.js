@@ -30,10 +30,10 @@ import SwordWoman from '../images/swordwoman.svg';
 function useArena() {
   // Prep Session Storage data:
   const ssKey = 'gmcm-combatants';
-  const parsedSessionData = JSON.parse(sessionStorage.getItem(ssKey) || '[]');
+  const parsedSessionData = typeof window !== 'undefined' ? window.JSON.parse(sessionStorage.getItem(ssKey) || '[]') : [];
   if (parsedSessionData.length > 0) {
     parsedSessionData.sort((a, b) => (a.initiative < b.initiative ? 1 : -1));
-    sessionStorage.setItem(ssKey, JSON.stringify(parsedSessionData));
+    typeof window !== 'undefined' && sessionStorage.setItem(ssKey, JSON.stringify(parsedSessionData));
   }
   // PARSED data:
   const [arenaSessionStorage, setArenaSessionStorage] = React.useState(parsedSessionData);
@@ -59,13 +59,16 @@ function useArena() {
   );
   // Keyboard shortcut for Drawer.
   React.useEffect(() => {
-    const ctrlC = (e) => {
-      if (e.ctrlKey && e.key === 'c') {
-        setArenaDrawerOpen(!arenaDrawerOpen);
-      }
-    };
-    window.addEventListener('keyup', ctrlC);
-    return () => window.removeEventListener('keyup', ctrlC);
+    if (typeof window !== 'undefined') {
+      const ctrlC = (e) => {
+        if (e.ctrlKey && e.key === 'c') {
+          setArenaDrawerOpen(!arenaDrawerOpen);
+        }
+      };
+      window.addEventListener('keyup', ctrlC);
+      return () => window.removeEventListener('keyup', ctrlC);
+    }
+    return null;
   }, [arenaDrawerOpen]);
   // Turn indicator.
   const [turnIndex, setTurnIndex] = React.useState(0);
@@ -209,7 +212,7 @@ function useArena() {
     // Resort the data and recreate the list.
     setCombatantListItems(combatantListMaker(arenaSessionStorage));
     // Stringify and resend the data to Session Storage.
-    sessionStorage.setItem(ssKey, JSON.stringify(arenaSessionStorage));
+    typeof window !== 'undefined' && sessionStorage.setItem(ssKey, JSON.stringify(arenaSessionStorage));
   }, [arenaSessionStorage, turnIndex]);
 
   // Clear button stuff.
@@ -281,7 +284,7 @@ function useArena() {
                 setError(true);
                 return;
               }
-              setArenaSessionStorage(
+              typeof window !== 'undefined' && setArenaSessionStorage(
                 [...arenaSessionStorage, {
                   name: playerName, initiative: 0, hp: 0, type: 'player',
                 }],
