@@ -14,7 +14,7 @@ const SnackAttack = React.forwardRef((props, ref) => {
   console.log(props);
   return (
     <SnackbarContent ref={ref}>
-      <Card>
+      <Card sx={{ backgroundColor: 'secondary.main', color: 'black' }}>
         <CardActions>
           <Typography>
             bye.
