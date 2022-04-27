@@ -31,7 +31,7 @@ import MarkdownView from 'react-showdown';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { useSnackbar } from 'notistack';
 import Layout from './layout';
-import { Dice } from './dice';
+import { Attack, Dice } from './dice';
 import * as CREATURE_TYPES from '../images/creature-types';
 import * as MAGIC_TYPES from '../images/magic-types';
 import DmcmDamageIcon from '../images/exploding-planet.svg';
@@ -555,7 +555,12 @@ function MonsterStats({
           <List disablePadding>
             {stat.map((s) => (
               <ListItem key={s.name}>
-                <ListItemText primary={s.name} secondary={s.content} />
+                <ListItemText
+                  primary={s.name}
+                  secondary={<MarkdownView markdown={s.content} components={{ Attack, Dice }} />}
+                  secondaryTypographyProps={{ component: 'div', variant: 'body2' }}
+                />
+                {/* <ListItemText primary={s.name} secondary={s.content} /> */}
               </ListItem>
             ))}
           </List>

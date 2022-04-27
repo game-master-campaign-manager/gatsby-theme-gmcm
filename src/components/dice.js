@@ -1,15 +1,35 @@
 import React from 'react';
 import { Box, IconButton, Tooltip } from '@mui/material';
 import CasinoIcon from '@mui/icons-material/Casino';
-import { useSnackbar } from 'notistack';
+import { useSnackbar, SnackbarContent } from 'notistack';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { Button } from 'gatsby-theme-material-ui';
 
+const SnackAttack = React.forwardRef((props, ref) => {
+  console.log(props);
+  console.log(ref);
+  return (
+    <SnackbarContent ref={ref}>
+      bye
+    </SnackbarContent>
+  );
+});
+
 export function Attack({ n, h, d }) {
+  const { enqueueSnackbar } = useSnackbar();
   console.log(n);
   console.log(h);
   console.log(d);
-  return <div>hi</div>;
+  return (
+    <Button
+      onClick={(key) => enqueueSnackbar(
+        null,
+        { persist: true, content: () => <SnackAttack id={key} /> },
+      )}
+    >
+      hi
+    </Button>
+  );
 }
 
 export function Dice({
