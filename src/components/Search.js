@@ -31,7 +31,7 @@ import MarkdownView from 'react-showdown';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { useSnackbar } from 'notistack';
 import Layout from './layout';
-import Dice from './dice';
+import { Dice } from './dice';
 import * as CREATURE_TYPES from '../images/creature-types';
 import * as MAGIC_TYPES from '../images/magic-types';
 import DmcmDamageIcon from '../images/exploding-planet.svg';

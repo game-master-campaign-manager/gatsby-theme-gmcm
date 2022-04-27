@@ -31,7 +31,7 @@ import {
 } from '@mui/icons-material/';
 import Layout from './layout';
 import { MonsterLink, SpellLink } from './custom-link';
-import Dice from './dice';
+import { Dice } from './dice';
 import {
   MAP, GENERAL, UP, DOWN,
   CARD_HEADER_STYLES, SCROLL_BEHAVIOR, UNKNOWN_FLAG, FLAG_TOOLTIPS,

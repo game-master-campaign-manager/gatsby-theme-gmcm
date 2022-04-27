@@ -5,7 +5,14 @@ import { useSnackbar } from 'notistack';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { Button } from 'gatsby-theme-material-ui';
 
-function Dice({
+export function Attack({ n, h, d }) {
+  console.log(n);
+  console.log(h);
+  console.log(d);
+  return <div>hi</div>;
+}
+
+export function Dice({
   r, variant, ability, value, modifier, disableText,
 }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -64,5 +71,3 @@ function Dice({
     </Tooltip>
   );
 }
-
-export default Dice;

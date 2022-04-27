@@ -20,7 +20,7 @@ import MarkdownView from 'react-showdown';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Masonry from '@mui/lab/Masonry';
 import Layout from './layout';
-import Dice from './dice';
+import { Dice } from './dice';
 import { SCROLL_BEHAVIOR } from '../utils/constants';
 
 /* Table of Contents */
