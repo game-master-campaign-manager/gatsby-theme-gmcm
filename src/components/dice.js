@@ -1,16 +1,26 @@
 import React from 'react';
-import { Box, IconButton, Tooltip } from '@mui/material';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import CasinoIcon from '@mui/icons-material/Casino';
 import { useSnackbar, SnackbarContent } from 'notistack';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { Button } from 'gatsby-theme-material-ui';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
 
 const SnackAttack = React.forwardRef((props, ref) => {
   console.log(props);
-  console.log(ref);
   return (
     <SnackbarContent ref={ref}>
-      bye
+      <Card>
+        <CardActions>
+          <Typography>
+            bye.
+          </Typography>
+        </CardActions>
+      </Card>
     </SnackbarContent>
   );
 });
