@@ -9,33 +9,49 @@ import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { Button } from 'gatsby-theme-material-ui';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
 
-const SnackAttack = React.forwardRef((props, ref) => {
-  console.log(props);
+const SnackAttack = React.forwardRef(({
+  id, n, h, d,
+}, ref) => {
+  const { closeSnackbar } = useSnackbar();
   return (
     <SnackbarContent ref={ref}>
       <Card sx={{ backgroundColor: 'secondary.main', color: 'black' }}>
         <CardActions>
-          <Typography>
-            bye.
+          <Typography sx={{ fontWeight: 'bold' }}>{n}</Typography>
+          <Typography component="p" variant="overline" sx={{ fontStyle: 'italic', lineHeight: '2' }}>
+            to Hit:
+            <Box component="span" sx={{ typography: 'body1', fontStyle: 'normal', ml: 1 }}>{h}</Box>
           </Typography>
+          <Typography component="p" variant="overline" sx={{ fontStyle: 'italic', lineHeight: '2' }}>
+            Damage:
+            <Box component="span" sx={{ typography: 'body1', fontStyle: 'normal', ml: 1 }}>{d}</Box>
+          </Typography>
+          <IconButton onClick={() => closeSnackbar(id)}>
+            <CloseIcon sx={{ color: 'black' }} />
+          </IconButton>
         </CardActions>
       </Card>
     </SnackbarContent>
   );
 });
 
-export function Attack({ n, h, d }) {
+export function Attack({ n = '', h, d }) {
   const { enqueueSnackbar } = useSnackbar();
-  console.log(n);
-  console.log(h);
-  console.log(d);
   return (
-    <Button
-      onClick={(key) => enqueueSnackbar(
+    <Button onClick={() => {
+      const hRoll = new DiceRoll(h);
+      const dRoll = new DiceRoll(d);
+      enqueueSnackbar(
         null,
-        { persist: true, content: () => <SnackAttack id={key} /> },
-      )}
+        {
+          persist: true,
+          // eslint-disable-next-line react/no-unstable-nested-components
+          content: (key) => <SnackAttack id={key} n={n} h={hRoll.total} d={dRoll.total} />,
+        },
+      );
+    }}
     >
       hi
     </Button>

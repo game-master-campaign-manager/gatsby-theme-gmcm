@@ -343,25 +343,7 @@ function SearchResultItemContentMonster({ monster, page }) {
   return (
     <>
       <MonsterAbilityList abilities={monster.abilities} />
-      <MonsterStats
-        ac={monster.ac}
-        hp={monster.hp}
-        speed={monster.speed}
-        saves={monster.saves}
-        skills={monster.skills}
-        dmgvulnerabilities={monster.dmgvulnerabilities}
-        dmgresistances={monster.dmgresistances}
-        dmgimmunities={monster.dmgimmunities}
-        cdnimmunities={monster.cdnimmunities}
-        senses={monster.senses}
-        languages={monster.languages}
-        challenge={monster.challenge}
-        traits={monster.traits}
-        actions={monster.actions}
-        reactions={monster.reactions}
-        lgdyactions={monster.lgdyactions}
-        page={page}
-      />
+      <MonsterStats monster={monster} page={page} />
     </>
   );
 }
@@ -393,25 +375,26 @@ function MonsterAbilityList({ abilities }) {
   );
 }
 
-function MonsterStats({
-  ac,
-  actions,
-  cdnimmunities,
-  challenge,
-  dmgimmunities,
-  dmgresistances,
-  dmgvulnerabilities,
-  hp,
-  languages,
-  lgdyactions,
-  reactions,
-  saves,
-  senses,
-  skills,
-  speed,
-  traits,
-  page,
-}) {
+function MonsterStats({ monster, page }) {
+  const {
+    ac,
+    hp,
+    speed,
+    saves,
+    skills,
+    dmgvulnerabilities,
+    dmgresistances,
+    dmgimmunities,
+    cdnimmunities,
+    senses,
+    languages,
+    challenge,
+    traits,
+    actions,
+    reactions,
+    lgdyactions,
+  } = monster;
+
   const simpleStat = (stat) => {
     const listItems = [];
     if (typeof stat === 'object' || typeof stat === 'string') {

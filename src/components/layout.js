@@ -41,6 +41,8 @@ function Layout({
           // for <SnackbarProvider />
           '& .SnackbarContainer-root': {
             gap: 2,
+            // Some weird bug w/ notistack that puts "pointer-events" to "none".
+            pointerEvents: 'all !important',
           },
         }}
       >
