@@ -413,6 +413,24 @@ function MonsterStats({ monster, page }) {
   };
   const speedRegEx = /^\d+\sft\./;
 
+  const addProps = (components, defaultProps) => {
+    const withProps = {};
+
+    for (const [key, Component] of Object.entries(components)) {
+      withProps[key] = (props) => <Component {...defaultProps} {...props} />;
+    }
+
+    return withProps;
+  };
+  const shortcodes = { Attack, Dice };
+  const someDefaultProps = {
+    monster: monster.name,
+  };
+  const shortcodesWithProps = React.useMemo(
+    () => addProps(shortcodes, someDefaultProps),
+    someDefaultProps,
+  );
+
   return (
     <List
       sx={{
@@ -540,7 +558,7 @@ function MonsterStats({ monster, page }) {
               <ListItem key={s.name}>
                 <ListItemText
                   primary={s.name}
-                  secondary={<MarkdownView markdown={s.content} components={{ Attack, Dice }} />}
+                  secondary={<MarkdownView markdown={s.content} components={shortcodesWithProps} />}
                   secondaryTypographyProps={{ component: 'div', variant: 'body2' }}
                 />
                 {/* <ListItemText primary={s.name} secondary={s.content} /> */}

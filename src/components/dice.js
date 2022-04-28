@@ -12,14 +12,18 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 
 const SnackAttack = React.forwardRef(({
-  id, n, h, d,
+  id, n, h, d, monster,
 }, ref) => {
   const { closeSnackbar } = useSnackbar();
+  console.log(monster);
   return (
     <SnackbarContent ref={ref}>
       <Card sx={{ backgroundColor: 'secondary.main', color: 'black' }}>
         <CardActions>
-          <Typography sx={{ fontWeight: 'bold' }}>{n}</Typography>
+          <Typography sx={{ fontWeight: 'bold' }}>
+            {monster}
+            {n}
+          </Typography>
           <Typography component="p" variant="overline" sx={{ fontStyle: 'italic', lineHeight: '2' }}>
             to Hit:
             <Box component="span" sx={{ typography: 'body1', fontStyle: 'normal', ml: 1 }}>{h}</Box>
@@ -37,8 +41,11 @@ const SnackAttack = React.forwardRef(({
   );
 });
 
-export function Attack({ n = '', h, d }) {
+export function Attack({
+  n = '', h, d, monster = '',
+}) {
   const { enqueueSnackbar } = useSnackbar();
+  console.log(monster);
   return (
     <Button onClick={() => {
       const hRoll = new DiceRoll(h);
@@ -48,7 +55,7 @@ export function Attack({ n = '', h, d }) {
         {
           persist: true,
           // eslint-disable-next-line react/no-unstable-nested-components
-          content: (key) => <SnackAttack id={key} n={n} h={hRoll.total} d={dRoll.total} />,
+          content: (key) => <SnackAttack id={key} n={n} h={hRoll.total} d={dRoll.total} monster={monster} />,
         },
       );
     }}
