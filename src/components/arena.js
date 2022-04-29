@@ -51,11 +51,9 @@ function useArena() {
   const [error, setError] = React.useState(false);
   // Skull input adornment.
   const deathAdornment = (
-    <IconButton size="small" sx={{ px: 0 }}>
-      <SvgIcon sx={{ width: '0.75rem' }}>
-        <SkullIcon />
-      </SvgIcon>
-    </IconButton>
+    <SvgIcon sx={{ width: '0.75rem' }}>
+      <SkullIcon />
+    </SvgIcon>
   );
   // Keyboard shortcut for Drawer.
   React.useEffect(() => {
@@ -174,14 +172,15 @@ function useArena() {
                 {dupes(item.name)}
               </em>
             )}
-            primaryTypographyProps={{ variant: 'body2' }}
-            secondaryTypographyProps={{ component: 'span', sx: { ml: 1, lineHeight: '1.75' } }}
+            primaryTypographyProps={{ variant: 'body2', sx: { fontWeight: 'bold', lineHeight: '1.6' } }}
+            secondaryTypographyProps={{ component: 'span', sx: { ml: 1, lineHeight: '1.6' } }}
             sx={{ display: 'flex', flexDirection: 'row', maxWidth: '15rem' }}
           />
           {/* HP value */}
           <TextField
             size="small"
-            InputProps={{ endAdornment: item.hp > 0 ? '' : deathAdornment, inputMode: 'numeric', pattern: '[0-9.+-]*' }}
+            label="HP"
+            InputProps={{ endAdornment: item.hp > 0 ? '' : (item.type === 'monster' && deathAdornment), inputMode: 'numeric', pattern: '[0-9.+-]*' }}
             defaultValue={item.hp}
             onFocus={(event) => event.target.select()}
             onKeyDown={(event) => {
@@ -219,7 +218,7 @@ function useArena() {
   const options = ['Clear monsters', 'Clear players', 'Clear all combatants'];
   const anchorRef = React.useRef(null);
   const combatantListRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [clearOpen, setClearOpen] = React.useState(false);
   const handleClearClick = () => {
     const clicked = options[selectedIndex];
