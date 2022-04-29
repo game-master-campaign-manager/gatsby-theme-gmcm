@@ -415,30 +415,21 @@ function MonsterStats({ monster, page }) {
 
   const addProps = (components, defaultProps) => {
     const withProps = {};
-
+    // eslint-disable-next-line no-restricted-syntax
     for (const [key, Component] of Object.entries(components)) {
       withProps[key] = (props) => <Component {...defaultProps} {...props} />;
     }
-
     return withProps;
   };
   const shortcodes = { Attack, Dice };
-  const someDefaultProps = {
-    monster: monster.name,
-  };
+  const someDefaultProps = { monster: monster.name };
   const shortcodesWithProps = React.useMemo(
     () => addProps(shortcodes, someDefaultProps),
     someDefaultProps,
   );
 
   return (
-    <List
-      sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        typography: 'body1',
-      }}
-    >
+    <List sx={{ display: 'flex', flexWrap: 'wrap', typography: 'body1' }}>
       {[ac, hp].map((stat, index) => (
         <ListItem
           key={Math.random()}
@@ -469,10 +460,7 @@ function MonsterStats({ monster, page }) {
       {[speed, saves, skills, senses].map((stat, index) => stat && (
         <ListItem
           key={page.childMdx.frontmatter.tableStatNames[index].title}
-          sx={{
-            display: 'block',
-            flex: '2 2 100%',
-          }}
+          sx={{ display: 'block', flex: '2 2 100%' }}
         >
           <ListItemText primary={page.childMdx.frontmatter.tableStatNames[index].title} />
           <TableContainer
