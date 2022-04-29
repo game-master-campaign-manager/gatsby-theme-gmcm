@@ -10,20 +10,17 @@ import { Button } from 'gatsby-theme-material-ui';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/styles';
 
 const SnackAttack = React.forwardRef(({
-  id, n, h, d, monster,
+  id, n, h, d, monster, backgroundColor,
 }, ref) => {
   const { closeSnackbar } = useSnackbar();
-  console.log(monster);
   return (
     <SnackbarContent ref={ref}>
-      <Card sx={{ backgroundColor: 'secondary.main', color: 'black' }}>
+      <Card sx={{ backgroundColor, color: 'black' }}>
         <CardActions>
-          <Typography sx={{ fontWeight: 'bold' }}>
-            {monster}
-            {n}
-          </Typography>
+          <Typography sx={{ fontWeight: 'bold' }}>{`${monster}: ${n}`}</Typography>
           <Typography component="p" variant="overline" sx={{ fontStyle: 'italic', lineHeight: '2' }}>
             to Hit:
             <Box component="span" sx={{ typography: 'body1', fontStyle: 'normal', ml: 1 }}>{h}</Box>
@@ -44,23 +41,47 @@ const SnackAttack = React.forwardRef(({
 export function Attack({
   n = '', h, d, monster = '',
 }) {
+  const safeH = h.charAt(0) === '+' ? `1d20+${h.charAt(1)}` : h;
   const { enqueueSnackbar } = useSnackbar();
-  console.log(monster);
+  const theme = useTheme();
   return (
-    <Button onClick={() => {
-      const hRoll = new DiceRoll(h);
-      const dRoll = new DiceRoll(d);
-      enqueueSnackbar(
-        null,
-        {
-          persist: true,
-          // eslint-disable-next-line react/no-unstable-nested-components
-          content: (key) => <SnackAttack id={key} n={n} h={hRoll.total} d={dRoll.total} monster={monster} />,
-        },
-      );
-    }}
+    <Button
+      variant="contained"
+      onClick={() => {
+        const hRoll = new DiceRoll(safeH);
+        let dRoll = new DiceRoll(d);
+        let backgroundColor = theme.palette.secondary.main;
+        // Critical Hit: all dice are doubled.
+        if (hRoll.rolls[0].value === 20) {
+          backgroundColor = theme.palette.success.main;
+          const secondRoll = new DiceRoll(d);
+          dRoll = { total: secondRoll.total + dRoll.total - dRoll.rolls[2] };
+        }
+        // Critical Miss: no damage.
+        if (hRoll.rolls[0].value === 1) {
+          backgroundColor = theme.palette.error.main;
+          dRoll = { total: 0 };
+        }
+        enqueueSnackbar(
+          null,
+          {
+            persist: true,
+            // eslint-disable-next-line react/no-unstable-nested-components
+            content: (key) => (
+              <SnackAttack
+                id={key}
+                n={n}
+                h={hRoll.total}
+                d={dRoll.total}
+                monster={monster}
+                backgroundColor={backgroundColor}
+              />
+            ),
+          },
+        );
+      }}
     >
-      hi
+      {n}
     </Button>
   );
 }
