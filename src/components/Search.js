@@ -53,9 +53,6 @@ function Search({
     monsters: [],
     spells: [],
   };
-  console.log(spells);
-  console.log(monsters);
-  console.log(searchData);
 
   let searchTitle = '';
   page.childMdx.frontmatter.searchCategories.forEach((cat) => {
@@ -219,8 +216,6 @@ function SearchResultsItemHeader({
   let combatIcon = false;
   let hpRoll = '';
   let initiativeRoll = '';
-  console.log(item);
-  console.log(page);
 
   if (item.monster) {
     Object.keys(CREATURE_TYPES).forEach((c) => {
