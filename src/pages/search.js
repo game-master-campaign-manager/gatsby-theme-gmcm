@@ -44,11 +44,10 @@ query SearchPageQuery {
             attacksave
             castingtime
             components
-            damage
             description
             duration
             level
-            name
+            spell
             range
             ritual
             school
@@ -66,7 +65,7 @@ query SearchPageQuery {
         id
         frontmatter {
           monsters {
-            name
+            monster
             type
             ac {
               value

@@ -34,10 +34,11 @@ import Layout from './layout';
 import { Attack, Dice } from './dice';
 import * as CREATURE_TYPES from '../images/creature-types';
 import * as MAGIC_TYPES from '../images/magic-types';
-import DmcmDamageIcon from '../images/exploding-planet.svg';
 import DmcmAttackIcon from '../images/bullseye.svg';
 import useArena from './arena';
 import SwordWoman from '../images/swordwoman.svg';
+
+// look into useContext for passing drawer state/page values.
 
 function Search({
   location, page, spells, monsters,
@@ -52,6 +53,9 @@ function Search({
     monsters: [],
     spells: [],
   };
+  console.log(spells);
+  console.log(monsters);
+  console.log(searchData);
 
   let searchTitle = '';
   page.childMdx.frontmatter.searchCategories.forEach((cat) => {
@@ -69,11 +73,12 @@ function Search({
     };
     if (category === 'monsters') {
       pusher(monsters.nodes);
+      searchData[category].sort((a, b) => a.monster.localeCompare(b.monster));
     }
     if (category === 'spells') {
       pusher(spells.nodes);
+      searchData[category].sort((a, b) => a.spell.localeCompare(b.spell));
     }
-    searchData[category].sort((a, b) => a.name.localeCompare(b.name));
   } else {
     console.error('GMCM ERROR: URL Param: \'category\' is missing. Search will not work.');
   }
@@ -97,7 +102,6 @@ function Search({
           value={value}
           setValue={setValue}
           data={searchData[category]}
-          category={category}
         />
         <SearchResults
           value={value}
@@ -106,7 +110,6 @@ function Search({
           arenaSessionStorage={arenaSessionStorage}
           setArenaSessionStorage={setArenaSessionStorage}
           page={page}
-          category={category}
         />
       </Box>
     </Layout>
@@ -129,7 +132,7 @@ function SearchForm({
         <Autocomplete
           multiple
           options={data}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => option.monster || option.spell}
           filterSelectedOptions
           renderInput={(params) => (
             <TextField
@@ -155,7 +158,6 @@ function SearchResults({
   arenaSessionStorage,
   setArenaSessionStorage,
   page,
-  category,
 }) {
   return (
     <Box
@@ -168,14 +170,13 @@ function SearchResults({
           <Masonry columns={2} spacing={2} sx={{ m: 0 }}>
             {value.map((item) => (
               <SearchResultsItem
-                key={item.name}
+                key={item.monster || item.spell}
                 item={item}
                 arenaDrawerOpen={arenaDrawerOpen}
                 setArenaDrawerOpen={setArenaDrawerOpen}
                 arenaSessionStorage={arenaSessionStorage}
                 setArenaSessionStorage={setArenaSessionStorage}
                 page={page}
-                category={category}
               />
             ))}
           </Masonry>
@@ -192,10 +193,10 @@ function SearchResultsItem({
   arenaSessionStorage,
   setArenaSessionStorage,
   page,
-  category,
 }) {
+  const itemName = item.monster || item.spell;
   return (
-    <Box id={item.name.toLowerCase().replaceAll(' ', '-')}>
+    <Box id={itemName.toLowerCase().replaceAll(' ', '-')}>
       <Card raised sx={{ position: 'relative' }}>
         <SearchResultsItemHeader
           item={item}
@@ -204,23 +205,24 @@ function SearchResultsItem({
           arenaSessionStorage={arenaSessionStorage}
           setArenaSessionStorage={setArenaSessionStorage}
           page={page}
-          category={category}
         />
-        <SearchResultsItemContent item={item} page={page} category={category} />
+        <SearchResultsItemContent item={item} page={page} />
       </Card>
     </Box>
   );
 }
 function SearchResultsItemHeader({
-  item, arenaSessionStorage, setArenaSessionStorage, page, category,
+  item, arenaSessionStorage, setArenaSessionStorage, page,
 }) {
   let DmcmIcon;
   let subtitle;
   let combatIcon = false;
   let hpRoll = '';
   let initiativeRoll = '';
+  console.log(item);
+  console.log(page);
 
-  if (category === 'monsters') {
+  if (item.monster) {
     Object.keys(CREATURE_TYPES).forEach((c) => {
       if (item.type && item.type.toUpperCase().search(c.toUpperCase()) > -1) {
         DmcmIcon = CREATURE_TYPES[c];
@@ -230,7 +232,7 @@ function SearchResultsItemHeader({
     combatIcon = true;
     hpRoll = new DiceRoll(item.hp && item.hp.notes ? item.hp.notes : '0');
     initiativeRoll = new DiceRoll(item.abilities && item.abilities.dex ? `d20+${Math.floor((item.abilities.dex - 10) / 2)}` : 'd20');
-  } else if (category === 'spells') {
+  } else if (item.spell) {
     Object.keys(MAGIC_TYPES).forEach((m) => {
       if (item.school && item.school.toUpperCase().search(m.toUpperCase()) > -1) {
         DmcmIcon = MAGIC_TYPES[m];
@@ -267,7 +269,7 @@ function SearchResultsItemHeader({
             </SvgIcon>
           </Avatar>
         )}
-        title={<Typography sx={{ wordBreak: 'break-all', mr: '2rem' }} variant="h6" component="h3">{item.name}</Typography>}
+        title={<Typography sx={{ wordBreak: 'break-all', mr: '2rem' }} variant="h6" component="h3">{item.monster || item.spell}</Typography>}
         subheader={<Typography variant="body1">{subtitle}</Typography>}
         sx={{ overflow: 'hidden' }}
       />
@@ -318,11 +320,11 @@ function SearchResultsItemHeader({
   );
 }
 
-function SearchResultsItemContent({ item, page, category }) {
+function SearchResultsItemContent({ item, page }) {
   const content = (
-    category === 'monsters' && <SearchResultItemContentMonster monster={item} page={page} />
+    item.monster && <SearchResultItemContentMonster monster={item} page={page} />
   ) || (
-    category === 'spells' && <SearchResultItemContentSpell spell={item} page={page} />
+    item.spell && <SearchResultItemContentSpell spell={item} page={page} />
   );
   return (
     <CardContent>
@@ -422,7 +424,7 @@ function MonsterStats({ monster, page }) {
     return withProps;
   };
   const shortcodes = { Attack, Dice };
-  const someDefaultProps = { monster: monster.name };
+  const someDefaultProps = { monster: monster.monster };
   const shortcodesWithProps = React.useMemo(
     () => addProps(shortcodes, someDefaultProps),
     someDefaultProps,
@@ -592,7 +594,6 @@ function SearchResultItemContentSpell({ spell, page }) {
         components={spell.components}
         duration={spell.duration}
         attackSave={spell.attacksave}
-        damage={spell.damage}
         page={page}
       />
       <MarkdownView markdown={spell.description} />
@@ -601,9 +602,9 @@ function SearchResultItemContentSpell({ spell, page }) {
 }
 
 function SpellStats({
-  castingTime, range, components, duration, attackSave, damage, page,
+  castingTime, range, components, duration, attackSave, page,
 }) {
-  const spellStatIcons = [<WatchLater />, <SocialDistance />, <Extension />, <WatchLater />, <DmcmAttackIcon width="24" fill="white" />, <DmcmDamageIcon width="24" fill="White" />];
+  const spellStatIcons = [<WatchLater />, <SocialDistance />, <Extension />, <WatchLater />, <DmcmAttackIcon width="24" fill="white" />];
   return (
     <List
       sx={{
@@ -613,7 +614,7 @@ function SpellStats({
       }}
       dense
     >
-      {[castingTime, range, components, duration, attackSave, damage].map((stat, index) => (
+      {[castingTime, range, components, duration, attackSave].map((stat, index) => (
         <ListItem
           key={page.childMdx.frontmatter.spellStatNames[index]}
           sx={{
