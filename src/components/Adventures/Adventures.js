@@ -4,13 +4,13 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Paper from '@mui/material/Paper';
 import { CardActionArea } from 'gatsby-theme-material-ui';
-import Layout from './layout';
-import AdventureDetails from './AdventureDetails/AdventureDetails';
+import Layout from '../layout';
+import AdventureDetails from '../AdventureDetails/AdventureDetails';
 
 function Adventures({ page, adventures }) {
-  const data = page.childMdx;
+  const { title } = page;
   return (
-    <Layout title={data.frontmatter.title} hideDrawerIcon>
+    <Layout title={title} hideDrawerIcon>
       <AdventuresList content={adventures.nodes} />
     </Layout>
   );
