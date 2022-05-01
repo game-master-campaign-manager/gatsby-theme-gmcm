@@ -26,7 +26,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import SkullIcon from '../../images/icons/skull.svg';
 import SwordWoman from '../../images/swordwoman.svg';
-import arenaStrings from './arenaStrings';
+import arenaStrings from './useArenaStrings';
 
 console.log(arenaStrings);
 
