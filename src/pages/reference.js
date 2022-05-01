@@ -1,25 +1,15 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Reference from '../components/Reference';
+import Reference from '../components/Reference/Reference';
+import referenceStrings from '../components/Reference/referenceStrings';
 
 export default function ReferencePage({ data }) {
-  const { page, references } = data;
-  return <Reference page={page} references={references} />;
+  const { references } = data;
+  return <Reference page={referenceStrings} references={references} />;
 }
 
 export const query = graphql`
 query ReferencePageQuery {
-  page: file(
-    sourceInstanceName: {eq: "defaultContent"}
-    relativePath: {eq: "pages/Reference.mdx"}
-  ) {
-    childMdx {
-      id
-      frontmatter {
-        title
-      }
-    }
-  }
   references: allFile(
     filter: {sourceInstanceName: {eq: "defaultContent"}, relativeDirectory: {eq: "references"}}
   ) {

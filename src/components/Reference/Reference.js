@@ -19,9 +19,9 @@ import { Link } from 'gatsby-theme-material-ui';
 import MarkdownView from 'react-showdown';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Masonry from '@mui/lab/Masonry';
-import Layout from './layout';
-import { Dice } from './dice';
-import { SCROLL_BEHAVIOR } from '../utils/constants';
+import Layout from '../layout';
+import { Dice } from '../dice';
+import { SCROLL_BEHAVIOR } from '../../utils/constants';
 
 /* Table of Contents */
 function TableOfContents({ referenceData }) {
@@ -323,7 +323,7 @@ function Reference({ page, references }) {
   }
 
   return (
-    <Layout title={page.childMdx.frontmatter.title} hideDrawerIcon>
+    <Layout title={page.title} hideDrawerIcon>
       <Fab
         color="primary"
         aria-label="Scroll to top"
