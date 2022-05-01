@@ -9,11 +9,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Navigation from './navigation';
-import Layout from './layout';
+import Navigation from '../navigation';
+import Layout from '../layout';
 
 function Index({ data }) {
-  const content = data.file.childMdx;
   return (
     <Layout hideNavigation>
       <Box>
@@ -32,8 +31,8 @@ function Index({ data }) {
         >
           <Card raised>
             <CardContent>
-              <Typography variant="h2">{content.frontmatter.title}</Typography>
-              <Typography>{content.frontmatter.text}</Typography>
+              <Typography variant="h2">{data.title}</Typography>
+              <Typography>{data.text}</Typography>
               <Box
                 sx={{
                   mt: 4,
@@ -46,9 +45,9 @@ function Index({ data }) {
                   },
                 }}
               >
-                <Typography variant="h6" component="h3">{content.frontmatter.externalLinks.title}</Typography>
+                <Typography variant="h6" component="h3">{data.documentation.label}</Typography>
                 <List disablePadding>
-                  {content.frontmatter.externalLinks.links.map((link) => (
+                  {data.documentation.links.map((link) => (
                     <ListItem key={link.url}>
                       <a target="_blank" href={link.url} rel="noreferrer noopener">{link.title}</a>
                     </ListItem>
@@ -59,10 +58,10 @@ function Index({ data }) {
           </Card>
           <Navigation homeNav size="large" hideDrawerIcon />
           <Card raised>
-            <CardHeader title={content.frontmatter.news.title} subheader={`v${content.frontmatter.news.version}`} />
+            <CardHeader title={data.news.label} subheader={`v${data.news.version}`} />
             <CardContent>
               <List disablePadding>
-                {content.frontmatter.news.bullets.map((bullet) => (
+                {data.news.bullets.map((bullet) => (
                   <ListItem key={bullet}>{`* ${bullet}`}</ListItem>
                 ))}
               </List>

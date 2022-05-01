@@ -1,36 +1,7 @@
 import React from 'react';
-import { graphql } from 'gatsby';
-import Index from '../components/Index';
+import Index from '../components/Index/Index';
+import indexStrings from '../components/Index/indexStrings';
 
-export default function IndexPage({ data }) {
-  return <Index data={data} />;
+export default function IndexPage() {
+  return <Index data={indexStrings} />;
 }
-
-export const query = graphql`
-query IndexPageQuery {
-  file(
-    sourceInstanceName: {eq: "defaultContent"}
-    relativePath: {eq: "pages/Index.mdx"}
-  ) {
-    childMdx {
-      id
-      frontmatter {
-        title
-        text
-        externalLinks {
-          title
-          links {
-            title
-            url
-          }
-        }
-        news {
-          title
-          version
-          bullets
-        }
-      }
-    }
-  }
-}
-`;
