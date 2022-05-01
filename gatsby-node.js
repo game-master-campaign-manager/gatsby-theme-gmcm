@@ -172,19 +172,19 @@ exports.createPages = async ({ graphql, actions, reporter }, options) => {
     const locationRegex = new RegExp('adventures/\\w+/locations/');
     let template = 'foo';
     if (adventureRegex.test(node.slug)) {
-      template = 'Adventure';
+      template = 'AdventureLandingPage';
     }
     if (locationRegex.test(node.slug)) {
-      template = 'Location';
+      template = 'LocationPageLayout';
     }
     if (locationRegex.test(node.slug) || adventureRegex.test(node.slug)) {
       actions.createPage({
         path: `${basePath}${node.slug}`,
-        component: require.resolve(`./src/components/${template}PageLayout/${template}PageLayout.js`),
+        component: require.resolve(`./src/components/${template}/${template}.js`),
         context: {
           id: node.id,
-          locations: template === 'Adventure' && `${node.slug}locations/`,
-          npcs: template === 'Adventure' && `${node.slug}npcs/`,
+          locations: template === 'AdventureLandingPage' && `${node.slug}locations/`,
+          npcs: template === 'AdventureLandingPage' && `${node.slug}npcs/`,
         },
       });
     }
