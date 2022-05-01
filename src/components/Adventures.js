@@ -5,7 +5,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Paper from '@mui/material/Paper';
 import { CardActionArea } from 'gatsby-theme-material-ui';
 import Layout from './layout';
-import AdventureDetails from './adventure-details';
+import AdventureDetails from './AdventureDetails/AdventureDetails';
 
 function Adventures({ page, adventures }) {
   const data = page.childMdx;

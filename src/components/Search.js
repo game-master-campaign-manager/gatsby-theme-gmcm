@@ -35,7 +35,7 @@ import { Attack, Dice } from './dice';
 import * as CREATURE_TYPES from '../images/creature-types';
 import * as MAGIC_TYPES from '../images/magic-types';
 import DmcmAttackIcon from '../images/bullseye.svg';
-import useArena from './arena/arena';
+import useArena from './useArena/useArena';
 import SwordWoman from '../images/swordwoman.svg';
 
 // look into useContext for passing drawer state/page values.
