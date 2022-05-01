@@ -1,11 +1,11 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Adventures from '../components/Adventures/Adventures';
-import adventureDetailsStrings from '../components/AdventureDetails/adventureDetailsStrings';
+import adventuresStrings from '../components/Adventures/adventuresStrings';
 
 export default function AdventuresPage({ data }) {
   const { adventures } = data;
-  return <Adventures page={adventureDetailsStrings} adventures={adventures} />;
+  return <Adventures page={adventuresStrings} adventures={adventures} />;
 }
 
 export const query = graphql`
