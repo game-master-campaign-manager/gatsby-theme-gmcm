@@ -1,24 +1,7 @@
 import React from 'react';
-import { graphql } from 'gatsby';
-import FourOhFour from '../components/404';
+import FourOhFour from '../components/404/404';
+import fourOhFourStrings from '../components/404/404Strings';
 
-export default function FourOhFourPage({ data }) {
-  return <FourOhFour data={data} />;
+export default function FourOhFourPage() {
+  return <FourOhFour data={fourOhFourStrings} />;
 }
-
-export const query = graphql`
-query FourOhFourPageQuery {
-  file(
-    sourceInstanceName: {eq: "defaultContent"}
-    relativePath: {eq: "pages/404.mdx"}
-  ) {
-    childMdx {
-      id
-      frontmatter {
-        title
-        textLines
-      }
-    }
-  }
-}
-`;
