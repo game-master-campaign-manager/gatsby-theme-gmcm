@@ -23,7 +23,8 @@ const indexStrings = {
     version: '0.1.3',
     bullets: [
       'FEATURE: Attack Buttons: Now in Search and Location pages, you can use `<Attack />` in your `.mdx` files to create a button to roll an attack. It also tracks if the attack is a critical hit/miss and adjusts damage roles accordingly. Full documentation in the Wiki.',
-      'QOL: Separated data and presentation in files so that it is now easier to shadow a component in the GMCM. This will also help localization in the future.',
+      'FEATURE: All SRD Spells are added to the "Spellbook" search page.',
+      'QOL: Separated data and presentation in files so that it is now easier to shadow a component in the GMCM. This will also help localization in the future. More functionality for both of these to come in future releases.',
       'QOL: Various UI improvements to the Combat Tracker',
       'BUGFIX: Fixed "Goblin" monster with bad value in HP, which caused the site to crash when selecting it.',
     ],
