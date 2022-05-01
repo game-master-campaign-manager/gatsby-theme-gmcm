@@ -1,38 +1,15 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Search from '../components/Search';
+import Search from '../components/Search/Search';
+import searchStrings from '../components/Search/searchStrings';
 
 export default function SearchPage({ data, location }) {
-  const { page, spells, monsters } = data;
-  return <Search location={location} page={page} spells={spells} monsters={monsters} />;
+  const { spells, monsters } = data;
+  return <Search location={location} page={searchStrings} spells={spells} monsters={monsters} />;
 }
 
 export const query = graphql`
 query SearchPageQuery {
-  page: file(
-    sourceInstanceName: {eq: "defaultContent"}
-    relativePath: {eq: "pages/Search.mdx"}
-  ) {
-    childMdx {
-      id
-      frontmatter {
-        searchCategories {
-          title
-          shortName
-        }
-        simpleStatNames
-        tableStatNames {
-          title
-          columns
-        }
-        lifeStatNames
-        infoStatNames
-        spellStatNames
-        spellLevelLabel
-        ritualExplainer
-      }
-    }
-  }
   spells: allFile(
     filter: {sourceInstanceName: {eq: "defaultContent"}, relativeDirectory: {eq: "spells"}}
   ) {

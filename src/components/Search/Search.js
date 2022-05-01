@@ -30,13 +30,13 @@ import Masonry from '@mui/lab/Masonry';
 import MarkdownView from 'react-showdown';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { useSnackbar } from 'notistack';
-import Layout from './layout';
-import { Attack, Dice } from './dice';
-import * as CREATURE_TYPES from '../images/creature-types';
-import * as MAGIC_TYPES from '../images/magic-types';
-import DmcmAttackIcon from '../images/bullseye.svg';
-import useArena from './useArena/useArena';
-import SwordWoman from '../images/swordwoman.svg';
+import Layout from '../layout';
+import { Attack, Dice } from '../dice';
+import * as CREATURE_TYPES from '../../images/creature-types';
+import * as MAGIC_TYPES from '../../images/magic-types';
+import DmcmAttackIcon from '../../images/bullseye.svg';
+import useArena from '../useArena/useArena';
+import SwordWoman from '../../images/swordwoman.svg';
 
 // look into useContext for passing drawer state/page values.
 
@@ -55,7 +55,7 @@ function Search({
   };
 
   let searchTitle = '';
-  page.childMdx.frontmatter.searchCategories.forEach((cat) => {
+  page.categories.forEach((cat) => {
     if (category === cat.shortName) {
       searchTitle = cat.title;
     }
@@ -237,13 +237,13 @@ function SearchResultsItemHeader({
       <Box
         key={Math.random()}
         component="span"
-        title={page.childMdx.frontmatter.ritualExplainer}
+        title={page.ritualExplainer}
         sx={{ borderBottom: '1px dashed', cursor: 'help' }}
       >
         ritual
       </Box>
     ) : 'spell';
-    subtitle = [`${page.childMdx.frontmatter.spellLevelLabel} ${item.level && item.level}, ${item.school && item.school} `, ritual];
+    subtitle = [`${page.spellLevelLabel} ${item.level && item.level}, ${item.school && item.school} `, ritual];
   } else {
     console.error('Searched item not recognized. Make sure your content follows frontmatter guidelines.');
   }
@@ -449,17 +449,17 @@ function MonsterStats({ monster, page }) {
           secondaryAction={index === 1 && stat.notes && <Dice disableText r={stat.notes} />}
         >
           <ListItemText
-            primary={page.childMdx.frontmatter.lifeStatNames[index]}
+            primary={page.stats.monsters.life[index]}
             secondary={stat && (`${stat.value} ${stat.notes ? `(${stat.notes})` : ''}`)}
           />
         </ListItem>
       ))}
       {[speed, saves, skills, senses].map((stat, index) => stat && (
         <ListItem
-          key={page.childMdx.frontmatter.tableStatNames[index].title}
+          key={page.stats.monsters.table[index].title}
           sx={{ display: 'block', flex: '2 2 100%' }}
         >
-          <ListItemText primary={page.childMdx.frontmatter.tableStatNames[index].title} />
+          <ListItemText primary={page.stats.monsters.table[index].title} />
           <TableContainer
             component={Paper}
             sx={{
@@ -469,7 +469,7 @@ function MonsterStats({ monster, page }) {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  {page.childMdx.frontmatter.tableStatNames[index].columns.map((column) => (
+                  {page.stats.monsters.table[index].columns.map((column) => (
                     <TableCell key={column}>{column}</TableCell>
                   ))}
                 </TableRow>
@@ -517,26 +517,26 @@ function MonsterStats({ monster, page }) {
         challenge,
       ].map((stat, index) => stat && (
         <ListItem
-          key={page.childMdx.frontmatter.simpleStatNames[index]}
+          key={page.stats.monsters.simple[index]}
           sx={{
             flex: '1 1 50%',
           }}
         >
           <ListItemText
-            primary={page.childMdx.frontmatter.simpleStatNames[index]}
+            primary={page.stats.monsters.simple[index]}
             secondary={simpleStat(stat)}
           />
         </ListItem>
       ))}
       {[traits, actions, reactions, lgdyactions].map((stat, index) => stat && (
         <ListItem
-          key={page.childMdx.frontmatter.infoStatNames[index]}
+          key={page.stats.monsters.info[index]}
           sx={{
             flex: '2 2 100%',
             display: 'block',
           }}
         >
-          <ListItemText primary={page.childMdx.frontmatter.infoStatNames[index]} />
+          <ListItemText primary={page.stats.monsters.info[index]} />
           <Divider />
           <List disablePadding>
             {stat.map((s) => (
@@ -611,7 +611,7 @@ function SpellStats({
     >
       {[castingTime, range, components, duration, attackSave].map((stat, index) => (
         <ListItem
-          key={page.childMdx.frontmatter.spellStatNames[index]}
+          key={page.stats.spells[index]}
           sx={{
             flex: '1 1 50%',
           }}
@@ -626,7 +626,7 @@ function SpellStats({
             }
           </ListItemIcon>
           <ListItemText
-            primary={page.childMdx.frontmatter.spellStatNames[index]}
+            primary={page.stats.spells[index]}
             secondaryTypographyProps={{
               component: 'div',
               variant: 'body2',
