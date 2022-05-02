@@ -1,5 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 module.exports = ({ contentPath = 'src/content', basePath = '/' }) => ({
+  siteMetadata: {
+    title: 'Game Master\'s Campaign Manager',
+    shortTitle: 'GMCM',
+    description: '',
+  },
   plugins: [
     'gatsby-transformer-sharp', 'gatsby-plugin-sharp', 'gatsby-plugin-image', 'gatsby-plugin-react-helmet', 'gatsby-plugin-mdx',
     {
