@@ -24,8 +24,9 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import SkullIcon from '../images/icons/skull.svg';
-import SwordWoman from '../images/swordwoman.svg';
+import SkullIcon from '../../images/icons/skull.svg';
+import SwordWoman from '../../images/swordwoman.svg';
+import arenaStrings from './useArenaStrings';
 
 function useArena() {
   // Prep Session Storage data:
@@ -51,11 +52,9 @@ function useArena() {
   const [error, setError] = React.useState(false);
   // Skull input adornment.
   const deathAdornment = (
-    <IconButton size="small" sx={{ px: 0 }}>
-      <SvgIcon sx={{ width: '0.75rem' }}>
-        <SkullIcon />
-      </SvgIcon>
-    </IconButton>
+    <SvgIcon sx={{ width: '0.75rem' }}>
+      <SkullIcon />
+    </SvgIcon>
   );
   // Keyboard shortcut for Drawer.
   React.useEffect(() => {
@@ -103,7 +102,7 @@ function useArena() {
   const hpSubmit = (value, current, index) => {
     const arenaCopy = [...arenaSessionStorage];
     const arenaCopyItem = { ...arenaCopy[index] };
-    console.info(`${arenaCopyItem.name} ${value.includes('+') ? 'receives' : 'loses'} ${value} HP`);
+    console.info(`${arenaCopyItem.name} ${value.includes('+') ? arenaStrings.console.info.receives : arenaStrings.console.info.loses} ${value} ${arenaStrings.hp}`);
     const hpSanitized = Number.isNaN(Number(parseInt(value, 10))) ? 0 : Number(parseInt(value, 10));
     arenaCopyItem.hp = current + hpSanitized;
     arenaCopy[index] = arenaCopyItem;
@@ -174,14 +173,15 @@ function useArena() {
                 {dupes(item.name)}
               </em>
             )}
-            primaryTypographyProps={{ variant: 'body2' }}
-            secondaryTypographyProps={{ component: 'span', sx: { ml: 1, lineHeight: '1.75' } }}
+            primaryTypographyProps={{ variant: 'body2', sx: { fontWeight: 'bold', lineHeight: '1.6' } }}
+            secondaryTypographyProps={{ component: 'span', sx: { ml: 1, lineHeight: '1.6' } }}
             sx={{ display: 'flex', flexDirection: 'row', maxWidth: '15rem' }}
           />
           {/* HP value */}
           <TextField
             size="small"
-            InputProps={{ endAdornment: item.hp > 0 ? '' : deathAdornment, inputMode: 'numeric', pattern: '[0-9.+-]*' }}
+            label={arenaStrings.hp}
+            InputProps={{ endAdornment: item.hp > 0 ? '' : (item.type === 'monster' && deathAdornment), inputMode: 'numeric', pattern: '[0-9.+-]*' }}
             defaultValue={item.hp}
             onFocus={(event) => event.target.select()}
             onKeyDown={(event) => {
@@ -191,7 +191,7 @@ function useArena() {
             }}
             sx={{ '& .gmcm-InputBase-adornedEnd': { pr: 1 }, '& input': { width: '28px' } }}
           />
-          <Tooltip title="Delete Player">
+          <Tooltip title={arenaStrings.delete}>
             <IconButton
               sx={{ ml: 'auto' }}
               onClick={() => {
@@ -216,13 +216,12 @@ function useArena() {
   }, [arenaSessionStorage, turnIndex]);
 
   // Clear button stuff.
-  const options = ['Clear monsters', 'Clear players', 'Clear all combatants'];
+  const options = arenaStrings.clear.data;
   const anchorRef = React.useRef(null);
   const combatantListRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [clearOpen, setClearOpen] = React.useState(false);
   const handleClearClick = () => {
-    const clicked = options[selectedIndex];
     const { children } = combatantListRef.current;
     const found = [];
     const finder = (type) => {
@@ -237,14 +236,14 @@ function useArena() {
       arenaCopy = arenaCopy.filter((value, index) => found.indexOf(index) === -1);
       setArenaSessionStorage(arenaCopy);
     };
-    if (clicked === 'Clear all combatants') {
+    if (selectedIndex === 2) {
       sessionStorage.clear();
       setArenaSessionStorage([]);
     } else {
-      if (clicked === 'Clear monsters') {
+      if (selectedIndex === 0) {
         finder('monster');
       }
-      if (clicked === 'Clear players') {
+      if (selectedIndex === 1) {
         finder('player');
       }
       remover();
@@ -297,7 +296,7 @@ function useArena() {
               variant="filled"
               size="small"
               fullWidth
-              label="Add a player"
+              label={arenaStrings.add}
               error={error && playerName === ''}
               value={playerName}
               InputProps={{
@@ -316,14 +315,18 @@ function useArena() {
             />
           </Box>
           {/* Turn advancement */}
-          <ButtonGroup variant="contained" aria-label="turn advancer" sx={{ alignSelf: 'center', mb: 2 }}>
-            <Button onClick={() => handleTurnClick('previous')}>
-              <ArrowForwardIcon sx={{ transform: 'rotate(180deg)' }} />
-            </Button>
-            <Typography variant="body2" sx={{ my: 'auto', px: 1 }}>Turn Direction</Typography>
-            <Button onClick={() => handleTurnClick('next')}>
-              <ArrowForwardIcon />
-            </Button>
+          <ButtonGroup variant="contained" aria-label={arenaStrings.turns.aria} sx={{ alignSelf: 'center', mb: 2 }}>
+            <Tooltip title={arenaStrings.turns.prev}>
+              <Button onClick={() => handleTurnClick('previous')}>
+                <ArrowForwardIcon sx={{ transform: 'rotate(180deg)' }} />
+              </Button>
+            </Tooltip>
+            <Typography variant="body2" sx={{ my: 'auto', px: 1 }}>{arenaStrings.turns.label}</Typography>
+            <Tooltip title={arenaStrings.turns.next}>
+              <Button onClick={() => handleTurnClick('next')}>
+                <ArrowForwardIcon />
+              </Button>
+            </Tooltip>
           </ButtonGroup>
           {/* Combatant List */}
           {combatantListItems.length > 0 && (
@@ -334,13 +337,13 @@ function useArena() {
             </Card>
           )}
           {/* Clear Button Group */}
-          <ButtonGroup variant="contained" ref={anchorRef} aria-label="clear buttons" sx={{ alignSelf: 'center', mt: 2 }}>
+          <ButtonGroup variant="contained" ref={anchorRef} aria-label={arenaStrings.clear.aria} sx={{ alignSelf: 'center', mt: 2 }}>
             <Button onClick={handleClearClick}>{options[selectedIndex]}</Button>
             <Button
               size="small"
               aria-controls={clearOpen ? 'split-menu-menu' : undefined}
               aria-expanded={clearOpen ? 'true' : undefined}
-              aria-label="select clear option"
+              aria-label={arenaStrings.clear.selectAria}
               aria-haspopup="menu"
               onClick={handleToggle}
             >
@@ -387,10 +390,10 @@ function useArena() {
               px: 2, alignSelf: 'center', mt: 'auto', pb: 2,
             }}
           >
-            Press CTRL+C to toggle the Combat Drawer.
+            {arenaStrings.tip}
           </Typography>
         </Drawer>
-        <Fab sx={{ position: 'fixed', bottom: '1rem', right: '1rem' }} color="primary" aria-label="Add to Combat Tracker" onClick={() => setArenaDrawerOpen(true)}>
+        <Fab sx={{ position: 'fixed', bottom: '1rem', right: '1rem' }} color="primary" aria-label={arenaStrings.open} onClick={() => setArenaDrawerOpen(true)}>
           <SvgIcon>
             <SwordWoman />
           </SvgIcon>

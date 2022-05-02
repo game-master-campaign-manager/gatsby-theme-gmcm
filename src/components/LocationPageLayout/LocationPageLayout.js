@@ -16,37 +16,24 @@ import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import {
-  Link,
-  Button,
-  ListItemButton,
-  CardActionArea,
+  Link, Button, ListItemButton, CardActionArea,
 } from 'gatsby-theme-material-ui';
 import MarkdownView from 'react-showdown';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import InfoIcon from '@mui/icons-material/Info';
+import MapIcon from '@mui/icons-material/Map';
+import Layout from '../Layout/Layout';
+import { MonsterLink, SpellLink } from '../CustomLink/CustomLink';
+import { Dice } from '../Dice/Dice';
+import { SCROLL_BEHAVIOR } from '../../utils/constants';
 import {
-  ArrowBack,
-  ArrowDownward,
-  ArrowUpward,
-  Info,
-  Map,
-} from '@mui/icons-material/';
-import Layout from './layout';
-import { MonsterLink, SpellLink } from './custom-link';
-import Dice from './dice';
-import {
-  MAP, GENERAL, UP, DOWN,
-  CARD_HEADER_STYLES, SCROLL_BEHAVIOR, UNKNOWN_FLAG, FLAG_TOOLTIPS,
-} from '../utils/constants';
-import {
-  Read,
-  TreasureChest,
-  Person,
-  Minion,
-  SecretDoor,
-  Eyes,
-  Trap,
-  Boss,
-  Unknown,
-} from '../images/icons';
+  Read, TreasureChest, Person, Minion, SecretDoor, Eyes, Trap, Boss, Unknown,
+} from '../../images/icons';
+import locationPageLayoutStrings from './locationPageLayoutStrings';
+
+const cardHeaderStyles = { textTransform: 'capitalize', typography: 'h5' };
 
 const markdownComponentsList = {
   Link, MonsterLink, SpellLink, Dice,
@@ -54,38 +41,24 @@ const markdownComponentsList = {
 
 function LocationPageLayout({ data, location }) {
   const [scrollLocation, setScrollLocation] = useState(0);
-
   const parentAdventureTitle = location.state ? location.state.parentAdventureTitle : '';
   const parentAdventureSlug = location.state ? location.state.parentAdventureSlug : '';
   return (
     <Layout title={data.mdx.frontmatter.title} hideDrawerIcon>
       {parentAdventureTitle && (
-        <Link
-          sx={{
-            typography: 'Body1',
-            color: 'primary.light',
-          }}
-          to={`/${parentAdventureSlug}`}
-        >
-          <ArrowBack
-            fontSize="inherit"
-            sx={{
-              position: 'relative',
-              top: 3,
-            }}
-          />
+        <Link sx={{ typography: 'Body1', color: 'primary.light' }} to={`/${parentAdventureSlug}`}>
+          <ArrowBackIcon fontSize="inherit" sx={{ position: 'relative', top: 3 }} />
           {parentAdventureTitle}
         </Link>
       )}
-      <Box
-        sx={{
-          display: 'inline-block',
-          position: 'sticky',
-          left: '100%',
-          top: '1rem',
-          zIndex: 'snackbar',
-          mb: 2,
-        }}
+      <Box sx={{
+        display: 'inline-block',
+        position: 'sticky',
+        left: '100%',
+        top: '1rem',
+        zIndex: 'snackbar',
+        mb: 2,
+      }}
       >
         <LocationNavigation
           locationMax={data.mdx.frontmatter.areas.length}
@@ -94,11 +67,7 @@ function LocationPageLayout({ data, location }) {
         />
       </Box>
       <Box>
-        <Paper
-          sx={{
-            overflow: 'hidden',
-          }}
-        >
+        <Paper sx={{ overflow: 'hidden' }}>
           <LocationMap
             image={getImage(data.mdx.frontmatter.map.image)}
             map={data.mdx.frontmatter.map}
@@ -114,31 +83,27 @@ function LocationPageLayout({ data, location }) {
   );
 }
 
-function LocationNavigation({
-  locationMax,
-  scrollLocation,
-  setScrollLocation,
-}) {
+function LocationNavigation({ locationMax, scrollLocation, setScrollLocation }) {
   const navData = [
     {
-      name: MAP,
+      name: locationPageLayoutStrings.navigation.map,
       anchor: 'map',
-      icon: <Map />,
+      icon: <MapIcon />,
     },
     {
-      name: GENERAL,
+      name: locationPageLayoutStrings.navigation.general,
       anchor: 'general',
-      icon: <Info />,
+      icon: <InfoIcon />,
     },
     {
-      name: UP,
+      name: locationPageLayoutStrings.navigation.directions.up,
       anchor: 'up',
-      icon: <ArrowUpward />,
+      icon: <ArrowUpwardIcon />,
     },
     {
-      name: DOWN,
+      name: locationPageLayoutStrings.navigation.directions.down,
       anchor: 'down',
-      icon: <ArrowDownward />,
+      icon: <ArrowDownwardIcon />,
     },
   ];
 
@@ -186,11 +151,9 @@ function LocationNavigation({
 
 function LocationNavigationButton({ content, handleClick }) {
   const [anchorTarget, setAnchorTarget] = useState(null);
-
   useEffect(() => {
     setAnchorTarget(document.getElementById(content.anchor));
   }, []);
-
   return (
     <Button
       to={`#${content.anchor}`}
@@ -223,34 +186,16 @@ function LocationMap({
     : null;
 
   return (
-    <Card
-      id="map"
-      raised
-      sx={{
-        m: 2,
-      }}
-    >
+    <Card id="map" raised sx={{ m: 2 }}>
       <CardHeader
-        avatar={<Map />}
-        title={MAP}
+        avatar={<MapIcon />}
+        title={locationPageLayoutStrings.navigation.map}
         disableTypography
-        sx={CARD_HEADER_STYLES}
+        sx={cardHeaderStyles}
       />
-      <CardContent
-        sx={{
-          position: 'relative',
-          p: 0,
-          pb: '0 !important',
-        }}
-      >
-        <GatsbyImage
-          image={image}
-          loading="eager"
-          alt={`Map of ${title}`}
-        />
-        <List
-          sx={overlayFrame}
-        >
+      <CardContent sx={{ position: 'relative', p: 0, pb: '0 !important' }}>
+        <GatsbyImage image={image} loading="eager" alt={`Map of ${title}`} />
+        <List sx={overlayFrame}>
           {areas.map((area, index) => (
             <React.Fragment key={`${area.name}-${Math.random()}`}>
               <LocationMapArea
@@ -259,10 +204,7 @@ function LocationMap({
                 setScrollLocation={setScrollLocation}
               />
               {area.traps && area.traps.map((trap) => (
-                <LocationMapTrap
-                  content={trap}
-                  key={`${area.name}-trap-${Math.random()}`}
-                />
+                <LocationMapTrap content={trap} key={`${area.name}-trap-${Math.random()}`} />
               ))}
             </React.Fragment>
           ))}
@@ -302,31 +244,31 @@ function LocationMapArea({
   const flagIcons = {
     person: {
       icon: <Person />,
-      title: FLAG_TOOLTIPS.person,
+      title: locationPageLayoutStrings.flags.person,
     },
     monster: {
       icon: <Minion />,
-      title: FLAG_TOOLTIPS.monster,
+      title: locationPageLayoutStrings.flags.monster,
     },
     secret: {
       icon: <SecretDoor />,
-      title: FLAG_TOOLTIPS.secret,
+      title: locationPageLayoutStrings.flags.secret,
     },
     eyes: {
       icon: <Eyes />,
-      title: FLAG_TOOLTIPS.eyes,
+      title: locationPageLayoutStrings.flags.eyes,
     },
     treasure: {
       icon: <TreasureChest />,
-      title: FLAG_TOOLTIPS.treasure,
+      title: locationPageLayoutStrings.flags.treasure,
     },
     trap: {
       icon: <Trap />,
-      title: FLAG_TOOLTIPS.trap,
+      title: locationPageLayoutStrings.flags.trap,
     },
     boss: {
       icon: <Boss />,
-      title: FLAG_TOOLTIPS.boss,
+      title: locationPageLayoutStrings.flags.boss,
     },
   };
   return (
@@ -388,15 +330,13 @@ function LocationMapArea({
                 {content.flags.map((flag) => (
                   <Tooltip
                     key={flagIcons[flag] ? flagIcons[flag].title : Math.random()}
-                    title={flagIcons[flag] ? flagIcons[flag].title : UNKNOWN_FLAG}
+                    title={
+                      flagIcons[flag]
+                        ? flagIcons[flag].title
+                        : locationPageLayoutStrings.flags.unknown
+                    }
                   >
-                    <SvgIcon
-                      color="secondary"
-                      viewBox="0 0 24 24"
-                      sx={{
-                        mx: 0.5,
-                      }}
-                    >
+                    <SvgIcon color="secondary" viewBox="0 0 24 24" sx={{ mx: 0.5 }}>
                       {flagIcons[flag] ? flagIcons[flag].icon : <Unknown />}
                     </SvgIcon>
                   </Tooltip>
@@ -412,18 +352,12 @@ function LocationMapArea({
 
 function GeneralFeatures({ content }) {
   return (
-    <Card
-      raised
-      id="general"
-      sx={{
-        m: 2,
-      }}
-    >
+    <Card raised id="general" sx={{ m: 2 }}>
       <CardHeader
-        avatar={<Info />}
-        title={GENERAL}
+        avatar={<InfoIcon />}
+        title={locationPageLayoutStrings.navigation.general}
         disableTypography
-        sx={CARD_HEADER_STYLES}
+        sx={cardHeaderStyles}
       />
       <Divider />
       <CardContent>
@@ -437,11 +371,7 @@ function LocationAreaList({ content }) {
   return (
     <List component={Stack}>
       {content.map((area, index) => (
-        <LocationAreaListItem
-          content={area}
-          index={index + 1}
-          key={`${area.name}-${Math.random()}`}
-        />
+        <LocationAreaListItem content={area} index={index + 1} key={`${area.name}-${Math.random()}`} />
       ))}
     </List>
   );
@@ -449,35 +379,19 @@ function LocationAreaList({ content }) {
 
 function LocationAreaListItem({ content, index }) {
   return (
-    <ListItem
-      id={index}
-      sx={{
-        display: 'block',
-      }}
-    >
+    <ListItem id={index} sx={{ display: 'block' }}>
       <Card raised>
         <CardHeader title={`${index}. ${content.name}`} />
         <Divider />
         <CardContent>
           {content.callout && (
-            <LocationAreaListItemAlert
-              content={content.callout}
-              icon={<Read width="24" />}
-              severity="warning"
-            />
+            <LocationAreaListItemAlert content={content.callout} icon={<Read width="24" />} severity="warning" />
           )}
           {content.flavor && (
-            <LocationAreaListItemAlert
-              content={content.flavor}
-              icon={<TreasureChest width="24" />}
-              severity="info"
-            />
+            <LocationAreaListItemAlert content={content.flavor} icon={<TreasureChest width="24" />} severity="info" />
           )}
           {content.content && (
-            <MarkdownView
-              markdown={content.content}
-              components={markdownComponentsList}
-            />
+            <MarkdownView markdown={content.content} components={markdownComponentsList} />
           )}
         </CardContent>
       </Card>
@@ -490,19 +404,9 @@ function LocationAreaListItemAlert({ content, icon, severity }) {
     <Alert
       severity={severity}
       icon={(
-        <SvgIcon
-          sx={{
-            mt: 1.5,
-          }}
-        >
-          {icon}
-        </SvgIcon>
+        <SvgIcon sx={{ mt: 1.5 }}>{icon}</SvgIcon>
       )}
-      sx={{
-        '&:not(:first-of-type)': {
-          mt: 1,
-        },
-      }}
+      sx={{ '&:not(:first-of-type)': { mt: 1 } }}
     >
       <MarkdownView markdown={content} />
     </Alert>

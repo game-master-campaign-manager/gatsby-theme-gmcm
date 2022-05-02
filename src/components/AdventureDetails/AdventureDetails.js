@@ -1,17 +1,34 @@
 import React from 'react';
-import {
-  Box, Chip, Stack, Tooltip,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import PublicIcon from '@mui/icons-material/Public';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import SwitchAccessShortcutIcon from '@mui/icons-material/SwitchAccessShortcut';
-import {
-  SETTING, PLAYERS, LEVELS,
-} from '../utils/constants';
+import adventureDetailsStrings from './adventureDetailsStrings';
+// import {
+//   SETTING, PLAYERS, LEVELS,
+// } from '../../utils/strings';
+
+function AdventureDetails({
+  levels, players, setting, body, direction,
+}) {
+  return (
+    <Stack direction={direction || 'column'}>
+      <AdventureStats setting={setting} levels={levels} players={players} />
+      <AdventureDescription body={body} />
+    </Stack>
+  );
+}
 
 function AdventureStats({ setting, levels, players }) {
-  const statTitles = [SETTING, LEVELS, PLAYERS];
+  const statTitles = [
+    adventureDetailsStrings.setting,
+    adventureDetailsStrings.levels,
+    adventureDetailsStrings.players,
+  ];
   const statIcons = [<PublicIcon />, <SwitchAccessShortcutIcon />, <SupervisedUserCircleIcon />];
   return (
     <Stack
@@ -38,8 +55,7 @@ function AdventureStats({ setting, levels, players }) {
   );
 }
 
-function AdventureDescription(props) {
-  const { body } = props;
+function AdventureDescription({ body }) {
   return (
     <Box
       sx={{
@@ -48,17 +64,6 @@ function AdventureDescription(props) {
     >
       <MDXRenderer>{body}</MDXRenderer>
     </Box>
-  );
-}
-
-function AdventureDetails({
-  levels, players, setting, body, direction,
-}) {
-  return (
-    <Stack direction={direction || 'column'}>
-      <AdventureStats setting={setting} levels={levels} players={players} />
-      <AdventureDescription body={body} />
-    </Stack>
   );
 }
 

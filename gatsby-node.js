@@ -21,130 +21,8 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   });
 };
 
-exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
-  createTypes(`
-    type MdxFrontmatter @infer {
-      monsters: [Monster]
-      areas: [Area]
-      spells: [Spell]
-      setting: String
-      levels: String
-      playernum: String
-      map: Map
-    }
-    type Map {
-      image: File @fileByRelativePath
-      width: Int
-      height: Int
-      padding: String
-    }
-    type Spell {
-      name: String
-      source: String
-      castingtime: String
-      classes: [String]
-      components: String
-      description: String
-      duration: String
-      level: String
-      range: String
-      ritual: Boolean
-      school: String
-      attacksave: String
-      damage: String
-    }
-    type Area {
-      id: ID
-      name: String
-      x: Int
-      y: Int
-      flags: [String]
-      flavor: String
-      callout: String
-      content: String
-      traps: [Trap]
-    }
-    type Trap {
-      x: Int
-      y: Int
-      w: Int
-      h: Int
-    }
-    type Monster {
-      ac: Stat
-      hp: Stat
-      speed: [String]
-      type: String
-      name: String
-      abilities: AbilityList
-      skills: [Buff]
-      saves: [Buff]
-      senses: [String]
-      languages: [String]
-      source: String
-      description: String
-      lgdyactions: [Definition]
-      reactions: [Definition]
-      actions: [Definition]
-      traits: [Definition]
-      cdnimmunities: [String]
-      dmgvulnerabilities: [String]
-      dmgresistances: [String]
-      dmgimmunities: [String]
-      challenge: String
-    }
-    type Stat {
-      value: String
-      notes: String
-    }
-    type AbilityList {
-      str: Int
-      dex: Int
-      con: Int
-      int: Int
-      wis: Int
-      cha: Int
-    }
-    type Buff {
-      name: String
-      modifier: String
-    }
-    type Definition {
-      name: String
-      content: String
-    }
-    type Mdx implements Node @infer {
-      frontmatter: MdxFrontmatter
-    }
-  `);
-};
-
 exports.createPages = async ({ graphql, actions, reporter }, options) => {
   const basePath = options.basePath || '/';
-
-  // Home Page
-  // actions.createPage({
-  //   path: basePath,
-  //   component: require.resolve('./pages/index.js'),
-  // });
-
-  // Adventures Listing Page
-  // actions.createPage({
-  //   path: `${basePath}adventures`,
-  //   component: require.resolve('./pages/adventures.js'),
-  // });
-
-  // Search Page
-  // actions.createPage({
-  //   path: `${basePath}search`,
-  //   component: require.resolve('./pages/search.js'),
-  // });
-
-  // Reference Page
-  // actions.createPage({
-  //   path: `${basePath}reference`,
-  //   component: require.resolve('./src/pages/reference.js'),
-  // });
 
   const result = await graphql(`
     query {
@@ -172,19 +50,19 @@ exports.createPages = async ({ graphql, actions, reporter }, options) => {
     const locationRegex = new RegExp('adventures/\\w+/locations/');
     let template = 'foo';
     if (adventureRegex.test(node.slug)) {
-      template = 'adventure';
+      template = 'AdventureLandingPage';
     }
     if (locationRegex.test(node.slug)) {
-      template = 'location';
+      template = 'LocationPageLayout';
     }
     if (locationRegex.test(node.slug) || adventureRegex.test(node.slug)) {
       actions.createPage({
         path: `${basePath}${node.slug}`,
-        component: require.resolve(`./src/components/${template}-page-layout.js`),
+        component: require.resolve(`./src/components/${template}/${template}.js`),
         context: {
           id: node.id,
-          locations: template === 'adventure' && `${node.slug}locations/`,
-          npcs: template === 'adventure' && `${node.slug}npcs/`,
+          locations: template === 'AdventureLandingPage' && `${node.slug}locations/`,
+          npcs: template === 'AdventureLandingPage' && `${node.slug}npcs/`,
         },
       });
     }
