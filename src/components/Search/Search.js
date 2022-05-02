@@ -289,11 +289,11 @@ function SearchResultsItemHeader({
               },
             }}
             onClick={() => {
-              enqueueSnackbar(`Added ${item.name} to the Combat Tracker.`);
+              enqueueSnackbar(`Added ${item.monster} to the Combat Tracker.`);
               // setArenaDrawerOpen(!arenaDrawerOpen);
               setArenaSessionStorage([...arenaSessionStorage,
                 {
-                  name: item.name,
+                  name: item.monster,
                   hp: hpRoll.total,
                   initiative: initiativeRoll.total,
                   type: 'monster',
