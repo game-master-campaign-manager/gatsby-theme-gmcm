@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Paper from '@mui/material/Paper';
 import { CardActionArea } from 'gatsby-theme-material-ui';
-import Layout from '../layout';
+import Layout from '../Layout/Layout';
 import AdventureDetails from '../AdventureDetails/AdventureDetails';
 
 function Adventures({ page, adventures }) {

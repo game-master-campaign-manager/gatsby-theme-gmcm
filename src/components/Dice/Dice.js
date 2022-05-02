@@ -11,6 +11,7 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/styles';
+import diceStrings from './diceStrings';
 
 const SnackAttack = React.forwardRef(({
   id, n, h, d, monster, backgroundColor,
@@ -22,11 +23,13 @@ const SnackAttack = React.forwardRef(({
         <CardActions>
           <Typography sx={{ fontWeight: 'bold' }}>{`${monster}: ${n}`}</Typography>
           <Typography component="p" variant="overline" sx={{ fontStyle: 'italic', lineHeight: '2' }}>
-            to Hit:
+            {diceStrings.snackAttack.toHit}
+            :
             <Box component="span" sx={{ typography: 'body1', fontStyle: 'normal', ml: 1 }}>{h}</Box>
           </Typography>
           <Typography component="p" variant="overline" sx={{ fontStyle: 'italic', lineHeight: '2' }}>
-            Damage:
+            {diceStrings.snackAttack.damage}
+            :
             <Box component="span" sx={{ typography: 'body1', fontStyle: 'normal', ml: 1 }}>{d}</Box>
           </Typography>
           <IconButton onClick={() => closeSnackbar(id)}>

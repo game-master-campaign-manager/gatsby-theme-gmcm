@@ -9,8 +9,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Navigation from '../navigation';
-import Layout from '../layout';
+import MarkdownView from 'react-showdown';
+import Navigation from '../Navigation/Navigation';
+import Layout from '../Layout/Layout';
 
 function Index({ data }) {
   return (
@@ -59,12 +60,8 @@ function Index({ data }) {
           <Navigation homeNav size="large" hideDrawerIcon />
           <Card raised>
             <CardHeader title={data.news.label} subheader={`v${data.news.version}`} />
-            <CardContent>
-              <List disablePadding>
-                {data.news.bullets.map((bullet) => (
-                  <ListItem key={bullet}>{`* ${bullet}`}</ListItem>
-                ))}
-              </List>
+            <CardContent sx={{ typography: 'body1' }}>
+              <MarkdownView markdown={data.news.content} />
             </CardContent>
           </Card>
         </Paper>

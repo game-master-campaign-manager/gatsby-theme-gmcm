@@ -30,8 +30,8 @@ import Masonry from '@mui/lab/Masonry';
 import MarkdownView from 'react-showdown';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { useSnackbar } from 'notistack';
-import Layout from '../layout';
-import { Attack, Dice } from '../dice';
+import Layout from '../Layout/Layout';
+import { Attack, Dice } from '../Dice/Dice';
 import * as CREATURE_TYPES from '../../images/creature-types';
 import * as MAGIC_TYPES from '../../images/magic-types';
 import DmcmAttackIcon from '../../images/bullseye.svg';
@@ -46,21 +46,18 @@ function Search({
   const {
     arenaDrawerOpen, setArenaDrawerOpen, arenaRender, arenaSessionStorage, setArenaSessionStorage,
   } = useArena();
-
   const search = new URLSearchParams(location.search.substring(1));
   const category = search.get('category');
   const searchData = {
     monsters: [],
     spells: [],
   };
-
   let searchTitle = '';
   page.categories.forEach((cat) => {
     if (category === cat.shortName) {
       searchTitle = cat.title;
     }
   });
-
   // Populate searchData with the appropriate data.
   if (category && searchTitle.length) {
     const pusher = (source) => {
@@ -422,7 +419,7 @@ function MonsterStats({ monster, page }) {
   const someDefaultProps = { monster: monster.monster };
   const shortcodesWithProps = React.useMemo(
     () => addProps(shortcodes, someDefaultProps),
-    someDefaultProps,
+    [someDefaultProps],
   );
 
   return (

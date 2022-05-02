@@ -19,8 +19,8 @@ import { Link } from 'gatsby-theme-material-ui';
 import MarkdownView from 'react-showdown';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Masonry from '@mui/lab/Masonry';
-import Layout from '../layout';
-import { Dice } from '../dice';
+import Layout from '../Layout/Layout';
+import { Dice } from '../Dice/Dice';
 import { SCROLL_BEHAVIOR } from '../../utils/constants';
 
 /* Table of Contents */

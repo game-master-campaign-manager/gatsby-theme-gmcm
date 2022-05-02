@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Layout from '../layout';
+import Layout from '../Layout/Layout';
 
 function FourOhFour({ data }) {
   return (

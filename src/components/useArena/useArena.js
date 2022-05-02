@@ -28,8 +28,6 @@ import SkullIcon from '../../images/icons/skull.svg';
 import SwordWoman from '../../images/swordwoman.svg';
 import arenaStrings from './useArenaStrings';
 
-console.log(arenaStrings);
-
 function useArena() {
   // Prep Session Storage data:
   const ssKey = 'gmcm-combatants';
