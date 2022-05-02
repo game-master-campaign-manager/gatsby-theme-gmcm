@@ -1,6 +1,6 @@
 {
   "name": "@iamgarrett/gatsby-theme-gmcm",
-  "version": "0.1.3",
+  "version": "0.1.3-a",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
