@@ -1,4 +1,18 @@
 const searchStrings = {
+  title: 'Search',
+  toggle: {
+    aria: 'search category',
+    buttons: [
+      {
+        label: 'monsters',
+        aria: 'search monsters',
+      },
+      {
+        label: 'spells',
+        aria: 'search spells',
+      },
+    ],
+  },
   categories: [
     {
       title: 'Bestiary',

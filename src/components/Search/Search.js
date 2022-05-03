@@ -37,9 +37,44 @@ import * as MAGIC_TYPES from '../../images/magic-types';
 import DmcmAttackIcon from '../../images/bullseye.svg';
 import useArena from '../useArena/useArena';
 import SwordWoman from '../../images/swordwoman.svg';
+import searchStrings from './searchStrings';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+
+function Search({
+  location, page, spells, monsters,
+}) {
+  const [searchCategory, setSearchCategory] = React.useState(location.state && location.state.category ? location.state.category : 'monsters');
+  const handleClick = (event, newCategory) => {
+    setSearchCategory(newCategory);
+  };
+  const searchCategoryButtons = searchStrings.toggle.buttons.map((button) => (
+    <ToggleButton value={button.label} aria-label={button.aria}>{button.label.toUpperCase()}</ToggleButton>
+  ));
+  const {
+    arenaDrawerOpen, setArenaDrawerOpen, arenaRender, arenaSessionStorage, setArenaSessionStorage,
+  } = useArena();
+  const searchData = {
+    monsters: [],
+    spells: [],
+    items: [],
+  };
+  return (
+    <Layout title={searchStrings.title} arenaRender={arenaRender}>
+      <ToggleButtonGroup
+        value={searchCategory}
+        exclusive
+        onChange={handleClick}
+        aria-label={searchStrings.toggle.aria}
+      >
+        {searchCategoryButtons}
+      </ToggleButtonGroup>
+    </Layout>
+  );
+}
 
 // look into useContext for passing drawer state/page values.
 
+{ /*
 function Search({
   location, page, spells, monsters,
 }) {
@@ -543,7 +578,6 @@ function MonsterStats({ monster, page }) {
                   secondary={<MarkdownView markdown={s.content} components={shortcodesWithProps} />}
                   secondaryTypographyProps={{ component: 'div', variant: 'body2' }}
                 />
-                {/* <ListItemText primary={s.name} secondary={s.content} /> */}
               </ListItem>
             ))}
           </List>
@@ -640,5 +674,6 @@ function SpellStats({
     </List>
   );
 }
+*/ }
 
 export default Search;
