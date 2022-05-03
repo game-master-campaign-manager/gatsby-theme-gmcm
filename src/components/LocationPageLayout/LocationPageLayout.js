@@ -15,6 +15,7 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import { MDXProvider } from '@mdx-js/react';
 import {
   Link, Button, ListItemButton, CardActionArea,
 } from 'gatsby-theme-material-ui';
@@ -361,7 +362,9 @@ function GeneralFeatures({ content }) {
       />
       <Divider />
       <CardContent>
-        <MDXRenderer>{content}</MDXRenderer>
+        <MDXProvider components={markdownComponentsList}>
+          <MDXRenderer>{content}</MDXRenderer>
+        </MDXProvider>
       </CardContent>
     </Card>
   );
