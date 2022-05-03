@@ -36,6 +36,7 @@ function AdventuresList({ content }) {
 }
 
 function Adventure({ content }) {
+  console.log(content.childMdx.slug);
   return (
     <Card
       raised
@@ -45,7 +46,7 @@ function Adventure({ content }) {
       }}
     >
       <CardActionArea
-        to={content.childMdx.slug}
+        to={`/${content.childMdx.slug}`}
         sx={{
           height: '100%',
         }}
