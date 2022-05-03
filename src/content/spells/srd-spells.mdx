@@ -2128,14 +2128,15 @@ spells:
     castingtime: '1 action'
     components: 'V, S'
     description: |
-      You hurl a bubble of acid. Choose one creature within range, or choose two creatures within range that are within 5 feet of each other. A target must succeed on a Dexterity saving throw or take 1d6 acid damage.
+      You hurl a bubble of acid. Choose one creature within range, or choose two creatures within range that are within 5 feet of each other. A target must succeed on a **Dexterity saving throw** or take <Dice r="1d6" /> acid damage.
 
-      This spells damage increases by 1d6 when you reach 5th Level (2d6), 11th level (3d6) and 17th level (4d6).
+      This spells damage increases by 1d6 when you reach 5th Level (<Dice r="2d6" />), 11th level (<Dice r="3d6" />) and 17th level (<Dice r="4d6" />).
     duration: 'Instantaneous'
     level: 'Cantrip'
     range: '60 feet'
     ritual: false
     school: 'Conjuration'
+    damage: Acid
   - spell: 'Control Weather'
     source: "Player's Handbook"
     castingtime: '10 minutes'
