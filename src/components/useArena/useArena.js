@@ -337,7 +337,7 @@ function useArena() {
             </Card>
           )}
           {/* Clear Button Group */}
-          <ButtonGroup variant="contained" ref={anchorRef} aria-label={arenaStrings.clear.aria} sx={{ alignSelf: 'center', mt: 2 }}>
+          <ButtonGroup variant="contained" ref={anchorRef} aria-label={arenaStrings.clear.aria} sx={{ alignSelf: 'center', m: 2 }}>
             <Button onClick={handleClearClick}>{options[selectedIndex]}</Button>
             <Button
               size="small"
