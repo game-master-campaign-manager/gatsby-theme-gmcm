@@ -36,7 +36,6 @@ function AdventuresList({ content }) {
 }
 
 function Adventure({ content }) {
-  console.log(content.childMdx.slug);
   return (
     <Card
       raised
