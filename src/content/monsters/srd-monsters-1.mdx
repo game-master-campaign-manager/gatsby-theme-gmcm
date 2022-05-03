@@ -45,58 +45,42 @@ monsters:
       - name: Amphibious
         content: The aboleth can breathe air and water.
       - name: Mucous Cloud
-        content: >-
-          While underwater, the aboleth is surrounded by transformative mucus. A
-          creature that touches the aboleth or that hits it with a melee attack
-          while within 5 ft. of it must make a DC 14 Constitution saving throw. On
-          a failure, the creature is diseased for 1d4 hours. The diseased creature
-          can breathe only underwater.
+        content: |
+          While underwater, the aboleth is surrounded by transformative mucus. A creature that touches the aboleth or that hits it with a melee attack while within 5 ft. of it must make a **DC 14 Constitution saving throw**. On a failure, the creature is diseased for <Dice r="1d4" /> hours. The diseased creature can breathe only underwater.
       - name: Probing Telepathy
-        content: >-
-          If a creature communicates telepathically with the aboleth, the aboleth
-          learns the creature's greatest desires if the aboleth can see the
-          creature.
+        content: |
+          If a creature communicates telepathically with the aboleth, the aboleth learns the creature's greatest desires if the aboleth can see the creature.
     actions:
       - name: Multiattack
         content: The aboleth makes three tentacle attacks.
       - name: Tentacle
-        content: >-
-          Melee Weapon Attack: +9 to hit, reach 10 ft., one target. Hit: 12 (2d6 +
-          5) bludgeoning damage. If the target is a creature, it must succeed on a
-          DC 14 Constitution saving throw or become diseased. The disease has no
-          effect for 1 minute and can be removed by any magic that cures disease.
-          After 1 minute, the diseased creature's skin becomes translucent and
-          slimy, the creature can't regain hit points unless it is underwater, and
-          the disease can be removed only by heal or another disease-curing spell
-          of 6th level or higher. When the creature is outside a body of water, it
-          takes 6 (1d12) acid damage every 10 minutes unless moisture is applied
-          to the skin before 10 minutes have passed.
+        content: |
+          Melee Weapon Attack: +9 to hit, reach 10 ft., one target. Hit: 12 (2d6 + 5) bludgeoning damage. If the target is a creature, it must succeed on a **DC 14 Constitution saving throw** or become diseased. The disease has no effect for 1 minute and can be removed by any magic that cures disease. After 1 minute, the diseased creature's skin becomes translucent and slimy, the creature can't regain hit points unless it is underwater, and the disease can be removed only by heal or another disease-curing spell of 6th level or higher. **When the creature is outside a body of water, it takes 6 (<Dice r="1d12" />) acid damage every 10 minutes unless moisture is applied to the skin before 10 minutes have passed.**
+
+          <Attack n="Tentacle" h="+9" d="2d6+5" />
       - name: Tail
-        content: >-
-          Melee Weapon Attack: +9 to hit, reach 10 ft. one target. Hit: 15 (3d6 +
-          5) bludgeoning damage.
+        content: |
+          Melee Weapon Attack: +9 to hit, reach 10 ft. one target. Hit: 15 (3d6 + 5) bludgeoning damage.
+
+          <Attack n="Tail" h="+9" d="3d6+5" />
       - name: Enslave (3/day)
-        content: >-
-          The aboleth targets one creature it can see within 30 ft. of it. The
-          target must succeed on a DC 14 Wisdom saving throw or be magically
-          charmed by the aboleth until the aboleth dies or until it is on a
-          different plane of existence from the target. The charmed target is
-          under the aboleth's control and can't take reactions, and the aboleth
-          and the target can communicate telepathically with each other over any
-          distance.\nWhenever the charmed target takes damage, the target can
-          repeat the saving throw. On a success, the effect ends. No more than
-          once every 24 hours, the target can also repeat the saving throw when it
-          is at least 1 mile away from the aboleth.
+        content: |
+          The aboleth targets one creature it can see within 30 feet of it. The target must succeed on a **DC 14 Wisdom saving throw** or be magically charmed by the aboleth until the aboleth dies or until it is on a different plane of existence from the target. The charmed target is under the aboleth's control and can't take reactions, and the aboleth and the target can communicate telepathically with each other over any distance.
+
+          Whenever the charmed target takes damage, the target can repeat the saving throw. On a success, the effect ends. No more than once every 24 hours, the target can also repeat the saving throw when it is at least 1 mile away from the aboleth.
     reactions: null
     legendaryactions:
+      - content: |
+          The aboleth can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The aboleth regains spent legendary actions at the start of its turn.
       - name: Detect
-        content: The aboleth makes a Wisdom (Perception) check.
+        content: The aboleth makes a **Wisdom (Perception) check**.
       - name: Tail Swipe
         content: The aboleth makes one tail attack.
       - name: Psychic Drain (Costs 2 Actions)
-        content: >-
-          One creature charmed by the aboleth takes 10 (3d6) psychic damage, and
-          the aboleth regains hit points equal to the damage the creature takes.
+        content: |
+          One creature charmed by the aboleth takes 10 (3d6) psychic damage, and the aboleth regains hit points equal to the damage the creature takes.
+
+          <Attack n="Psychic Drain" h="+0" d="3d6" />
     description: ''
     imgurl: null
   - monster: Deva
@@ -8650,13 +8634,13 @@ monsters:
         content: |
           Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6+2) slashing damage.
 
-          <Attack n="Scimitar" h="1d20+4" d="1d6+2" />
+          <Attack n="Scimitar" h="+4" d="1d6+2" />
       - name: Shortbow
         content: |
           Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5
           (1d6+2) piercing damage.
 
-          <Attack n="Shortbow" h="1d20+4" d="1d6+2" />
+          <Attack n="Shortbow" h="+4" d="1d6+2" />
     reactions: null
     legendaryactions: null
     description: ''
