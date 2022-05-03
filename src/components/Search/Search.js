@@ -376,7 +376,7 @@ function MonsterStats({ monster }) {
     () => addProps(shortcodes, someDefaultProps),
     [someDefaultProps],
   );
-  console.log(monster);
+
   return (
     <List sx={{ display: 'flex', flexWrap: 'wrap', typography: 'body1' }}>
       {[monster.ac, monster.hp].map((stat, index) => (
@@ -466,7 +466,7 @@ function MonsterStats({ monster }) {
           <ListItemText primary={monsterStrings.simple[index]} secondary={simpleStat(stat)} />
         </ListItem>
       ))}
-      {[monster.traits, monster.actions, monster.reactions, monster.lgdyactions]
+      {[monster.traits, monster.actions, monster.reactions, monster.legendaryactions]
         .map((stat, index) => stat && (
           <ListItem key={monsterStrings.info[index]} sx={{ flex: '2 2 100%', display: 'block' }}>
             <ListItemText primary={monsterStrings.info[index]} />
