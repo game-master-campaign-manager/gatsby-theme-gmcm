@@ -5,16 +5,12 @@ const navigationStrings = {
       slug: '/adventures',
     },
     {
-      title: 'bestiary',
-      slug: '/search/?category=monsters',
-    },
-    {
       title: 'reference',
       slug: '/reference',
     },
     {
-      title: 'spellbook',
-      slug: '/search/?category=spells',
+      title: 'search',
+      slug: '/search',
     },
   ],
 };
