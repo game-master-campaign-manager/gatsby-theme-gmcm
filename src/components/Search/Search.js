@@ -216,14 +216,16 @@ function SearchResultsItemHeader({ item }) {
       }
     });
     const ritual = item.ritual ? (
-      <Box
-        key={Math.random()}
-        component="span"
-        title={page.ritualExplainer}
-        sx={{ borderBottom: '1px dashed', cursor: 'help' }}
+      <Tooltip
+        arrow
+        key={item.spell}
+        sx={{ boxShadow: 5 }}
+        title={<Typography fontSize={15}>{page.ritualText}</Typography>}
       >
-        {page.ritual}
-      </Box>
+        <Box component="span" sx={{ borderBottom: '1px dashed', cursor: 'help' }}>
+          {page.ritual}
+        </Box>
+      </Tooltip>
     ) : page.spell;
     subtitle = [`${page.spellLevelLabel} ${item.level && item.level}, ${item.school && item.school} `, ritual];
   } else {
