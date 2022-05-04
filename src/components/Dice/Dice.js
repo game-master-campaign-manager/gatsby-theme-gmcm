@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import Collapse from '@mui/material/Collapse';
+import Paper from '@mui/material/Paper';
 import CasinoIcon from '@mui/icons-material/Casino';
 import { useSnackbar, SnackbarContent } from 'notistack';
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
@@ -10,13 +12,20 @@ import { Button } from 'gatsby-theme-material-ui';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTheme } from '@mui/styles';
 import diceStrings from './diceStrings';
 
 const SnackAttack = React.forwardRef(({
-  id, n, h, d, monster, backgroundColor,
+  id, n, h, d, damageObj, monster, backgroundColor,
 }, ref) => {
   const { closeSnackbar } = useSnackbar();
+  const [expanded, setExpanded] = React.useState(false);
+  const handleExpandClick = React.useCallback(() => {
+    setExpanded((oldExpanded) => !oldExpanded);
+  }, []);
+  const damages = damageObj.rolls.map((x) => x.value && x.value);
+  console.log(damages);
   return (
     <SnackbarContent ref={ref}>
       <Card sx={{ backgroundColor, color: 'black' }}>
@@ -32,10 +41,23 @@ const SnackAttack = React.forwardRef(({
             :
             <Box component="span" sx={{ typography: 'body1', fontStyle: 'normal', ml: 1 }}>{d}</Box>
           </Typography>
-          <IconButton onClick={() => closeSnackbar(id)}>
-            <CloseIcon sx={{ color: 'black' }} />
-          </IconButton>
+          <Box>
+            <IconButton
+              aria-label="Show more"
+              onClick={handleExpandClick}
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+            <IconButton onClick={() => closeSnackbar(id)}>
+              <CloseIcon sx={{ color: 'black' }} />
+            </IconButton>
+          </Box>
         </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Paper square sx={{ p: 1 }}>
+            <Typography>PDF ready</Typography>
+          </Paper>
+        </Collapse>
       </Card>
     </SnackbarContent>
   );
@@ -76,6 +98,7 @@ export function Attack({
                 n={n}
                 h={hRoll.total}
                 d={dRoll.total}
+                damageObj={dRoll}
                 monster={monster}
                 backgroundColor={backgroundColor}
               />
