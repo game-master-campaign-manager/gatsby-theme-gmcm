@@ -47,10 +47,9 @@
     "gatsby-source-filesystem": "^4.11.1",
     "gatsby-theme-material-ui": "^5.2.0",
     "gatsby-transformer-sharp": "^4.11.0",
-    "markdown-to-jsx": "^7.1.7",
     "notistack": "^2.0.4",
     "react-helmet": "^6.1.0",
-    "react-markdown": "^8.0.3",
+    "react-showdown": "^2.3.1",
     "stream-browserify": "^3.0.0"
   }
 }

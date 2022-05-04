@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const indexStrings = {
   title: 'Hail fellow well met.',
   text: 'The GMCM is a React-based campaign manager for your favorite 5E TTRPG.',
@@ -21,7 +22,7 @@ const indexStrings = {
   news: {
     label: 'What\'s New',
     version: '0.1.4',
-    content: '',
+    content: '<Dice r="2d6" /> <Attack n="foo" h="+5" d="1d6+2" />',
     // * FEATURE: Search has been consolidated into one page.
     // * BUGFIX: When a monster lacks monster.hp.notes for calculating HP in the Combat Tracker, it will now default to monster.hp.value instead.
   },

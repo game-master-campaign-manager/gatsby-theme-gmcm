@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -10,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import MarkdownView from 'react-showdown';
+import { Dice, Attack } from '../Dice/Dice';
 import Navigation from '../Navigation/Navigation';
 import Layout from '../Layout/Layout';
 
@@ -61,7 +60,8 @@ function Index({ data }) {
           <Card raised>
             <CardHeader title={data.news.label} subheader={`v${data.news.version}`} />
             <CardContent sx={{ typography: 'body1' }}>
-              <MarkdownView markdown={data.news.content} />
+              <MarkdownView components={{ Dice, Attack }} markdown={data.news.content} />
+              {/* <Md components={[Dice, Attack]}>{data.news.content}</Md> */}
             </CardContent>
           </Card>
         </Paper>
