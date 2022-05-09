@@ -29,6 +29,7 @@ import SwordWoman from '../../images/swordwoman.svg';
 import arenaStrings from './useArenaStrings';
 
 function useArena() {
+  console.log('render');
   // Prep Session Storage data:
   const ssKey = 'gmcm-combatants';
   const parsedSessionData = typeof window !== 'undefined' ? window.JSON.parse(sessionStorage.getItem(ssKey) || '[]') : [];
@@ -330,7 +331,7 @@ function useArena() {
           </ButtonGroup>
           {/* Combatant List */}
           {combatantListItems.length > 0 && (
-            <Card raised sx={{ mx: 2 }}>
+            <Card raised sx={{ mx: 2, overflowY: 'scroll' }}>
               <CardContent>
                 <List ref={combatantListRef} disablePadding sx={{ '& > li + li': { mt: 1 } }}>{combatantListItems}</List>
               </CardContent>
