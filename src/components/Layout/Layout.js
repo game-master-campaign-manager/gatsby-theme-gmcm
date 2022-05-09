@@ -19,6 +19,7 @@ const HeaderContainer = (props) => <Container component="header" {...props} />;
 function Layout({
   children, hideNavigation, title = undefined, navDirection, arenaRender = undefined,
 }) {
+  console.log('Layout render');
   const data = useStaticQuery(graphql`
     query LayoutQuery {
       site {
@@ -67,7 +68,7 @@ function Layout({
                 underline="none"
                 to="/"
                 sx={{
-                  lineHeight: 1, color: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '1.25rem 0.5rem 0.5rem',
+                  lineHeight: 1, color: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '1.25rem 0.5rem 0.5rem', fontSize: '1.5rem',
                 }}
               >
                 {data.site.siteMetadata.shortTitle}
