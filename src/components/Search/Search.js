@@ -7,11 +7,31 @@ TODO:
 */
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import {
-  Autocomplete,
-  Avatar,
-  Box, ButtonGroup, Card, CardContent, CardHeader, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, SvgIcon, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, ToggleButton, ToggleButtonGroup, Tooltip, Typography,
-} from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import SvgIcon from '@mui/material/SvgIcon';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import Masonry from '@mui/lab/Masonry';
 import { IconButton } from 'gatsby-theme-material-ui';
 import MarkdownView from 'react-showdown';
@@ -24,7 +44,7 @@ import * as MAGIC_TYPES from '../../images/magic-types';
 import SwordWoman from '../../images/swordwoman.svg';
 import { Attack, Dice } from '../Dice/Dice';
 import DmcmAttackIcon from '../../images/bullseye.svg';
-import ArenaDrawer from '../Arena/Arena';
+import Arena from '../Arena/Arena';
 
 const PageDataContext = React.createContext('PageData');
 
@@ -173,14 +193,16 @@ function SearchForm({
   return (
     <Box>
       <Paper sx={{ p: 2 }}>
-        <ToggleButtonGroup
-          aria-label={`search ${searchCategory}`}
-          exclusive
-          onChange={handleClick}
-          value={searchCategory}
-        >
-          {toggleButtonsMap}
-        </ToggleButtonGroup>
+        {React.useMemo(() => (
+          <ToggleButtonGroup
+            aria-label={`search ${searchCategory}`}
+            exclusive
+            onChange={handleClick}
+            value={searchCategory}
+          >
+            {toggleButtonsMap}
+          </ToggleButtonGroup>
+        ), [searchCategory])}
         <Autocomplete
           multiple
           options={formattedSearchData[searchCategory]}
@@ -204,19 +226,19 @@ function SearchForm({
 
 function SearchResults({ value }) {
   console.log('SearchResults render');
-  const resultList = React.useMemo(() => (
-    <Box sx={{ mt: 2 }}>
-      <Paper sx={{ padding: 1 }}>
-        <Masonry columns={2} spacing={2} sx={{ m: 0 }}>
-          {value.map((v, i) => <ResultCard key={v.spell || v.monster} index={i} data={v} />)}
-        </Masonry>
-      </Paper>
-    </Box>
-  ), [value]);
+  const [arenaOpen, setArenaOpen] = React.useState(false);
   return (
     <>
-      {resultList}
-      <ArenaDrawer />
+      {React.useMemo(() => (
+        <Box sx={{ mt: 2 }}>
+          <Paper sx={{ padding: 1 }}>
+            <Masonry columns={2} spacing={2} sx={{ m: 0 }}>
+              {value.map((v, i) => <ResultCard key={v.spell || v.monster} index={i} data={v} />)}
+            </Masonry>
+          </Paper>
+        </Box>
+      ), [value])}
+      <Arena arenaOpen={arenaOpen} setArenaOpen={setArenaOpen} />
     </>
   );
 }
