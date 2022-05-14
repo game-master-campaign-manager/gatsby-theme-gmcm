@@ -2,7 +2,7 @@ const arenaStrings = {
   hp: 'HP',
   delete: 'Delete Combatant',
   clear: {
-    data: ['Clear monsters', 'Clear players', 'Clear all combatants'],
+    data: ['Clear monsters', 'Clear players', 'Clear all'],
     aria: 'clear buttons',
     selectAria: 'select clear option',
   },

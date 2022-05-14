@@ -61,7 +61,7 @@ function Arena({ arenaOpen, setArenaOpen }) {
           arenaSessionStorage={arenaSessionStorage}
           setArenaSessionStorage={setArenaSessionStorage}
         />
-      ), [])}
+      ), [arenaSessionStorage])}
       <TurnAdvancement handleTurnClick={handleTurnClick} />
       {React.useMemo(() => (
         <CombatantList
@@ -70,12 +70,15 @@ function Arena({ arenaOpen, setArenaOpen }) {
           turnIndex={turnIndex}
         />
       ), [arenaSessionStorage, turnIndex])}
+      <ClearArenaButton
+        arenaSessionStorage={arenaSessionStorage}
+        setArenaSessionStorage={setArenaSessionStorage}
+      />
     </Drawer>
   );
 }
 
 function AddPlayer({ arenaSessionStorage, setArenaSessionStorage }) {
-  console.log('AddPlayer render');
   const [playerName, setPlayerName] = React.useState('');
   const [error, setError] = React.useState(false);
   return (
@@ -194,28 +197,12 @@ function CombatantList({ arenaSessionStorage, setArenaSessionStorage, turnIndex 
     // Stringify and resend the data to Session Storage.
     typeof window !== 'undefined' && sessionStorage.setItem('gmcm-combatants', JSON.stringify(arenaSessionStorage));
   }, [arenaSessionStorage, turnIndex]);
-  // const handleClearClick = React.useCallback((type) => {
-  //   console.log(type);
-  //   const { children } = combatantListRef.current;
-  //   [...children].forEach((item) => console.log(item));
-  // }, []);
-
-  const handleClearClick = React.useCallback((type) => {
-    console.log(type);
-    console.log(combatantListRef.current);
-    // if ()
-    // const { children } = combatantListRef.current;
-    // [...children].forEach((item) => console.log(item));
-  }, [arenaSessionStorage]);
   return (
-    <>
-      <Card raised sx={{ mx: 2, overflowY: 'scroll' }}>
-        <CardContent>
-          <List ref={combatantListRef} disablePadding sx={{ '& > li + li': { mt: 1 } }}>{combatantListItems}</List>
-        </CardContent>
-      </Card>
-      <ClearArenaButton handleClearClick={handleClearClick} />
-    </>
+    <Card raised sx={{ mx: 2, overflowY: 'scroll' }}>
+      <CardContent>
+        <List ref={combatantListRef} disablePadding sx={{ '& > li + li': { mt: 1 } }}>{combatantListItems}</List>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -308,13 +295,13 @@ function Combatant({
   );
 }
 // line 203
-function ClearArenaButton({ handleClearClick }) {
+function ClearArenaButton({ arenaSessionStorage, setArenaSessionStorage }) {
   console.log('ClearArenaButton render');
   const anchorRef = React.useRef(null);
   const options = arenaStrings.clear.data;
+  const clearTypes = ['monster', 'player', 'all'];
   const [clearOpen, setClearOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  handleClearClick('foo');
   const handleToggle = () => {
     setClearOpen((prevOpen) => !prevOpen);
   };
@@ -328,10 +315,24 @@ function ClearArenaButton({ handleClearClick }) {
     setSelectedIndex(index);
     setClearOpen(false);
   };
+  const handleClearClick = (type) => {
+    if (type === 'all') {
+      sessionStorage.clear();
+      setArenaSessionStorage([]);
+    } else {
+      const newStorage = [];
+      [...arenaSessionStorage].forEach((combatant) => {
+        type !== combatant.type && newStorage.push(combatant);
+      });
+      setArenaSessionStorage(newStorage);
+    }
+  };
   return (
     <>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label={arenaStrings.clear.aria} sx={{ alignSelf: 'center', m: 2 }}>
-        <Button onClick={handleClearClick}>{options[selectedIndex]}</Button>
+        <Button onClick={() => handleClearClick(clearTypes[selectedIndex])}>
+          {options[selectedIndex]}
+        </Button>
         <Button
           size="small"
           aria-controls={clearOpen ? 'split-menu-menu' : undefined}
