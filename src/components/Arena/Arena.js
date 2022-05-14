@@ -1,14 +1,17 @@
 import React from 'react';
 import {
-  Box, ButtonGroup, Card, CardContent, ClickAwayListener, Drawer, Grow, List, ListItem, ListItemText, MenuItem, MenuList, Paper, Popper, SvgIcon, TextField, Tooltip, Typography,
+  Box, ButtonGroup, Card, CardContent, ClickAwayListener, Drawer, Grow, List, ListItem, ListItemText, MenuItem, MenuList, Paper, Popper, SpeedDial, SpeedDialAction, SvgIcon, TextField, Tooltip, Typography,
 } from '@mui/material';
 import { Button, IconButton } from 'gatsby-theme-material-ui';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import arenaStrings from './arenaStrings';
+import SwordWoman from '../../images/swordwoman.svg';
 import SkullIcon from '../../images/icons/skull.svg';
 
 /*
@@ -18,6 +21,36 @@ HOW TO ADD ARENA TO A GMCM PAGE
 3) Wrap anything else in the component calling Arena in React.useMemo() (See Search.js
    <SearchResults />).
 */
+
+export function ArenaAdder() {
+  /*
+  This will be a component that can be imported to search results in order to add a
+  monster to the arena.
+
+  Also use this to add monsters to location notes. and npc table.
+
+  REMOVE UPWARD ACTION
+  IMPORT SPEEDDIAL_ACTIONS FROM CONSTANTS
+  PUSH ARENA ACTION TO CSPEEDDIAL_ACTIONS
+  MAYBE IMPRT THE WHOLE SPEED DIAL FROM NEW DIFF COMPONENT?
+  MAYBE REMOVE ACTIONS FROM CONSTANTS AND PUT IN NEW COMPONENT?
+  */
+  const actions = [
+    { icon: <ArrowUpwardIcon />, name: 'Scroll' },
+    { icon: <SwordWoman />, name: 'Arena' },
+  ];
+  return (
+    <SpeedDial
+      aria-label="Speedial"
+      sx={{ position: 'absolute', bottom: 2, right: 2 }}
+      icon={<SpeedDialIcon />}
+    >
+      {actions.map((action) => (
+        <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} />
+      ))}
+    </SpeedDial>
+  );
+}
 
 function Arena({ arenaOpen, setArenaOpen }) {
   console.log('Arena render');
