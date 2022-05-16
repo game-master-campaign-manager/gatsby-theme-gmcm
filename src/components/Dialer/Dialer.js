@@ -3,10 +3,13 @@ import React from 'react';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
+import SvgIcon from '@mui/material/SvgIcon';
 // import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 // import SaveIcon from '@mui/icons-material/Save';
 // import PrintIcon from '@mui/icons-material/Print';
 // import ShareIcon from '@mui/icons-material/Share';
+import dialerStrings from './dialerStrings';
+import SwordWoman from '../../images/swordwoman.svg';
 import { DEFAULT_DIALER_ACTIONS } from '../../utils/constants';
 
 // const actions = [
@@ -15,6 +18,13 @@ import { DEFAULT_DIALER_ACTIONS } from '../../utils/constants';
 //   { icon: <PrintIcon />, name: 'Print' },
 //   { icon: <ShareIcon />, name: 'Share' },
 // ];
+export function arenaToggle() {
+  return {
+    icon: <SvgIcon><SwordWoman /></SvgIcon>,
+    name: dialerStrings.actions.arenaToggle,
+    action: '',
+  };
+}
 
 function Dialer({ dialerActions = '' }) {
   const actions = [...DEFAULT_DIALER_ACTIONS];
