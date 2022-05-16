@@ -12,12 +12,19 @@ import { SnackbarProvider } from 'notistack';
 import Navigation from '../Navigation/Navigation';
 import GmcmBlackBridgeIcon from '../../images/black-bridge.svg';
 import layoutStrings from './layoutStrings';
+import Dialer from '../Dialer/Dialer';
 
 // eslint-disable-next-line react/function-component-definition
 const HeaderContainer = (props) => <Container component="header" {...props} />;
 
 function Layout({
-  children, hideNavigation, title = undefined, navDirection, arenaRender = undefined,
+  children,
+  hideNavigation,
+  title = undefined,
+  navDirection,
+  arenaRender = undefined,
+  dialer = false,
+  dialerActions = undefined,
 }) {
   console.log('Layout render');
   const data = useStaticQuery(graphql`
@@ -87,6 +94,7 @@ function Layout({
               <Typography variant="h2" sx={{ fontWeight: 500, textTransform: 'capitalize' }}>{title}</Typography>
             )}
             {children}
+            {dialer && <Dialer customActions={dialerActions} />}
           </SnackbarProvider>
         </Container>
         <Container component="footer" sx={{ mt: 4, mb: 2 }}>
