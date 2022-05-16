@@ -22,6 +22,53 @@ HOW TO ADD ARENA TO A GMCM PAGE
    <SearchResults />).
 */
 
+export function AddMonsterButton() {
+  return (
+    <Tooltip title="Foo">
+      <IconButton
+        aria-label="Foo"
+        sx={{
+          position: 'absolute',
+          top: '0.25rem',
+          right: '0.25rem',
+          '&::after': {
+            content: '"+"',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            borderRadius: '50%',
+            width: '12px',
+            height: '12px',
+            fontSize: '1.25rem',
+            lineHeight: '12px',
+            p: '0.25rem',
+            boxSizing: 'content-box',
+            backgroundColor: 'grey.800',
+          },
+        }}
+        onClick={() => {
+          console.log('FOO');
+        }}
+        // onClick={() => {
+        //   enqueueSnackbar(`Added ${item.monster} to the Combat Tracker.`);
+        //   setArenaSessionStorage([...arenaSessionStorage,
+        //     {
+        //       name: item.monster,
+        //       hp: hpRoll.total || item.hp.value,
+        //       initiative: initiativeRoll.total,
+        //       type: 'monster',
+        //     },
+        //   ]);
+        // }}
+      >
+        <SvgIcon>
+          <SwordWoman />
+        </SvgIcon>
+      </IconButton>
+    </Tooltip>
+  );
+}
+
 export function ArenaAdder() {
   /*
   This will be a component that can be imported to search results in order to add a
