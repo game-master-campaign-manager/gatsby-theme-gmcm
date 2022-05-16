@@ -6,6 +6,6 @@ export const SCROLL_BEHAVIOR = {
   block: 'start',
 };
 
-export const SPEEDDIAL_ACTION = [
+export const DEFAULT_DIALER_ACTIONS = [
   { icon: <ArrowUpwardIcon />, name: 'Scroll' },
 ];
