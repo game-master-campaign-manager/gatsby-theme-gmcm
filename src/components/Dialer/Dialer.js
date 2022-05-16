@@ -16,7 +16,12 @@ import { DEFAULT_DIALER_ACTIONS } from '../../utils/constants';
 //   { icon: <ShareIcon />, name: 'Share' },
 // ];
 
-function Dialer() {
+function Dialer({ dialerActions = '' }) {
+  const actions = [...DEFAULT_DIALER_ACTIONS];
+  console.log(actions);
+  dialerActions && dialerActions.forEach((action) => {
+    actions.push(action);
+  });
   return (
     <SpeedDial
       ariaLabel="SpeedDial basic example"
@@ -25,7 +30,7 @@ function Dialer() {
       }}
       icon={<SpeedDialIcon />}
     >
-      {DEFAULT_DIALER_ACTIONS.map((action) => (
+      {actions.map((action) => (
         <SpeedDialAction
           key={action.name}
           icon={action.icon}

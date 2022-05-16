@@ -94,7 +94,7 @@ function Layout({
               <Typography variant="h2" sx={{ fontWeight: 500, textTransform: 'capitalize' }}>{title}</Typography>
             )}
             {children}
-            {dialer && <Dialer customActions={dialerActions} />}
+            {dialer && <Dialer dialerActions={dialerActions} />}
           </SnackbarProvider>
         </Container>
         <Container component="footer" sx={{ mt: 4, mb: 2 }}>

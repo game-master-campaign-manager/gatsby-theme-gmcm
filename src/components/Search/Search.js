@@ -44,7 +44,7 @@ import * as MAGIC_TYPES from '../../images/magic-types';
 import SwordWoman from '../../images/swordwoman.svg';
 import { Attack, Dice } from '../Dice/Dice';
 import DmcmAttackIcon from '../../images/bullseye.svg';
-import Arena, { AddMonsterButton } from '../Arena/Arena';
+import Arena from '../Arena/Arena';
 
 const PageDataContext = React.createContext('PageData');
 
@@ -296,7 +296,6 @@ function ResultCard({ data, index }) {
         title={<Typography sx={{ wordBreak: 'break-all', mr: '2rem' }} variant="h6" component="h3">{data.monster || data.spell}</Typography>}
         subheader={<Typography variant="body1">{subtitle}</Typography>}
       />
-      <AddMonsterButton />
       {/* {combatIcon && (
         <Tooltip title={pageData.addCombatTracker}>
           <IconButton

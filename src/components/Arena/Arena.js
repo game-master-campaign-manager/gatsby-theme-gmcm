@@ -72,7 +72,7 @@ export function AddMonsterButton() {
 export function ArenaAdder() {
   /*
   This will be a component that can be imported to search results in order to add a
-  monster to the arena.
+  monster to the arena. NO IT WONT THIS WAS A TEST
 
   Also use this to add monsters to location notes. and npc table.
 
