@@ -44,7 +44,7 @@ import * as MAGIC_TYPES from '../../images/magic-types';
 import SwordWoman from '../../images/swordwoman.svg';
 import { Attack, Dice } from '../Dice/Dice';
 import DmcmAttackIcon from '../../images/bullseye.svg';
-import Arena from '../Arena/Arena';
+import Arena, { AddMonsterButton } from '../Arena/Arena';
 
 const PageDataContext = React.createContext('PageData');
 
@@ -52,10 +52,11 @@ function Search({ location, page }) {
   console.log('Search render');
   const pageData = React.useMemo(() => ({ pageData: page }), []);
   return (
-    <Layout title={page.title}>
+    <Layout title={page.title} dialer>
       <PageDataContext.Provider value={pageData}>
         <SearchContent locationData={location} />
       </PageDataContext.Provider>
+      {/* <Dialer /> */}
     </Layout>
   );
 }
@@ -295,7 +296,8 @@ function ResultCard({ data, index }) {
         title={<Typography sx={{ wordBreak: 'break-all', mr: '2rem' }} variant="h6" component="h3">{data.monster || data.spell}</Typography>}
         subheader={<Typography variant="body1">{subtitle}</Typography>}
       />
-      {combatIcon && (
+      <AddMonsterButton />
+      {/* {combatIcon && (
         <Tooltip title={pageData.addCombatTracker}>
           <IconButton
             aria-label={pageData.addCombatTracker}
@@ -335,7 +337,7 @@ function ResultCard({ data, index }) {
             </SvgIcon>
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
       <Divider />
       <CardContent>
         {data.monster && <MonsterContent monster={data} />}
