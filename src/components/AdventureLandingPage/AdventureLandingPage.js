@@ -44,7 +44,7 @@ function AdventurePageLayout({ data }) {
             />
           </Card>
           <Card raised>
-            <Typography variant="h4" componen="h3" sx={{ px: 1 }}>
+            <Typography variant="h4" component="h3" sx={{ px: 1 }}>
               <LocationOnIcon />
               {adventureLandingPageStrings.locations.label}
             </Typography>
